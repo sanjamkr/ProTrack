@@ -1,0 +1,10 @@
+{% if tasks %}
+    <ul>
+    {% for question in tasks %}
+        <li><a href="{% url 'task:detail' task.id %}">{{ task.tname }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No tasks are available.</p>
+{% endif %}
+
