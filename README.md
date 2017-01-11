@@ -14,11 +14,10 @@ Web-based Project Tracking Application.
  
  TABLES:
   - Go to 127.0.0.1:8000/admin (Enter above created username and password to login)
-  - Task section on home screen contains task tables: Task,Tags,Comments,SubTasks (Have read-write privileges here)
+  - Tracker section on home screen contains all database tables (Have read-write privileges here)
  
 VIEWS:
   - Go to 127.0.0.1:8000/task/1 from any browser (Task 1)
-  - Go to 127.0.0.1:8000/task/2 (Task 2)
   - Go to 127.0.0.1:8000/task/3 (Task 3 Doesn't exist-404 error)
  
 

@@ -1,9 +1,0 @@
-<h1>{{ task.tname }}</h1>
-
-<h3>TAGS</h3>
-
-<ul>
-{% for Comment in task.comment_set.all %}
-    <li>{{ Comment.comment }}</li>
-{% endfor %}
-</ul>
