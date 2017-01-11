@@ -37,7 +37,7 @@ class task(models.Model):
     project = models.ForeignKey(project, on_delete=models.CASCADE)
     tname = models.CharField(max_length=100)
     desc = models.CharField(max_length=200)
-    due_date =models.DateField('due date')
+    due_date = models.DateField('due date')
     risk = models.CharField(max_length=200)
     status = models.CharField(max_length=50)
     priority = models.CharField(max_length=50)
