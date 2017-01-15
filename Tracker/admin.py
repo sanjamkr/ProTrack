@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import member,group,group_member,project,task,tag,comment,subtask,sprint,sprint_task
+from .models import member,group,group_member,project,task,tag,comment,subtask,sprint
 
 # Register your models here.
 
@@ -20,4 +20,3 @@ admin.site.register(tag)
 admin.site.register(comment)
 admin.site.register(subtask)
 admin.site.register(sprint)
-admin.site.register(sprint_task)

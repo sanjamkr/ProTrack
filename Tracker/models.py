@@ -46,6 +46,7 @@ class task(models.Model):
     remainder = models.CharField(max_length=200)
     heading = models.CharField(max_length=200)
     dep_task = models.CharField(max_length=100)
+    cur_sprint = models.CharField(max_length=100)
     tp = models.IntegerField(default=1)
 
     def __str__(self):
@@ -78,9 +79,4 @@ class sprint(models.Model):
 
     def __str__(self):
         return self.sname
-    
 
-# Tasks in a sprint
-class sprint_task(models.Model):
-    sprint = models.ForeignKey(sprint,on_delete=models.CASCADE)
-    task = models.CharField(max_length=100) # Should map from task table

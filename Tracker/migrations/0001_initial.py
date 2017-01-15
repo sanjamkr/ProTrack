@@ -103,6 +103,7 @@ class Migration(migrations.Migration):
                 ('remainder', models.CharField(max_length=200)),
                 ('heading', models.CharField(max_length=200)),
                 ('dep_task', models.CharField(max_length=100)),
+                ('cur_sprint', models.CharField(max_length=100)),
                 ('tp', models.IntegerField(default=1)),
                 ('project', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Tracker.project')),
             ],
