@@ -12,7 +12,8 @@ def index (request, task_id):
     
 def detail(request,task_id):
     task = get_object_or_404(task,pk=task_id)
-    return render(request,'task/detail.html',{'task': task})
+    return HttpResponse("You're looking at task %s." % task_id)
+    #return render(request,'task/detail.html',{'task': task})
 
 def tag(request,task_id):
     response = "tags for the task %s."
