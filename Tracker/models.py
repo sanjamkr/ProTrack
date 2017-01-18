@@ -76,6 +76,5 @@ class sprint(models.Model):
     sname = models.CharField(max_length=100)
     start_date =models.DateField('start date')
     end_date =models.DateField('end date')
-
     def __str__(self):
         return self.sname

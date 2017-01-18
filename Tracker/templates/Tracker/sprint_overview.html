@@ -1,0 +1,10 @@
+{% if sprint_list %}
+    <ol>
+    {% for sprints in sprint_list %}
+        <li><a href="/Tracker/sprint/{{ sprints.id }}/">{{ sprints.sname }}</a></li>
+    {% endfor %}
+    </ol>
+{% else %}
+    <p>No sprints are available.</p>
+{% endif %}
+
