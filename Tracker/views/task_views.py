@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import Http404
 from django.http import HttpResponse
 
-from .models import task
+from Tracker.models import task
 
 def index (request):
     # tasks = task.objects.order_by('-due_date')[:5]
