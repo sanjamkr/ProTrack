@@ -1,7 +1,7 @@
 {% if sprint_list %}
-    <ol>
+    <ol>SPRINT LIST :
     {% for sprints in sprint_list %}
-        <li><a href="/Tracker/sprint/{{ sprints.id }}/">{{ sprints.sname }}</a></li>
+        <li><a href="{% url 'sprint_detail' sprints.id %}">{{ sprints.sname }}</a></li>
     {% endfor %}
     </ol>
 {% else %}

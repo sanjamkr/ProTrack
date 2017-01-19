@@ -9,15 +9,15 @@ def task_index (request):
     context = {
         'task_list': task_list,
     }
-    return render(request,'Tracker/index.html',context)
+    return render(request,'Tracker/task_index.html',context)
     
-def add_task(request,task_id):
-    response = "task details for id : %s. are -"
-    return HttpResponse(response % task_id)
-
+def add_task(request):
+    ta = get_object_or_404(task,pk=7)
+    return render(request,'Tracker/task_add.html',{'task': ta})
+   
 def view_task(request,task_id):
     ta = get_object_or_404(task,pk=task_id)
-    return render(request,'Tracker/detail.html',{'task': ta})
+    return render(request,'Tracker/task_detail.html',{'task': ta})
    
 def handle(request,task_id):
     response = " %s"
