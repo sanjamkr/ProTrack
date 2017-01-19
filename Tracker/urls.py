@@ -4,10 +4,9 @@ from . import views
 
 #app_name = 'task'
 urlpatterns = [
-    url(r'^$',views.index, name='index'),
     url(r'^sprint/$', views.sprint_overview, name='sprint_overview'),
-	url(r'^sprint/(?P<sprint_id>[0-9]+)/$', views.sprint_detail, name='sprint_detail'),
-	url(r'^(?P<task_id>[0-9]+)/$', views.detail, name='detail'),
-    url(r'^(?P<task_id>[0-9]+)/tag/$', views.tag, name='tag'),
-    url(r'^(?P<task_id>[0-9]+)/comment/$', views.comment, name='comment'),   
+    url(r'^sprint/(?P<sprint_id>[0-9]+)/$', views.sprint_detail, name='sprint_detail'),
+   # url(r'^$',views.task_index, name='task_index'),
+    url(r'^(?P<task_id>[0-9]+)/view/$', views.add_task),
+    url(r'^(?P<task_id>[0-9]+)/$', views.view_task,name= 'detail'),
 ]

@@ -4,22 +4,24 @@ from django.http import HttpResponse
 
 from Tracker.models import task
 
-def index (request):
-    # tasks = task.objects.order_by('-due_date')[:5]
-    # context = {'task_list': tasks}
-    # return render(request,'task/index.html',context)
-    return HttpResponse("You're in task view")
+def task_index (request):
+    task_list = task.objects.order_by('-due_date')[:]
+    context = {
+        'task_list': task_list,
+    }
+    return render(request,'Tracker/index.html',context)
     
-def detail(request,task_id):
-    #task = get_object_or_404(task,pk=task_id)
-    return HttpResponse("You're looking at task %s." % task_id)
-    #return render(request,'task/detail.html',{'task': task})
-
-def tag(request,task_id):
-    response = "tags for the task %s."
+def add_task(request,task_id):
+    response = "task details for id : %s. are -"
     return HttpResponse(response % task_id)
 
-def comment(request,task_id):
-    response = "comment %s."
+def view_task(request,task_id):
+    ta = get_object_or_404(task,pk=task_id)
+    return render(request,'Tracker/detail.html',{'task': ta})
+   
+def handle(request,task_id):
+    response = " %s"
     return HttpResponse(response % task_id)
+
+
 
