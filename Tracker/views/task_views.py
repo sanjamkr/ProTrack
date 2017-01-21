@@ -12,8 +12,7 @@ def task_index (request):
     return render(request,'Tracker/task_index.html',context)
     
 def add_task(request):
-    ta = get_object_or_404(task,pk=7)
-    return render(request,'Tracker/task_add.html',{'task': ta})
+    return render(request,'Tracker/task_add.html')
    
 def view_task(request,task_id):
     ta = get_object_or_404(task,pk=task_id)
