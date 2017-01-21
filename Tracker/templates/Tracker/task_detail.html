@@ -1,8 +1,13 @@
 <h2>Task Details with Id = {{ task.id }}:</h2>
-<i>Project: {{task.project}}<br /></i>
-Name : {{ task.tname }}<br />
-Description : {{ task.desc}} <br />
-Due_date : {{task.due_date}}<br />
-State : {{ task.state }}<br />
-Assigned To : {{task.assign }}<br />
-Task Points : {{task.tp}}<br />
+<table padding-bottom= 100px >
+<tr><td>Project: <span contenteditable>{{task.project}}</span></td>
+<tr><td>Name : <span contenteditable> {{ task.tname }}</span></td>
+<tr><td>Description : <span contenteditable> {{ task.desc}} </span></td>
+<tr><td>Due_date : <span contenteditable>{{task.due_date}}</span></td>
+<tr><td>State : <span contenteditable> {{ task.state }}</span></td>
+<tr><td>Assigned To : <span contenteditable>{{task.assign }}</span></td>
+<tr><td>Task Points : <span contenteditable>{{task.tp}}</span></td>
+</table>
+<form action="http://127.0.0.1:8000/Tracker/task/">
+    <input type="submit" value="Back" />
+</form>
