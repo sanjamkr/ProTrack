@@ -2,7 +2,7 @@
 Web-based Project Tracking Application.
 
 # Setup for Local Environment:
- 1) Install python3 ad django 1.10
+ 1) Install python3 and django 1.10
  
  2) Clone from git repository to a local directory(Directory A)
  
@@ -17,8 +17,8 @@ Web-based Project Tracking Application.
   - Tracker section on home screen contains all database tables (Have read-write privileges here)
  
 VIEWS:
-  - Go to 127.0.0.1:8000/task/1 from any browser (Task 1)
-  - Go to 127.0.0.1:8000/task/3 (Task 3 Doesn't exist-404 error)
+  - Go to 127.0.0.1:8000/Tracker from any browser (Login Screen)
+  - Go to 127.0.0.1:8000/Tracker/MemberId=1 (Member 1's Details)
  
 
 
