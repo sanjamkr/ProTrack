@@ -1,4 +1,5 @@
 <h2>Task Details with Id = {{ task.id }}:</h2>
+
 <table padding-bottom= 100px >
 <tr><td>Project: <span contenteditable>{{task.project}}</span></td>
 <tr><td>Name : <span contenteditable> {{ task.tname }}</span></td>
@@ -8,6 +9,7 @@
 <tr><td>Assigned To : <span contenteditable>{{task.assign }}</span></td>
 <tr><td>Task Points : <span contenteditable>{{task.tp}}</span></td>
 </table>
-<form action="http://127.0.0.1:8000/Tracker/task/">
+
+<form action="http://127.0.0.1:8000/Tracker">
     <input type="submit" value="Back" />
 </form>

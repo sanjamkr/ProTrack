@@ -1,9 +1,0 @@
-{% if group_list %}
-	<ul>
-	{% for group in group_list %}
-		<li> <a href = "/Tracker/{{group.id}}/">{{group.gname}}</a></li>
-	{% endfor %}
-	</ul>
-{% else %}
-	<p> No groups yet/ </p>
-{% endif %}
