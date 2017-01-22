@@ -1,15 +1,11 @@
 <h2>Group Details with Group Id = {{ group.id }}:</h2>
 Group Name : {{ group.gname }}
 
-{% if project_list %}
-	<ul>Group Projects :
-	{% for project in project_list %}
-    	<li>{{ project.id }} <a href= "{% url 'project_detail' project.id %}">{{ project.pname }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-	<p>No projects avaialable for this group</p>
-{% endif %}
+<ul>
+	{% for project in group.project_set.all %}
+	<li><a href= "{% url 'project_detail' project.id %}">{{ project.pname }}</a></li>
+	{% endfor %}
+</ul>
 
 
 <a href=# name=save_group_details><button>Save</button></a>

@@ -1,25 +1,18 @@
 <h2>Project Details with Id = {{ project.id }}:</h2>
 Project Name : {{ project.pname }}<br />
 
-{% if task_list %}
-    <ul>TASK LIST :
-    {% for task in task_list %}
-        <li>{{ task.id }} <a href= "{% url 'task_detail' task.id %}">{{ task.tname }}</a></li>
+<ul>
+    {% for task in project.task_set.all %}
+    <li><a href= "{% url 'task_detail' task.id %}">{{ task.tname }}</a></li>
     {% endfor %}
-    </ul>
-{% else %}
-    <p>No tasks present</p>
-{% endif %}
+</ul>
 
-{% if sprint_list %}
-    <ol>SPRINT LIST :
-    {% for sprints in sprint_list %}
-        <li><a href="{% url 'sprint_detail' sprints.id %}">{{ sprints.sname }}</a></li>
+<ul>
+    {% for sprint in project.sprint_set.all %}
+    <li><a href= "{% url 'sprint_detail' sprint.id %}">{{ sprint.sname }}</a></li>
     {% endfor %}
-    </ol>
-{% else %}
-    <p>No sprints are available.</p>
-{% endif %}
+</ul>
+
 
 <a href="/Tracker/task/add_task/"><button>Add_Task</button></a>
 <a href=#><button>Add_Sprint</button></a>
