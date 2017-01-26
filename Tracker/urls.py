@@ -10,6 +10,8 @@ urlpatterns = [
     url(r'^TaskId=(?P<task_id>[0-9]+)/$', views.task_detail,name= 'task_detail'),
     url(r'^SprintId=(?P<sprint_id>[0-9]+)/$', views.sprint_detail, name='sprint_detail'),
 
-    url(r'^task/add_task/$',views.add_task, name='add_task'),
-    url(r'^sprint/add_sprint/$',views.add_sprint, name='add_sprint'),
+    url(r'^add_group/$',views.add_group, name='add_group'),
+    url(r'^add_project/$',views.add_project, name='add_project'),
+    url(r'^add_task/$',views.add_task, name='add_task'),
+    url(r'^add_sprint/$',views.add_sprint, name='add_sprint'),
     ]

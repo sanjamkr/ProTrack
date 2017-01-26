@@ -1,5 +1,7 @@
-<h2>Group Details with Group Id = {{ group.id }}:</h2>
-Group Name : {{ group.gname }}
+<h2>Group Details</h2>
+<h4>Group Id : {{ group.id }}</h4>
+<h4>Group Name : {{ group.gname }}</h4>
+<h4>Projects :</h4>
 
 <ul>
 	{% for project in group.project_set.all %}
@@ -7,7 +9,7 @@ Group Name : {{ group.gname }}
 	{% endfor %}
 </ul>
 
-
+<a href="/Tracker/add_project/"><button>Add New Project</button></a><br /><br />
 <a href=# name=save_group_details><button>Save</button></a>
 <a href=# name=leave_group><button>Leave Group</button></a>
-<a href=# name=exit><button>Exit</button></a>
+<a href=# name=exit><button>Back</button></a>

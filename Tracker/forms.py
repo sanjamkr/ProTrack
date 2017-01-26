@@ -21,12 +21,6 @@ class NewSprint(ModelForm):
     class Meta:
         model = sprint
         fields = ['project','sname','start_date','end_date']
-    #sname = forms.CharField(label='Sprint Name', max_length=100)
-    #project = forms.ChoiceField(project, on_delete=models.CASCADE)
-    #start_date = forms.DateField(label='Start Date')
-    #end_date = forms.DateField(label='End Date')
-
-#form = NewSprint()
 
 # Creating a form to change an existing article.
 #sprint = sprint.objects.get(pk=1)

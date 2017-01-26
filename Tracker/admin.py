@@ -19,4 +19,6 @@ admin.site.register(project,projectAdmin)
 admin.site.register(tag)
 admin.site.register(comment)
 admin.site.register(subtask)
-admin.site.register(sprint)
+class sprintAdmin(admin.ModelAdmin):
+        list_display = ('id','sname')
+admin.site.register(sprint,sprintAdmin)

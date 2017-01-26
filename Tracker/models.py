@@ -1,16 +1,5 @@
 from django.db import models
 
-#Registration and Login
-class member(models.Model):
-    fname = models.CharField(max_length=100)
-    lname = models.CharField(max_length=100)
-    email = models.CharField(max_length=254)
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.username
-
 #Groups
 class group(models.Model):
     gname = models.CharField(max_length=100)
@@ -18,19 +7,46 @@ class group(models.Model):
     def __str__(self):
         return self.gname
 
+#Registration and Login
+class member(models.Model):
+    fname = models.CharField(max_length=100)
+    lname = models.CharField(max_length=100)
+    email = models.CharField(max_length=254)
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.username
+
+
 #Members associated with a Group
 class group_member(models.Model):                                                           
      group = models.ForeignKey(group, on_delete=models.CASCADE)
      members = models.CharField(max_length=100)   #Members to be mapped here from member model
 
 #Projects associated with a Group
+
 class project(models.Model):                                                                 
     pgroup = models.ForeignKey(group, on_delete=models.CASCADE)
     pname = models.CharField(max_length=100)
     pdesc = models.CharField(max_length=100,blank=True)
+<<<<<<< Updated upstream
 
     def __str__(self):
         return self.pname
+=======
+#    task = models.ManyToManyField(task)
+
+    def __str__(self):
+        return self.pname
+#........................................
+Status_Choices = (
+    ('red','Red'),('yellow','Yellow'),('green','Green'),
+)
+Priority_Choices = (
+    ('high','High'),('medium','Medium'),('low','Low'),
+)
+>>>>>>> Stashed changes
 
 #Tasks associated with a Project
 class task(models.Model):
@@ -39,6 +55,7 @@ class task(models.Model):
     desc = models.CharField(max_length=200,blank=True)
     due_date = models.DateField('due date')
     risk = models.CharField(max_length=200,blank=True)
+<<<<<<< Updated upstream
     status = models.CharField(max_length=50,blank=True)
     priority = models.CharField(max_length=50,blank=True)
     state = models.CharField(max_length=50,blank=True)
@@ -47,6 +64,16 @@ class task(models.Model):
     heading = models.CharField(max_length=200,blank=True)
     dep_task = models.CharField(max_length=100,blank=True)
     cur_sprint = models.CharField(max_length=100,blank=True)
+=======
+    status = models.CharField(max_length=50,default='Yellow',choices=Status_Choices)
+    priority = models.CharField(max_length=50,choices=Priority_Choices)
+    state = models.CharField(max_length=50)
+    assign = models.CharField(max_length=100)
+    remainder = models.CharField(max_length=200,blank=True)
+    heading = models.CharField(max_length=200,blank=True)
+    dep_task = models.CharField(max_length=100,blank=True)
+    cur_sprint = models.CharField(max_length=100,blank=True,null=True)
+>>>>>>> Stashed changes
     tp = models.IntegerField(default=1)
 
     def __str__(self):
@@ -73,7 +100,7 @@ class subtask(models.Model):
 # Sprints for a Project
 class sprint(models.Model):
     project = models.ForeignKey(project, on_delete=models.CASCADE)
-    sname = models.CharField(max_length=100)
+    sname = models.CharField(max_length=100,verbose_name='Sprint Name')
     start_date =models.DateField('start date')
     end_date =models.DateField('end date')
     def __str__(self):
