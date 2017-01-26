@@ -27,26 +27,26 @@ class group_member(models.Model):
 class project(models.Model):                                                                 
     pgroup = models.ForeignKey(group, on_delete=models.CASCADE)
     pname = models.CharField(max_length=100)
-    pdesc = models.CharField(max_length=100)
+    pdesc = models.CharField(max_length=100,blank=True)
 
     def __str__(self):
         return self.pname
-    
+
 #Tasks associated with a Project
 class task(models.Model):
     project = models.ForeignKey(project, on_delete=models.CASCADE)
     tname = models.CharField(max_length=100)
-    desc = models.CharField(max_length=200)
+    desc = models.CharField(max_length=200,blank=True)
     due_date = models.DateField('due date')
-    risk = models.CharField(max_length=200)
-    status = models.CharField(max_length=50)
-    priority = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    assign = models.CharField(max_length=100)
-    remainder = models.CharField(max_length=200)
-    heading = models.CharField(max_length=200)
-    dep_task = models.CharField(max_length=100)
-    cur_sprint = models.CharField(max_length=100)
+    risk = models.CharField(max_length=200,blank=True)
+    status = models.CharField(max_length=50,blank=True)
+    priority = models.CharField(max_length=50,blank=True)
+    state = models.CharField(max_length=50,blank=True)
+    assign = models.CharField(max_length=100,blank=True)
+    remainder = models.CharField(max_length=200,blank=True)
+    heading = models.CharField(max_length=200,blank=True)
+    dep_task = models.CharField(max_length=100,blank=True)
+    cur_sprint = models.CharField(max_length=100,blank=True)
     tp = models.IntegerField(default=1)
 
     def __str__(self):
