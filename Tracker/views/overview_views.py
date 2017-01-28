@@ -30,12 +30,16 @@ def add_group(request):
         form = NewGroup()
     return render(request, 'Tracker/add_group.html', {'form': form})
 
-def group_detail(request,group_id):
-    gname = get_object_or_404(group,pk=group_id)
-    context = {
-        'group': gname,
-    }
-    return render(request,'Tracker/group_detail.html',context)
+def edit_group(request,group_id):
+    if request.method == 'POST':
+        g = get_object_or_404(group,pk=group_id)
+        form = NewGroup(request.POST,instance=g)
+        if form.is_valid():
+            form.save()
+    else:
+        g = get_object_or_404(group,pk=group_id)
+        form = NewGroup(instance=g)
+    return render(request, 'Tracker/edit_group.html', {'group': g,'form': form})
 
 #.........Project Views..................
 
@@ -49,9 +53,13 @@ def add_project(request):
         form = NewProject()
     return render(request, 'Tracker/add_project.html', {'form': form})
 
-def project_detail(request,project_id):
-    p = get_object_or_404(project,pk=project_id)
-    context = {
-        'project' : p,
-    }
-    return render(request,'Tracker/project_detail.html',context)
+def edit_project(request,project_id):
+    if request.method == 'POST':
+        p = get_object_or_404(project,pk=project_id)
+        form = NewProject(request.POST,instance=p)
+        if form.is_valid():
+            form.save()
+    else:
+        p = get_object_or_404(project,pk=project_id)
+        form = NewProject(instance=p)
+    return render(request, 'Tracker/edit_project.html', {'project': p,'form': form})

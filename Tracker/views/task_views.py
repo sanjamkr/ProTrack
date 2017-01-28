@@ -14,10 +14,15 @@ def add_task(request):
         form = NewTask()
     return render(request, 'Tracker/add_task.html', {'form': form})
 
-def task_detail(request,task_id):
-    ta = get_object_or_404(task,pk=task_id)
-    return render(request,'Tracker/task_detail.html',{'task': ta})
-
-
-
+def edit_task(request,task_id):
+    if request.method == 'POST':
+        t = get_object_or_404(task,pk=task_id)
+        form = NewTask(request.POST,instance=t)
+        if form.is_valid():
+            form.save()
+    else:
+        t = get_object_or_404(task,pk=task_id)
+        form = NewTask(instance=t)
+    return render(request, 'Tracker/edit_task.html', {'task': t,'form': form})
+    
 

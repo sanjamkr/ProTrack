@@ -14,6 +14,14 @@ def add_sprint(request):
         form = NewSprint()
     return render(request, 'Tracker/add_sprint.html', {'form': form})
 
-def sprint_detail(request,sprint_id):
-    s = get_object_or_404(sprint,pk=sprint_id)
-    return render(request,'Tracker/sprint_detail.html',{'sprint': s})
+def edit_sprint(request,sprint_id):
+    if request.method == 'POST':
+        sp = get_object_or_404(sprint,pk=sprint_id)
+        form = NewSprint(request.POST,instance=sp)
+        if form.is_valid():
+            form.save()
+    else:
+        sp = get_object_or_404(sprint,pk=sprint_id)
+        form = NewSprint(instance=sp)
+    return render(request, 'Tracker/edit_sprint.html', {'sprint': sp,'form': form})
+    

@@ -1,14 +1,16 @@
-<h3>Welcome ProTrack Member! </h3>
+<h1>Welcome ProTrack Member! </h1>
 
-{% if group_list %}
-	<ul>Your Groups :
-    {% for group in group_list %}
-    	<li>{{ group.id }} <a href= "{% url 'group_detail' group.id %}">{{ group.gname }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-	<p>No associated groups</p>
-{% endif %}
-
+	<table>
+		{% if group_list %}
+			<tr><td>Your Groups :</td></tr>
+    		{% for group in group_list %}
+    			<tr>
+    				<td>{{ group.id }} <a href= "{% url 'edit_group' group.id %}">{{ group.gname }}</a></td>
+    			</tr>
+    		{% endfor %}
+		{% else %}
+			<tr><td>No associated groups</td></tr>
+		{% endif %}
+	</table>
 <a href="/Tracker/add_group/"><button>Add New Group</button></a>
 <a href="/Tracker" name=logout><button>Logout</button></a>
