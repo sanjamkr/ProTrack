@@ -13,22 +13,7 @@ def add_sprint(request):
     else:
         form = NewSprint()
     return render(request, 'Tracker/add_sprint.html', {'form': form})
-    
-def edit_sprint(request):
-    if request.method == 'POST':
-        a = sprint.objects.get(pk=6)
-        form = NewSprint(request.POST, instance=a)
-        if form.is_valid():
-            new_article = form.save()
-            return HttpResponseRedirect('/Tracker/homepage/')
-    else:
-        form = NewSprint()
-    return render(request, 'Tracker/add_sprint.html', {'form': form})
-
-def added(request):
-    new_sprint_name = request.POST['sname']
-    return HttpResponse("New Sprint Name : %s" % new_sprint_name)
 
 def sprint_detail(request,sprint_id):
-    return HttpResponse("You're looking at sprint %s." % sprint_id)
-
+    s = get_object_or_404(sprint,pk=sprint_id)
+    return render(request,'Tracker/sprint_detail.html',{'sprint': s})

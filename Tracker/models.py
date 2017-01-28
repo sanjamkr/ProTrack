@@ -18,12 +18,6 @@ class member(models.Model):
     def __str__(self):
         return self.username
 
-
-#Members associated with a Group
-class group_member(models.Model):                                                           
-     group = models.ForeignKey(group, on_delete=models.CASCADE)
-     members = models.CharField(max_length=100)   #Members to be mapped here from member model
-
 #Projects associated with a Group
 class project(models.Model):                                                                 
     pgroup = models.ForeignKey(group, on_delete=models.CASCADE)
@@ -33,6 +27,7 @@ class project(models.Model):
     def __str__(self):
         return self.pname
 #........................................
+
 Status_Choices = (
     ('red','Red'),('yellow','Yellow'),('green','Green'),
 )

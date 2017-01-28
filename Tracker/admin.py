@@ -1,16 +1,12 @@
 from django.contrib import admin
 
-from .models import member,group,group_member,project,task,tag,comment,subtask,sprint
-
 # Register your models here.
+from .models import member,group,project,task,tag,comment,subtask,sprint
 
 admin.site.register(member)
 admin.site.register(group)
-admin.site.register(group_member)
-# admin.site.register(project)
 class projectAdmin(admin.ModelAdmin):
 	list_display = ('pname','pgroup')
-# admin.site.register(task)
 class taskAdmin(admin.ModelAdmin):
 	list_display = ('tname','project', 'due_date', 'status','priority')
 	list_filter = ('due_date','status')

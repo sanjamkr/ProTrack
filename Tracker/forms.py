@@ -22,7 +22,3 @@ class NewSprint(ModelForm):
         model = sprint
         fields = ['project','sname','start_date','end_date']
 
-# Creating a form to change an existing article.
-#sprint = sprint.objects.get(pk=1)
-#form = NewSprint(instance=article)
-

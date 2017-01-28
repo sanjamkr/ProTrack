@@ -5,9 +5,14 @@
 <tr><td>Name : <span contenteditable> {{ task.tname }}</span></td>
 <tr><td>Description : <span contenteditable> {{ task.desc}} </span></td>
 <tr><td>Due_date : <span contenteditable>{{task.due_date}}</span></td>
+<tr><td>Status : <span contenteditable> {{ task.status }}</span></td>
 <tr><td>State : <span contenteditable> {{ task.state }}</span></td>
+<tr><td>Priority : <span contenteditable> {{ task.priority }}</span></td>
 <tr><td>Assigned To : <span contenteditable>{{task.assign }}</span></td>
-<tr><td>Task Points : <span contenteditable>{{task.tp}}</span></td>
+<tr><td>Any Risk : <span contenteditable>{{task.tp}}</span></td>
+<tr><td>Remainder : <span contenteditable>{{task.remainder}}</span></td>
+<tr><td>Current Sprint : <span contenteditable>{{task.cur_sprint}}</span></td>
+<tr><td>Any dependent task : <span contenteditable>{{task.dep_task}}</span></td>
 </table>
 
 <form action="http://127.0.0.1:8000/Tracker">

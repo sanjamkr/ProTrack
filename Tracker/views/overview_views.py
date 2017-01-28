@@ -20,13 +20,6 @@ def homepage(request):
 
 #............Group Views.................
 
-def group_detail(request,group_id):
-    gname = get_object_or_404(group,pk=group_id)
-    context = {
-        'group': gname,
-    }
-    return render(request,'Tracker/group_detail.html',context)
-
 def add_group(request):
     if request.method == 'POST':
         form = NewGroup(request.POST)
@@ -37,15 +30,14 @@ def add_group(request):
         form = NewGroup()
     return render(request, 'Tracker/add_group.html', {'form': form})
 
+def group_detail(request,group_id):
+    gname = get_object_or_404(group,pk=group_id)
+    context = {
+        'group': gname,
+    }
+    return render(request,'Tracker/group_detail.html',context)
 
 #.........Project Views..................
-
-def project_detail(request,project_id):
-    p = get_object_or_404(project,pk=project_id)
-    context = {
-        'project' : p,
-    }
-    return render(request,'Tracker/project_detail.html',context)
 
 def add_project(request):
     if request.method == 'POST':
@@ -56,3 +48,10 @@ def add_project(request):
     else:
         form = NewProject()
     return render(request, 'Tracker/add_project.html', {'form': form})
+
+def project_detail(request,project_id):
+    p = get_object_or_404(project,pk=project_id)
+    context = {
+        'project' : p,
+    }
+    return render(request,'Tracker/project_detail.html',context)
