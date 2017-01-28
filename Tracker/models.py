@@ -25,17 +25,10 @@ class group_member(models.Model):
      members = models.CharField(max_length=100)   #Members to be mapped here from member model
 
 #Projects associated with a Group
-
 class project(models.Model):                                                                 
     pgroup = models.ForeignKey(group, on_delete=models.CASCADE)
     pname = models.CharField(max_length=100)
     pdesc = models.CharField(max_length=100,blank=True)
-<<<<<<< Updated upstream
-
-    def __str__(self):
-        return self.pname
-=======
-#    task = models.ManyToManyField(task)
 
     def __str__(self):
         return self.pname
@@ -46,7 +39,6 @@ Status_Choices = (
 Priority_Choices = (
     ('high','High'),('medium','Medium'),('low','Low'),
 )
->>>>>>> Stashed changes
 
 #Tasks associated with a Project
 class task(models.Model):
@@ -55,16 +47,6 @@ class task(models.Model):
     desc = models.CharField(max_length=200,blank=True)
     due_date = models.DateField('due date')
     risk = models.CharField(max_length=200,blank=True)
-<<<<<<< Updated upstream
-    status = models.CharField(max_length=50,blank=True)
-    priority = models.CharField(max_length=50,blank=True)
-    state = models.CharField(max_length=50,blank=True)
-    assign = models.CharField(max_length=100,blank=True)
-    remainder = models.CharField(max_length=200,blank=True)
-    heading = models.CharField(max_length=200,blank=True)
-    dep_task = models.CharField(max_length=100,blank=True)
-    cur_sprint = models.CharField(max_length=100,blank=True)
-=======
     status = models.CharField(max_length=50,default='Yellow',choices=Status_Choices)
     priority = models.CharField(max_length=50,choices=Priority_Choices)
     state = models.CharField(max_length=50)
@@ -73,7 +55,6 @@ class task(models.Model):
     heading = models.CharField(max_length=200,blank=True)
     dep_task = models.CharField(max_length=100,blank=True)
     cur_sprint = models.CharField(max_length=100,blank=True,null=True)
->>>>>>> Stashed changes
     tp = models.IntegerField(default=1)
 
     def __str__(self):
