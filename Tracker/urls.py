@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^edit_group/(?P<group_id>[0-9]+)/$',views.edit_group, name='edit_group'),
     url(r'^edit_project/(?P<project_id>[0-9]+)/$',views.edit_project, name='edit_project'),
     url(r'^edit_task/(?P<task_id>[0-9]+)/$',views.edit_task, name='edit_task'),
+    url(r'^chart/(?P<project_id>[0-9]+)/$',views.pieview, name='chart'),
     url(r'^edit_sprint/(?P<sprint_id>[0-9]+)/$',views.edit_sprint, name='edit_sprint'),
     ]
 
