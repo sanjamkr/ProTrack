@@ -34,6 +34,9 @@ Status_Choices = (
 Priority_Choices = (
     ('high','High'),('medium','Medium'),('low','Low'),
 )
+State_Choices = (
+    ('open','Open'),('blocked','Blocked'),('completed', 'Completed'),
+)
 
 #Tasks associated with a Project
 class task(models.Model):
@@ -44,7 +47,7 @@ class task(models.Model):
     risk = models.CharField(max_length=200,blank=True)
     status = models.CharField(max_length=50,default='Yellow',choices=Status_Choices)
     priority = models.CharField(max_length=50,choices=Priority_Choices)
-    state = models.CharField(max_length=50)
+    state = models.CharField(max_length=50, default='Open',choices=State_Choices)
     assign = models.CharField(max_length=100)
     remainder = models.CharField(max_length=200,blank=True)
     heading = models.CharField(max_length=200,blank=True)
