@@ -63,3 +63,22 @@ def edit_project(request,project_id):
         p = get_object_or_404(project,pk=project_id)
         form = NewProject(instance=p)
     return render(request, 'Tracker/edit_project.html', {'project': p,'form': form})
+
+def pieview(request,project_id):
+    open_tasks = 0
+    complete_tasks = 0
+    blocked_tasks = 0
+    q = task.objects.filter(project = project_id)
+    for e in q:
+        if e.state == "Open":
+            open_tasks = open_tasks + 1
+        elif e.state == "Completed":
+            complete_tasks = complete_tasks + 1
+        else:
+            blocked_tasks = blocked_tasks + 1
+    context = { 'complete_tasks': complete_tasks, 
+        'blocked_tasks': blocked_tasks, 
+        'open_tasks': open_tasks
+    }
+       
+    return render(request, 'Tracker/charts.html', context)
