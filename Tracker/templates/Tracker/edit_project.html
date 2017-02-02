@@ -28,7 +28,6 @@
 	<br>
 	<input type="submit" value="Submit" />
 </form>
-<a href="/Tracker/add_task/"><button>Add_Task</button></a>
-<a href="/Tracker/add_sprint/"><button>Add_Sprint</button></a>
-<a href=#><button>Delete Project</button></a>
+
+<form><button formaction="/Tracker/add_task">Add Task</button> <button formaction="/Tracker/add_sprint">Add Sprint</button> <button formaction="{% url 'chart' project.id %}">Analysis</button><button formaction="#">Delete Project</button></form>
 

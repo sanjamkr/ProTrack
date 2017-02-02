@@ -6,7 +6,7 @@ from .models import member,group,project,task,tag,comment,subtask,sprint
 admin.site.register(member)
 admin.site.register(group)
 class projectAdmin(admin.ModelAdmin):
-	list_display = ('id','pname','pgroup')
+	list_display = ('pname','pgroup')
 class taskAdmin(admin.ModelAdmin):
 	list_display = ('tname','project', 'due_date', 'status','priority')
 	list_filter = ('due_date','status')
