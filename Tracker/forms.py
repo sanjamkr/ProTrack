@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+from django import forms
 from .models import sprint,group,project,task
 
 class NewGroup(ModelForm):
@@ -14,8 +15,9 @@ class NewProject(ModelForm):
 class NewTask(ModelForm):
     class Meta:
         model = task
-        fields = ['project','tname','desc','due_date','risk','status','priority',
+        fields = ['project','tname','desc','risk','status','priority',
                   'state','assign','remainder','heading','dep_task','cur_sprint','tp']
+        widgets = {'due_date': forms.DateInput(attrs={'class': 'datepicker'})}
 
 class NewSprint(ModelForm):
     class Meta:

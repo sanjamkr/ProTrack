@@ -2,11 +2,31 @@
 
 <form action="{% url 'edit_task' task.id %}" method="post">
 	{% csrf_token %}
-	<table>
+	<table cellpadding="0">
 		<tr><td  hidden>{{form.project}}</td></tr>
 		<tr><th>Name : </th><td> {{ form.tname }}</td></tr>
-		<tr><th>Description :</th><td> {{ form.desc}} </td></tr>
-		<tr><th>Due_date :</th><td> {{form.due_date}}</td></tr>
+		<tr>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+        <link rel="stylesheet" href="/resources/demos/style.css" />
+        <script>
+        $(function() {
+            $( "#id_date" ).datepicker();
+        });
+        </script>
+
+        <!--<form action="/datepickerview/" method="post" padding-left= 100px>{% csrf_token %}-->
+            <!--{{ form.date }} -->
+		
+            <th>       Due Date: <input name='date' type="text" id="id_date"></td>
+		
+        <!--</form>-->
+    
+
+		</tr>
+		<!--<tr><th>Due_date :</th><td> {{form.due_date}}</td></tr>-->
 		<tr><th>Status :</th><td>  {{ form.status }}</td></tr>
 		<tr><th>State : </th><td> {{ form.state }}</td></tr>
 		<tr><th>Priority : </th><td> {{ form.priority }}</td></tr>
