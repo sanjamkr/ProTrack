@@ -25,4 +25,6 @@ def edit_task(request,task_id):
         form = NewTask(instance=t)
     return render(request, 'Tracker/edit_task.html', {'task': t,'form': form})
     
-
+def task_comment(request,task_id):
+	tname = get_object_or_404(task,pk=task_id)
+	return render(request,'Tracker/task_comment.html',{'task': tname})
