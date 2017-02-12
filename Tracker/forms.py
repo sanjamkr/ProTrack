@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import sprint,group,project,task
+from .models import sprint,group,project,task,comment
 
 class NewGroup(ModelForm):
     class Meta:
@@ -23,4 +23,10 @@ class NewSprint(ModelForm):
     class Meta:
         model = sprint
         fields = ['project','sname','start_date','end_date']
+
+
+class NewComment(ModelForm):
+    class Meta:
+        model = comment
+        fields = ['task','comment']
 

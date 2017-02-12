@@ -1,9 +1,10 @@
-<h1>hellp</h1>
-<!--h1>Comments associated with {{ task.tname }}</h1>
+<h1>Comments associated with {{ task.tname }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 {% for c in task.comment_set.all %}
-    <label>{{ c.comment }}</label><br/>
+    <label>{{ c.comment }}</label>
+    <br/>
 {% endfor %}
--->
+
+<form><button formaction="/Tracker/add_comment/">Add Comment</button>

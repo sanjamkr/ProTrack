@@ -10,13 +10,13 @@
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-        <link rel="stylesheet" href="/resources/demos/style.css" />
+        <!--<link rel="stylesheet" href="/resources/demos/style.css" />-->
         <script>
         $(function() {
             $( "#id_date" ).datepicker();
         });
         </script>
-
+		
         <!--<form action="/datepickerview/" method="post" padding-left= 100px>{% csrf_token %}-->
             <!--{{ form.date }} -->
 		
@@ -37,8 +37,8 @@
 		<tr><th>Current Sprint :</th><td> {{form.cur_sprint}}</td></tr>
 		<tr><th>Any dependent task :</th><td> {{form.dep_task}}</td></tr>
 	</table>
-	<a href="{ % url 'task_comment' task.id %}"><button>Comments</button></a>
-    <input type="submit" value="Submit" />
+	<a href="{% url 'task_comment' task.id %}"><button>Comments</button></a> 
+   	<input type="submit" value="Submit" />
     <input type="reset" >
 </form>
 
