@@ -37,8 +37,9 @@
 		<tr><th>Current Sprint :</th><td> {{form.cur_sprint}}</td></tr>
 		<tr><th>Any dependent task :</th><td> {{form.dep_task}}</td></tr>
 	</table>
-	<a href="{% url 'task_comment' task.id %}"><button>Comments</button></a> 
+	 
    	<input type="submit" value="Submit" />
     <input type="reset" >
 </form>
+<a href="{% url 'task_comment' task.id %}"><button>Comments</button></a>
 
