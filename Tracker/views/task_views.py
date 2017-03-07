@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.http import Http404,HttpResponse,HttpResponseRedirect
 
 from Tracker.models import task
-from Tracker.forms import NewTask,NewComment
+from Tracker.forms import NewTask,NewComment,NewTag
 
 def add_task(request):
     if request.method == 'POST':
@@ -38,4 +38,18 @@ def add_comment(request):
 def task_comment(request,task_id):
 	tname = get_object_or_404(task,pk=task_id)
 	return render(request,'Tracker/task_comment.html',{'task': tname})
+
+def task_tag(request,task_id):
+	tname = get_object_or_404(task,pk=task_id)
+	return render(request,'Tracker/task_tag.html',{'task': tname})
+
+def add_tag(request):
+	if request.method == 'POST':
+		form = NewTag(request.POST)
+		if form.is_valid():
+			new_tag = form.save()
+			return HttpResponseRedirect('/Tracker/homepage/')
+	else:
+		form = NewTag()
+	return render(request, 'Tracker/add_tag.html', {'form': form})
 

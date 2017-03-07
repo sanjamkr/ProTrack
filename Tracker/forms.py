@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import sprint,group,project,task,comment
+from .models import sprint,group,project,task,comment,tag
 
 class NewGroup(ModelForm):
     class Meta:
@@ -29,4 +29,9 @@ class NewComment(ModelForm):
     class Meta:
         model = comment
         fields = ['task','comment']
+      
+class NewTag(ModelForm):
+	class Meta:
+		model = tag
+		fields = ['task','tag']
 

@@ -29,5 +29,13 @@
 	<input type="submit" value="Submit" />
 </form>
 
-<form><button formaction="/Tracker/add_task">Add Task</button> <button formaction="/Tracker/add_sprint">Add Sprint</button> <button formaction="{% url 'chart' project.id %}">Analysis</button><button formaction="#">Delete Project</button></form>
+<form>
+<button formaction="/Tracker/add_task">Add Task</button> <button formaction="/Tracker/add_sprint">Add Sprint</button> 
+<button formaction="{% url 'chart' project.id %}">Analysis</button><button formaction="#">Delete Project</button>
+</form>
+<form method="POST" action="/Tracker/search_tag/">
+{% csrf_token %}
+<input type="text" name="textfield">
 
+<button type="submit">Search Tasks By Tags</button>
+</form>

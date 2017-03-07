@@ -1,0 +1,10 @@
+<h1>Tags associated with {{ task.tname }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% for c in task.tag_set.all %}
+    <label>{{ c.tag }}</label>
+    <br/>
+{% endfor %}
+
+<form><button formaction="/Tracker/add_tag/">Add tag</button>

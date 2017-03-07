@@ -1,7 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 
-from Tracker.models import group,project,task,sprint
+from Tracker.models import group,project,task,sprint,tag
 from Tracker.forms import NewGroup,NewProject
 
 #...............Login..................
@@ -63,6 +63,15 @@ def edit_project(request,project_id):
         p = get_object_or_404(project,pk=project_id)
         form = NewProject(instance=p)
     return render(request, 'Tracker/edit_project.html', {'project': p,'form': form})
+
+def search_tag(request):
+	tag_name = request.POST.get('textfield', None)
+	try:
+		user = tag.objects.get(tag = tag_name)
+		html = ("<h1>Tasks Associated With Tag</h1>", user.task)
+		return HttpResponse(html)
+	except tag.DoesNotExist:
+		return HttpResponse("There is no task associated with this tag")  
 
 
 def pieview(request,project_id):
