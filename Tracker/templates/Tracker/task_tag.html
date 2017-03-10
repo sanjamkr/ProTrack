@@ -1,21 +1,13 @@
 <html>
-		<head>
-			<title>RTI Application Form</title>
-			<meta charset="utf-8">
-			<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-			<script src="../bootstrap/js/bootstrap.min.js"></script>
-		</head>
-		<body>
-<h1>Tags associated with {{ task.tname }}</h1>
-
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-{% for c in task.tag_set.all %}
-    <label>{{ c.tag }}</label>
-    <br/>
-{% endfor %}
-
-<form><button formaction="/Tracker/add_tag/">Add tag</button>
-</form>
-</body>
+	<head>
+		<title>Task_TAG</title>
+	</head>
+	<body>
+		<h1>Tags associated with {{ task.tname }}</h1>
+		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+		{% for c in task.tag_set.all %}
+    		<label>{{ c.tag }}</label><br/>
+		{% endfor %}
+		<form><button formaction="/Tracker/add_tag/">Add tag</button></form>
+	</body>
 </html>

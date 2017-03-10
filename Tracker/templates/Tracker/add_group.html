@@ -1,22 +1,15 @@
 <html>
-		<head>
-			<title>RTI Application Form</title>
-			<meta charset="utf-8">
-			<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-			<script src="../bootstrap/js/bootstrap.min.js"></script>
-		</head>
-
-		<body>
-
-<h1>Add New Group</h1> 
-
-<form action="{% url 'add_group' %}" method="post">
-    {% csrf_token %}
-    <table>
-    	{{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit" />
-</form>
-
-</body>
+	<head>
+		<title>Add Group</title>
+	</head>
+	<body>
+		<h1>Add New Group</h1> 
+		<form action="{% url 'add_group' %}" method="post">
+			{% csrf_token %}
+			<table>
+				{{ form.as_table }}
+			</table>
+			<input type="submit" value="Submit" />
+		</form>
+	</body>
 </html>
