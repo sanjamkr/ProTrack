@@ -40,6 +40,7 @@ State_Choices = (
 
 #Tasks associated with a Project
 class task(models.Model):
+    #sprint = models.ForeignKey(sprint, on_delete=models.CASCADE,blank=True,null=true)
     project = models.ForeignKey(project, on_delete=models.CASCADE)
     tname = models.CharField(max_length=100)
     desc = models.CharField(max_length=200,blank=True)
@@ -52,7 +53,7 @@ class task(models.Model):
     remainder = models.CharField(max_length=200,blank=True)
     heading = models.CharField(max_length=200,blank=True)
     dep_task = models.CharField(max_length=100,blank=True)
-    cur_sprint = models.CharField(max_length=100,blank=True,null=True)
+    #cur_sprint = models.CharField(max_length=100,blank=True,null=True)
     tp = models.IntegerField(default=1)
 
     def __str__(self):
@@ -77,11 +78,12 @@ class subtask(models.Model):
         return self.subtask
 
 # Sprints for a Project
-class sprint(models.Model):
+class sprint(models.Model):	
     project = models.ForeignKey(project, on_delete=models.CASCADE)
+    task = models.ManyToManyField(task)
+    #tp = models.IntegerField(default=1)
     sname = models.CharField(max_length=100,verbose_name='Sprint Name')
     start_date =models.DateField('start date')
     end_date =models.DateField('end date')
-
     def __str__(self):
         return self.sname

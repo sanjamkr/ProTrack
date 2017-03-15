@@ -16,13 +16,13 @@ class NewTask(ModelForm):
     class Meta:
         model = task
         fields = ['project','tname','desc','risk','status','priority',
-                  'state','assign','remainder','heading','dep_task','cur_sprint','tp']
+                  'state','assign','remainder','heading','dep_task','tp']
         widgets = {'due_date': forms.DateInput(attrs={'class': 'datepicker'})}
 
 class NewSprint(ModelForm):
     class Meta:
         model = sprint
-        fields = ['project','sname','start_date','end_date']
+        fields = ['project','task','sname','start_date','end_date']
 
 
 class NewComment(ModelForm):
