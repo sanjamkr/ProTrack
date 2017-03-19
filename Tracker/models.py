@@ -66,10 +66,23 @@ class task(models.Model):
     heading = models.CharField(max_length=200,blank=True)
     dep_task = models.CharField(max_length=100,blank=True)
     tp = models.IntegerField(default=1)
+    comp_time = models.DateTimeField(null=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.tname
-
+    
+    def __init__(self, *args, **kwargs):
+        super(task, self).__init__(*args, **kwargs)
+        self.old_state = self.state
+    
+    def save(self, force_insert=False, force_update=False):
+        if (self.old_state == 'open' or self.old_state=='blocked') and self.state == 'completed':
+            self.comp_time = datetime.datetime.now()
+        elif self.old_state == 'completed' and (self.state == 'open'  or self.state=='blocked'):
+            self.comp_time = None
+        super(task, self).save(force_insert, force_update)
+        self.old_state = self.state
 # Task's associated tags
 class tag(models.Model):
      task = models.ForeignKey(task, on_delete=models.CASCADE)
