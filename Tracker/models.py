@@ -1,6 +1,5 @@
 from django.db import models
 import datetime
-
 #Groups
 class group(models.Model):
     gname = models.CharField(max_length=100)
@@ -87,6 +86,7 @@ class task(models.Model):
             self.comp_time = None
         super(task, self).save(force_insert, force_update)
         self.old_state = self.state
+        
 # Task's associated tags
 class tag(models.Model):
      task = models.ForeignKey(task, on_delete=models.CASCADE)
