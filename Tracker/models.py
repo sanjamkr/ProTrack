@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 #Groups
 class group(models.Model):
     gname = models.CharField(max_length=100)
