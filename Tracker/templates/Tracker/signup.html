@@ -1,16 +1,15 @@
-<html>
-	<head>
-		<title>SignUp</title>
-	</head>
-	<body>
-		<h1>SignUp</h1> 
-		<form action="{% url 'signup' %}" method="post">
-			{% csrf_token %}
-			<table>
-				{{ form.as_table }}
-			</table>
-			<input type="submit" value="Submit" />
-		</form>
-		<a href="{% url 'add_group' %}" >Add New Group</a>
-	</body>
-</html>
+{% extends "Tracker/base.html" %}
+
+{% block title %} SignUp {% endblock %}
+
+{% block content %}
+	<h1>SignUp</h1> 
+	<form action="{% url 'signup' %}" method="post">
+		{% csrf_token %}
+		<table>
+			{{ form.as_table }}
+		</table>
+		<input type="submit" value="Submit" />
+	</form>
+	<a href="{% url 'add_group' %}" >Add New Group</a>
+{% endblock %}

@@ -30,13 +30,6 @@ def signup(request):
         form = NewMember()
     return render(request, 'Tracker/signup.html', {'form': form})
 
-def homepage(request):
-    group_list = group.objects.order_by('id')[:]
-    context = {
-        'group_list': group_list,
-    }
-    return render(request,'Tracker/homepage.html',context)
-
 #............Group View.................
 
 def add_group(request):
@@ -53,6 +46,12 @@ def add_group(request):
 def edit_group(request,group_id):
     g = get_object_or_404(group,pk=group_id)
     return render(request, 'Tracker/edit_group.html', {'group': g})
+
+def delete_project(request,project_id):
+    p = get_object_or_404(project,pk=project_id)
+    g = get_object_or_404(group,pk=p.pgroup.id)
+    project.objects.filter(id=project_id).delete()
+    return HttpResponseRedirect('/Tracker/edit_group/'+str(g.id)+'/')
 
 #.........Project Views..................
 
@@ -77,8 +76,6 @@ def edit_project(request,project_id):
         form = NewProject(instance=p)
     return render(request, 'Tracker/edit_project.html', {'project': p,'form': form})
 
-#......Searching by tags................
-
 def search_tag(request):
     tag_name = request.POST.get('textfield', None)
     try:
@@ -88,8 +85,6 @@ def search_tag(request):
     except tag.DoesNotExist:
         return HttpResponse("There is no task associated with this tag")  
 
-#..............Pie Chart..................
-        
 def pieview(request,project_id):
     open_tasks = 0
     complete_tasks = 0

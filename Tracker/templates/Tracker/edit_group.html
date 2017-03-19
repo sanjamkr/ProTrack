@@ -1,8 +1,8 @@
-<html>
-	<head>
-	<title>Group View</title>
-	</head>
-	<body>
+{% extends "Tracker/base.html" %}
+
+{% block title %} Group View {% endblock %}
+
+{% block content %}
 		<h1>Dashboard</h1>
 		<h2>Group Name : {{group.gname}} </h2>
 		<h3>Group Members:</h3>	
@@ -19,5 +19,4 @@
 			{% endfor %}
 		</list>
 	    <a href="{% url 'add_project' %}">Add New Project</a>
-	</body>
-</html>
+{% endblock content %}

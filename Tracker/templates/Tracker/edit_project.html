@@ -1,9 +1,8 @@
-<html>
-	<head>
-		<title>Project</title>
-	</head>
-	<body>
-	
+{% extends "Tracker/base.html" %}
+
+{% block title %} Project Screen{% endblock %}
+
+{% block content %}
 		<h1>Project View</h1>
 		<form action="{% url 'edit_project' project.id %}" method="post">
 		    {% csrf_token %}
@@ -23,6 +22,8 @@
 			<input type="submit" value="Submit" />
 		</form>
 		
+		<a href="{% url 'delete_project' project.id %}" >Delete Project</a>
+
 		<h2>Project's Task Pool:</h2>
 		<list>
 	    	{% for task in project.task_set.all %}
@@ -39,15 +40,13 @@
     	</list>
 		<a href="/Tracker/add_sprint">Add Sprint</a> 
 		
-		<form>
-			<button formaction="{% url 'chart' project.id %}">Analysis</button>
-		</form>
-		
 		<form method="POST" action="/Tracker/search_tag/">
 			{% csrf_token %}
 			<input type="text" name="textfield">
 			<button type="submit">Search Tasks By Tags</button>
 		</form>
-	
-	</body>
-</html>
+
+		<form>
+			<button formaction="{% url 'chart' project.id %}">Analysis</button>
+		</form>	
+{% endblock %}

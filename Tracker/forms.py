@@ -25,9 +25,8 @@ class NewSprint(ModelForm):
 class NewTask(ModelForm):
     class Meta:
         model = task
-        fields = ['tsprint','tproject','tname','desc','risk','status','priority',
+        fields = ['tsprint','tproject','tname','desc','due_date','risk','status','priority',
                   'state','assign','remainder','heading','dep_task','tp']
-        widgets = {'due_date': forms.DateInput(attrs={'class': 'datepicker'})}
 
 class NewTag(ModelForm):
 	class Meta:
