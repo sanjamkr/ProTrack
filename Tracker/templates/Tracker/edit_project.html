@@ -1,9 +1,10 @@
 <html>
 	<head>
-		<title>Project Screen</title>
+		<title>Project</title>
 	</head>
 	<body>
-		<h1>Project Details </h1>
+	
+		<h1>Project View</h1>
 		<form action="{% url 'edit_project' project.id %}" method="post">
 		    {% csrf_token %}
 			<table>
@@ -18,29 +19,35 @@
 					<th>Project Description :</th>
 					<td>  {{form.pdesc}}</td>
 				</tr>
-				<tr>
-			    	<th>Tasks:</th>
-		    		{% for task in project.task_set.all %}
-		    			<td><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a></td>
-		    		{% endfor %}</tr>
-				<tr>
-					<th>Sprints:</th>
-				 	{% for sprint in project.sprint_set.all %}
-		    			<td><a href= "{% url 'edit_sprint' sprint.id %}">{{ sprint.sname }}</a></td>
-		    		{% endfor %}
-		    	</tr>
-			</table><br>
+			</table>
 			<input type="submit" value="Submit" />
 		</form>
+		
+		<h2>Project's Task Pool:</h2>
+		<list>
+	    	{% for task in project.task_set.all %}
+    			<ul><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a></ul>
+    		{% endfor %}
+		</list>
+		<a href= "/Tracker/add_task">Add Task</a>
+		
+		<h2>Project Sprints:</h2>
+		<list>
+			{% for sprint in project.sprint_set.all %}
+    			<ul><a href= "{% url 'edit_sprint' sprint.id %}">{{ sprint.sname }}</a></ul>
+    		{% endfor %}
+    	</list>
+		<a href="/Tracker/add_sprint">Add Sprint</a> 
+		
 		<form>
-			<button formaction="/Tracker/add_task">Add Task</button> <button formaction="/Tracker/add_sprint">Add Sprint</button> 
-			<button formaction="{% url 'chart' project.id %}">Analysis</button><button formaction="#">Delete Project</button>
+			<button formaction="{% url 'chart' project.id %}">Analysis</button>
 		</form>
+		
 		<form method="POST" action="/Tracker/search_tag/">
 			{% csrf_token %}
 			<input type="text" name="textfield">
-
 			<button type="submit">Search Tasks By Tags</button>
 		</form>
+	
 	</body>
 </html>

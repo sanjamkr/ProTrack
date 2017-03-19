@@ -2,9 +2,11 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.login, name='login'), #1st login screen
-    url(r'^homepage/$', views.homepage, name='homepage'), #Member page, shows list of groups
+    url(r'^$', views.login, name='login'), #Login screen
+    url(r'^authentication/$', views.login_next, name='login_next'), #Login screen Validation
+    url(r'^signup/$',views.signup,name='signup'),
     
+    url(r'^homepage/$', views.homepage, name='homepage'),
     url(r'^add_group/$',views.add_group, name='add_group'), 
     url(r'^add_project/$',views.add_project, name='add_project'),
     url(r'^add_task/$',views.add_task, name='add_task'),

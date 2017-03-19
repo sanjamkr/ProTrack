@@ -1,28 +1,23 @@
 <html>
 	<head>
-	<title>Group Screen</title>
+	<title>Group View</title>
 	</head>
 	<body>
-		<h1>Group Details</h1>
-		<form action="{% url 'edit_group' group.id %}" method="post">
-			{% csrf_token %}
-			<table>
-				<tr>
-					<th>Name :</th>
-					<td>{{form.gname}}</td>
-				</tr>
-				<tr>
-					<th>Projects :</th>
-				</tr>
-				{% for project in group.project_set.all %}
-				<tr>
-					<td><a href= "{% url 'edit_project' project.id %}">{{ project.pname }}</a></td>
-				</tr>
-				{% endfor %}
-			</table>
-	    	<input type="submit" value="Submit" />
-			<a href="/Tracker/add_project/"><button>Add New Project</button></a>
-			<a href=# name=leave_group><button>Leave Group</button></a>
-		</form>
+		<h1>Dashboard</h1>
+		<h2>Group Name : {{group.gname}} </h2>
+		<h3>Group Members:</h3>	
+		<list>
+			{% for member in group.member_set.all %}
+				<ul>{{ member.username }}</ul>
+			{% endfor %}
+		</list>
+	    
+		<h3>List of Projects for this group:</h3>	
+		<list>
+			{% for project in group.project_set.all %}
+				<ul><a href= "{% url 'edit_project' project.id %}">{{ project.pname }}</a></ul>
+			{% endfor %}
+		</list>
+	    <a href="{% url 'add_project' %}">Add New Project</a>
 	</body>
 </html>

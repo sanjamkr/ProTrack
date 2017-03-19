@@ -1,37 +1,40 @@
 from django.forms import ModelForm
 from django import forms
-from .models import sprint,group,project,task,comment,tag
+from .models import group,member,project,sprint,task,tag,comment
 
 class NewGroup(ModelForm):
     class Meta:
         model = group
         fields = ['gname']
 
+class NewMember(ModelForm):
+    class Meta:
+        model = member
+        fields = ['fname','lname','email','username','password','mgroup']
+
 class NewProject(ModelForm):
     class Meta:
         model = project
         fields = ['pgroup','pname','pdesc']
 
-class NewTask(ModelForm):
-    class Meta:
-        model = task
-        fields = ['project','tname','desc','risk','status','priority',
-                  'state','assign','remainder','heading','dep_task','tp']
-        widgets = {'due_date': forms.DateInput(attrs={'class': 'datepicker'})}
-
 class NewSprint(ModelForm):
     class Meta:
         model = sprint
-        fields = ['project','task','sname','start_date','end_date']
+        fields = ['project','sname','start_date','end_date','status']
 
-
-class NewComment(ModelForm):
+class NewTask(ModelForm):
     class Meta:
-        model = comment
-        fields = ['task','comment']
-      
+        model = task
+        fields = ['tsprint','tproject','tname','desc','risk','status','priority',
+                  'state','assign','remainder','heading','dep_task','tp']
+        widgets = {'due_date': forms.DateInput(attrs={'class': 'datepicker'})}
+
 class NewTag(ModelForm):
 	class Meta:
 		model = tag
 		fields = ['task','tag']
 
+class NewComment(ModelForm):
+    class Meta:
+        model = comment
+        fields = ['task','comment']

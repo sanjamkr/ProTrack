@@ -25,3 +25,6 @@ def edit_sprint(request,sprint_id):
         form = NewSprint(instance=sp)
     return render(request, 'Tracker/edit_sprint.html', {'sprint': sp,'form': form})
     
+def sprint_task(request,sprint_id):
+    sname = get_object_or_404(sprint,pk=sprint_id)
+    return render(request,'Tracker/sprint_task.html',{'sprint': sname})

@@ -24,7 +24,7 @@ def edit_task(request,task_id):
         t = get_object_or_404(task,pk=task_id)
         form = NewTask(instance=t)
     return render(request, 'Tracker/edit_task.html', {'task': t,'form': form})
-  
+
 def add_comment(request):
 	if request.method == 'POST':
 		form = NewComment(request.POST)
@@ -52,4 +52,3 @@ def add_tag(request):
 	else:
 		form = NewTag()
 	return render(request, 'Tracker/add_tag.html', {'form': form})
-
