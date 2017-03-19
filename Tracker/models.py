@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 #Groups
 class group(models.Model):
@@ -24,7 +25,9 @@ class project(models.Model):
     pgroup = models.ForeignKey(group, on_delete=models.CASCADE)
     pname = models.CharField(max_length=100)
     pdesc = models.CharField(max_length=100,blank=True)
-
+    pcreated = models.DateTimeField(auto_now_add=True)
+    pdeadline = models.DateTimeField('Dead Line')
+    
     def __str__(self):
         return self.pname
 #........................................
@@ -46,6 +49,7 @@ class sprint(models.Model):
     start_date =models.DateField('start date')
     end_date =models.DateField('end date')
     status = models.CharField(max_length=10,verbose_name='Sprint Status',default='Green')
+
     
     def __str__(self):
         return self.sname

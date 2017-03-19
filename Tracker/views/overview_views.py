@@ -1,6 +1,7 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse,Http404,HttpResponseRedirect
-
+from datetime import datetime, timezone, timedelta 
+from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
 from Tracker.models import group,member,project,sprint,task,tag
 from Tracker.forms import NewGroup,NewMember,NewProject
 
@@ -89,19 +90,55 @@ def pieview(request,project_id):
     open_tasks = 0
     complete_tasks = 0
     blocked_tasks = 0
+    open_tp = 0
+    complete_tp = 0
+    blocked_tp = 0
+    p = get_object_or_404(project,pk=project_id)
     q = task.objects.filter(tproject = project_id)
+    now = datetime.now(timezone.utc)
+    days = (p.pdeadline - p.pcreated).days
+    months = [dt for dt in rrule(MONTHLY, dtstart=p.pcreated, until=p.pdeadline)]
+    dates = [dt for dt in rrule(DAILY, dtstart=p.pcreated, until=p.pdeadline)]
+    years = months = [dt for dt in rrule(YEARLY, dtstart=p.pcreated, until=p.pdeadline)]
+
     for e in q:
         if e.state == 'open':
             open_tasks = open_tasks + 1
+            open_tp = open_tp + e.tp
         elif e.state == 'completed':
             complete_tasks = complete_tasks + 1
+            complete_tp = complete_tp + e.tp
         elif e.state == 'blocked':
             blocked_tasks = blocked_tasks + 1
+            blocked_tp = blocked_tp + e.tp
+    total_tasks = open_tasks + complete_tasks + blocked_tasks
+    total_tp = open_tp + complete_tp + blocked_tp
+    realdata = []
+    for i in range(days+1):
+        x = sum(e.tp for e in q if e.created > (p.pcreated + timedelta(days=i)))
+        y = sum(e.tp for e in q if (e.comp_time!=None) and (e.comp_time > (p.pcreated + timedelta(days=i))))
+        realdata.append(x-y)
+        categories = [str(dt.day) + ' ' + dt.strftime("%b") for dt in dates]
+        diff = int(round(total_tp/(days+1)))
+        idealdata = [total_tp - (i*diff) for i in range(days+1)]
+    
+    '''elif days >= 365:
+        categories = [dt.strftime("%b") + " '" + dt.strftime("%y") for dt in months]
+    elif days > 730:
+        categories = [str(dt.year) for dt in years]'''
+        
     context = { 'complete_tasks': complete_tasks, 
         'blocked_tasks': blocked_tasks, 
-        'open_tasks': open_tasks
+        'open_tasks': open_tasks,
+        'days' : days,
+        'months': months,
+        'dates' : dates,
+        'categories' : categories,
+        'idealdata' : idealdata,
+        'realdata': realdata
     }
-    if complete_tasks>0 or blocked_tasks>0 or open_tasks>0:
+    if total_tasks>0:
         return render(request, 'Tracker/charts.html', context)
     else:
         return render(request, 'Tracker/nochart.html', context)
+

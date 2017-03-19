@@ -15,7 +15,7 @@ class NewMember(ModelForm):
 class NewProject(ModelForm):
     class Meta:
         model = project
-        fields = ['pgroup','pname','pdesc']
+        fields = ['pgroup','pname','pdesc','pdeadline']
 
 class NewSprint(ModelForm):
     class Meta:
