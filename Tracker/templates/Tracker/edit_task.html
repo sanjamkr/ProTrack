@@ -57,7 +57,7 @@
 		{% for c in task.comment_set.all %}
 			<label>{{ c.comment }}</label><br>
 		{% endfor %}
-		<a href="{% url 'add_comment' %}">Add Comment</a>
+		<a href="{% url 'add_comment' task.id %}">Add Comment</a>
 
 	<!-- TAGS FOR THIS TASK-->
 		<h2>Tags associated with {{ task.tname }}</h2>
@@ -67,5 +67,5 @@
 		{% for c in task.tag_set.all %}
     		<label>{{ c.tag }}</label>
 		{% endfor %}
-		<a href="{% url 'add_tag' %}">Add Another Tag</a>
+		<a href="{% url 'add_tag' task.id %}">Add Another Tag</a>
 {% endblock %}

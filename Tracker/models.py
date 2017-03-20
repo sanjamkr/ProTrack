@@ -2,29 +2,29 @@ from django.db import models
 import datetime
 #Groups
 class group(models.Model):
-    gname = models.CharField(max_length=100)
+    gname = models.CharField(max_length=100,verbose_name = "Group Name")
 
     def __str__(self):
         return self.gname
 
 #Registration and Login
 class member(models.Model):
-    fname = models.CharField(max_length=100)
-    lname = models.CharField(max_length=100)
-    email = models.CharField(max_length=254)
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=50)
-    mgroup = models.ForeignKey(group, on_delete=models.CASCADE)
+    fname = models.CharField(max_length=100,verbose_name = "First Name")
+    lname = models.CharField(max_length=100,verbose_name = "Last Name")
+    email = models.CharField(max_length=254,verbose_name = "Email")
+    username = models.CharField(max_length=100,verbose_name = "UserName")
+    password = models.CharField(max_length=50,verbose_name = "Password")
+    mgroup = models.ForeignKey(group, on_delete=models.CASCADE,verbose_name = "Group")
     
     def __str__(self):
         return self.username
 
 #Projects associated with a Group
 class project(models.Model):                                                                 
-    pgroup = models.ForeignKey(group, on_delete=models.CASCADE)
-    pname = models.CharField(max_length=100)
-    pdesc = models.CharField(max_length=100,blank=True)
-    pcreated = models.DateTimeField(auto_now_add=True)
+    pgroup = models.ForeignKey(group, on_delete=models.CASCADE,verbose_name = "Group")
+    pname = models.CharField(max_length=100,verbose_name = "Project Name")
+    pdesc = models.CharField(max_length=100,blank=True,verbose_name = "Project Description")
+    pcreated = models.DateTimeField(auto_now_add=True,verbose_name = "Create time")
     pdeadline = models.DateTimeField('Dead Line')
     
     def __str__(self):
@@ -42,12 +42,12 @@ State_Choices = (
 )
 
 # Sprints for a Project
-class sprint(models.Model):	
+class sprint(models.Model): 
     project = models.ForeignKey(project, on_delete=models.CASCADE)
     sname = models.CharField(max_length=100,verbose_name='Sprint Name')
     start_date =models.DateField('start date')
     end_date =models.DateField('end date')
-    status = models.CharField(max_length=10,verbose_name='Sprint Status',default='Green')
+    status = models.CharField(max_length=10,default='Green',choices=Status_Choices)
 
     
     def __str__(self):
@@ -55,8 +55,8 @@ class sprint(models.Model):
 
 #Tasks associated with a Project
 class task(models.Model):
-    tsprint = models.ForeignKey(sprint, on_delete=models.CASCADE,blank=True,null=True)
     tproject = models.ForeignKey(project, on_delete=models.CASCADE)
+    tsprint = models.ForeignKey(sprint, on_delete=models.CASCADE,blank=True,null=True)
     tname = models.CharField(max_length=100)
     desc = models.CharField(max_length=200,blank=True)
     due_date = models.DateField('due date')
@@ -65,7 +65,6 @@ class task(models.Model):
     priority = models.CharField(max_length=50,choices=Priority_Choices)
     state = models.CharField(max_length=50, default='open',choices=State_Choices)
     assign =  models.ForeignKey(member, blank=True, null=True)
-#    models.CharField(max_length=100)
     remainder = models.CharField(max_length=200,blank=True)
     heading = models.CharField(max_length=200,blank=True)
     dep_task = models.CharField(max_length=100,blank=True)

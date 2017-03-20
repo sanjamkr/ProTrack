@@ -34,7 +34,7 @@
     			<ul><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a></ul>
     		{% endfor %}
 		</list>
-		<a href= "/Tracker/add_task">Add Task</a>
+		<a href="{% url 'add_task' project.id %}" >Add Task</a>
 		
 		<h2>Project Sprints:</h2>
 		<list>
@@ -42,7 +42,7 @@
     			<ul><a href= "{% url 'edit_sprint' sprint.id %}">{{ sprint.sname }}</a></ul>
     		{% endfor %}
     	</list>
-		<a href="/Tracker/add_sprint">Add Sprint</a> 
+		<a href= "{% url 'add_sprint' project.id %}" >Add Sprint</a> 
 		
 		<form method="POST" action="/Tracker/search_tag/">
 			{% csrf_token %}

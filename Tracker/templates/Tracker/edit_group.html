@@ -18,5 +18,5 @@
 				<ul><a href= "{% url 'edit_project' project.id %}">{{ project.pname }}</a></ul>
 			{% endfor %}
 		</list>
-	    <a href="{% url 'add_project' %}">Add New Project</a>
+	    <a href="{% url 'add_project' group.id %}">Add New Project</a>
 {% endblock content %}

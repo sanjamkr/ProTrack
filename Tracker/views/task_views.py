@@ -4,15 +4,16 @@ from django.http import Http404,HttpResponse,HttpResponseRedirect
 from Tracker.models import task,project
 from Tracker.forms import NewTask,NewComment,NewTag
 
-def add_task(request):
+def add_task(request,project_id):
     if request.method == 'POST':
         form = NewTask(request.POST)
         if form.is_valid():
             new_task = form.save()
             return HttpResponseRedirect('/Tracker/edit_project/'+str(new_task.tproject.id)+'/')
     else:
-        form = NewTask()
-    return render(request, 'Tracker/add_task.html', {'form': form})
+        p = get_object_or_404(project,pk=project_id)
+        form = NewTask(initial={'tproject': p })
+    return render(request, 'Tracker/add_task.html', {'form': form,'project_id':project_id})
 
 def edit_task(request,task_id):
     if request.method == 'POST':
@@ -31,22 +32,24 @@ def delete_task(request,task_id):
     task.objects.filter(id=task_id).delete()
     return HttpResponseRedirect('/Tracker/edit_project/'+str(p.id)+'/')
 
-def add_comment(request):
+def add_comment(request,task_id):
     if request.method == 'POST':
         form = NewComment(request.POST)
         if form.is_valid():
             new_comment = form.save()
             return HttpResponseRedirect('/Tracker/edit_task/'+str(new_comment.task.id)+'/')
     else:
-        form = NewComment()
-    return render(request, 'Tracker/add_comment.html',{'form':form})
+        t = get_object_or_404(task,pk=task_id)
+        form = NewComment(initial={'task': t })
+    return render(request, 'Tracker/add_comment.html',{'form':form,'task_id':task_id})
 
-def add_tag(request):
+def add_tag(request,task_id):
     if request.method == 'POST':
         form = NewTag(request.POST)
         if form.is_valid():
             new_tag = form.save()
             return HttpResponseRedirect('/Tracker/edit_task/'+str(new_tag.task.id)+'/')
     else:
-        form = NewTag()
-    return render(request, 'Tracker/add_tag.html', {'form': form})
+        t = get_object_or_404(task,pk=task_id)
+        form = NewTag(initial={'task': t })
+    return render(request, 'Tracker/add_tag.html', {'form': form,'task_id':task_id})

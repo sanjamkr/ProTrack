@@ -27,7 +27,16 @@ class NewTask(ModelForm):
         model = task
         fields = ['tsprint','tproject','tname','desc','due_date','risk','status','priority',
                   'state','assign','remainder','heading','dep_task','tp']
-
+'''
+        def __init__(self, *args, **kwargs):
+            super(NewTask, self).__init__(*args, **kwargs)
+            #if self.instance:
+            self.fields['tsprint'].queryset = sprint.objects.filter(project__id=request.tproject.id)
+'''
+'''    def __init__(self, *args, **kwargs):
+        super (NewTask,self ).__init__(project,*args,**kwargs)
+        self.fields['tsprint'].queryset = sprint.objects.filter(project=task.tproject)
+'''
 class NewTag(ModelForm):
 	class Meta:
 		model = tag

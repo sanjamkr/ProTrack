@@ -5,10 +5,29 @@
 
 {% block content %}
 	<h1>New Sprint</h1> 
-	<form action="{% url 'add_sprint' %}" method="post">
+	<form action="{% url 'add_sprint' project_id %}" method="post">
 		{% csrf_token %}
 		<table>
-			{{ form.as_table }}
+			<tr>
+				<td  hidden>{{form.project}}</td>
+			</tr>
+			<tr>
+				<th>Sprint Name : </th>
+				<td>{{form.sname}}</td>
+			</tr>
+			<tr>
+				<th>Start Date: </th>
+				<td> {{ form.start_date }}</td>
+			</tr>
+			<tr>
+				<th>End Date: </th>
+				<td> {{ form.end_date }}</td>
+			</tr>
+			<tr>
+				<th> Status: </th>
+				<td> {{ form.status }}</td>
+			</tr>
+			
 		</table>
 		<input type="submit" value="Submit" />
 	</form>

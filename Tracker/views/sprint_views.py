@@ -4,15 +4,16 @@ from django.http import Http404,HttpResponse,HttpResponseRedirect
 from Tracker.models import sprint,project
 from Tracker.forms import NewSprint
 
-def add_sprint(request):
+def add_sprint(request,project_id):
     if request.method == 'POST':
         form = NewSprint(request.POST)
         if form.is_valid():
             new_sprint = form.save()
             return HttpResponseRedirect('/Tracker/edit_project/'+str(new_sprint.project.id)+'/')
     else:
-        form = NewSprint()
-    return render(request, 'Tracker/add_sprint.html', {'form': form})
+        p = get_object_or_404(project,pk=project_id)
+        form = NewSprint(initial={'project':p})
+    return render(request, 'Tracker/add_sprint.html', {'form': form,'project_id':project_id})
 
 def edit_sprint(request,sprint_id):
     if request.method == 'POST':

@@ -56,15 +56,16 @@ def delete_project(request,project_id):
 
 #.........Project Views..................
 
-def add_project(request):
+def add_project(request,group_id):
     if request.method == 'POST':
         form = NewProject(request.POST)
         if form.is_valid():
             new_project = form.save()
             return HttpResponseRedirect('/Tracker/edit_project/'+str(new_project.id)+'/')
     else:
-        form = NewProject()
-    return render(request, 'Tracker/add_project.html', {'form': form})
+        g = get_object_or_404(group,pk=group_id)
+        form = NewProject(initial={'pgroup': g})
+    return render(request, 'Tracker/add_project.html', {'form': form,'group_id':group_id})
 
 def edit_project(request,project_id):
     if request.method == 'POST':
