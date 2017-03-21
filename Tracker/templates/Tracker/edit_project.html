@@ -29,11 +29,26 @@
 		<a href="{% url 'delete_project' project.id %}" >Delete Project</a>
 
 		<h2>Project's Task Pool:</h2>
-		<list>
+		<table>
+		<tr>
+			<th>Name</th>
+			<th>Due_date :</th>
+			<th>Status :</th>
+			<th>State : </th>
+			<th>Assignee :</th>
+			<th>Task Points :</th>
+		</tr>
 	    	{% for task in project.task_set.all %}
-    			<ul><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a></ul>
+    			<tr>
+	    			<td><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a></td>
+	    			<td> {{task.due_date}}</td> 
+					<td>  {{ task.status }}</td>
+					<td> {{ task.state }}</td>
+					<td> {{task.assign }}</td>
+					<td> {{task.tp}}</td>
+				</tr>
     		{% endfor %}
-		</list>
+		</table>
 		<a href="{% url 'add_task' project.id %}" >Add Task</a>
 		
 		<h2>Project Sprints:</h2>
