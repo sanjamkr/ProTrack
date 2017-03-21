@@ -11,7 +11,7 @@ class group(models.Model):
 class member(models.Model):
     fname = models.CharField(max_length=100,verbose_name = "First Name")
     lname = models.CharField(max_length=100,verbose_name = "Last Name")
-    email = models.CharField(max_length=254,verbose_name = "Email")
+    email = models.EmailField(max_length=254,verbose_name = "Email")
     username = models.CharField(max_length=100,verbose_name = "UserName")
     password = models.CharField(max_length=50,verbose_name = "Password")
     mgroup = models.ForeignKey(group, on_delete=models.CASCADE,verbose_name = "Group")
@@ -49,7 +49,6 @@ class sprint(models.Model):
     end_date =models.DateField('end date')
     status = models.CharField(max_length=10,default='Green',choices=Status_Choices)
 
-    
     def __str__(self):
         return self.sname
 

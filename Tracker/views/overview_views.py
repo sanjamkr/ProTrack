@@ -17,7 +17,7 @@ def login_next(request):
     pwd = request.POST.get('pwd', None)
     try:
         user = member.objects.get(username = name,password = pwd)
-        return edit_group(request,user.mgroup.id)
+        return edit_group(request,user.mgroup.id,user.id)
     except member.DoesNotExist:
         return HttpResponseRedirect('/Tracker/')
     
@@ -43,10 +43,10 @@ def add_group(request):
         form = NewGroup()
     return render(request, 'Tracker/add_group.html', {'form': form})
 
-
-def edit_group(request,group_id):
+def edit_group(request,group_id,member_id):
     g = get_object_or_404(group,pk=group_id)
-    return render(request, 'Tracker/edit_group.html', {'group': g})
+    m = get_object_or_404(member,pk=member_id)
+    return render(request, 'Tracker/edit_group.html', {'group': g,'member':m})
 
 def delete_project(request,project_id):
     p = get_object_or_404(project,pk=project_id)

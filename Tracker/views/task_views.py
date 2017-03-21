@@ -13,7 +13,7 @@ def add_task(request,project_id):
     else:
         p = get_object_or_404(project,pk=project_id)
         form = NewTask(initial={'tproject': p })
-    return render(request, 'Tracker/add_task.html', {'form': form,'project_id':project_id})
+    return render(request, 'Tracker/add_task.html', {'form': form,'project':p})
 
 def edit_task(request,task_id):
     if request.method == 'POST':

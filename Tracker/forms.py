@@ -8,10 +8,11 @@ class NewGroup(ModelForm):
         fields = ['gname']
 
 class NewMember(ModelForm):
+    password=forms.CharField(widget=forms.PasswordInput)
     class Meta:
         model = member
         fields = ['fname','lname','email','username','password','mgroup']
-
+        
 class NewProject(ModelForm):
     class Meta:
         model = project

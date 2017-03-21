@@ -3,20 +3,30 @@
 {% block title %} Login {% endblock %}
 
 {% block content %}
+	<script>
+		function fpassoverlay(){
+				alert("Please Contact Admin");
+			}
+	</script>
 	<h1>Login</h1>
 	<form action="{% url 'login_next' %}" method="post">
 		{% csrf_token %}
 		<table>
 			<tr>
 				<td>UserName</td>
+			</tr>
+			<tr>
 				<td><input type=text name=name></td>
 			</tr>
 			<tr>
 				<td>Password</td>
+			</tr>
+			<tr>
 				<td><input type=password name=pwd></td>
 			</tr>
 		</table>
 		<input type=submit value=Login />
 	</form>
 	<a href="{% url 'signup' %}" >Register</a>
+	<a href="" onclick="fpassoverlay()" >Forgot Password</a>
 {% endblock %}

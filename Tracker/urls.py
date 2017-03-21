@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^add_group/$',views.add_group, name='add_group'), 
     #Group
     url(r'^homepage/$', views.login_next, name='login_next'),
-    url(r'^edit_group/(?P<group_id>[0-9]+)/$',views.edit_group, name='edit_group'),
+    url(r'^edit_group/(?P<group_id>[0-9]+)/(?P<member_id>[0-9]+)/$',views.edit_group, name='edit_group'),
     url(r'^add_project/(?P<group_id>[0-9]+)/$',views.add_project, name='add_project'),
     #Project
     url(r'^edit_project/(?P<project_id>[0-9]+)/$',views.edit_project, name='edit_project'),

@@ -19,4 +19,11 @@
 			{% endfor %}
 		</list>
 	    <a href="{% url 'add_project' group.id %}">Add New Project</a>
+	    <h3>Your Tasks</h3>
+	    <list>
+			{% for m in member.task_set.all %}
+				<ul>{{ m.tname }}</ul>
+			{% endfor %}
+		</list>
+	<a href="/Tracker/">Logout</a>
 {% endblock content %}

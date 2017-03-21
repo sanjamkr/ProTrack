@@ -53,4 +53,5 @@
     		{% endfor %}
     	</list>
     	<a href="{% url 'delete_sprint' sprint.id %}" >Delete Sprint</a>
+    	<br><a href="{% url 'edit_project' sprint.project.id %}" >Back</a>
 {% endblock %}

@@ -3,11 +3,53 @@
 {% block title %} SignUp {% endblock %}
 
 {% block content %}
+<script>
+	function confirm(){
+		var x=document.getElementById("id_password").value;
+		var y=document.getElementById("cpwd").value;
+		if(x != y){
+			document.getElementById('Error').style.display = "block";
+			return false
+		}
+		else{
+			document.getElementById('Error').style.display = "none";
+			return true
+		}
+	}
+</script>
 	<h1>SignUp</h1> 
-	<form action="{% url 'signup' %}" method="post">
+	<form action="{% url 'signup' %}" method="post" onsubmit="return confirm()">
 		{% csrf_token %}
 		<table>
-			{{ form.as_table }}
+			<tr>
+				<td>First Name</td>
+				<td>{{ form.fname }}</td>
+			</tr>
+			<tr>
+				<td>Last Name</td>
+				<td>{{ form.lname }}</td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td>{{ form.email }}</td>
+			</tr>
+			<tr>
+				<td>UserName</td>
+				<td>{{ form.username }}</td>
+			</tr>
+			<tr>
+				<td>Password</td>
+				<td><input id="id_password" name="password" required="" type="password"></td>
+			</tr>
+			<tr>
+				<td>Confirm Password</td>
+				<td><input onblur="confirm()" type=password name=pwd id=cpwd /></td>
+				<td id="Error" style="display: none;">Password Does Not Match</td>
+			</tr>
+			<tr>
+				<td>Group</td>
+				<td>{{ form.mgroup }}</td>
+			</tr> 
 		</table>
 		<input type="submit" value="Submit" />
 	</form>

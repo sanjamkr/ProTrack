@@ -68,4 +68,5 @@
     		<label>{{ c.tag }}</label>
 		{% endfor %}
 		<a href="{% url 'add_tag' task.id %}">Add Another Tag</a>
+		<br><a href="{% url 'edit_project' task.tproject.id %}" >Back</a>
 {% endblock %}
