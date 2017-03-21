@@ -1,6 +1,7 @@
 {% extends "Tracker/base.html" %}
 
 {% block title %} Task Screen{% endblock %}
+{% load my_tags %}
 
 {% block content %}
 		<h1>Task View</h1> 
@@ -54,9 +55,11 @@
 		{% if error_message %}
 			<p>{{ error_message }}</p>
 		{% endif %}
-		{% for c in task.comment_set.all %}
-			<label>{{ c.comment }}</label><br>
+        
+		{% for c in task.comment_set.all|dictsort:"ccreated"%}
+			<p><strong>{{ c.comment }}</strong> &nbsp {{ c.ccreated|timesince|upto:','}} ago</p>
 		{% endfor %}
+        
 		<a href="{% url 'add_comment' task.id %}">Add Comment</a>
 
 	<!-- TAGS FOR THIS TASK-->

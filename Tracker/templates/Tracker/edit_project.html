@@ -29,19 +29,19 @@
 		<a href="{% url 'delete_project' project.id %}" >Delete Project</a>
 
 		<h2>Project's Task Pool:</h2>
-		<table>
+		<table class = "taskpool">
 		<tr>
 			<th>Name</th>
-			<th>Due_date :</th>
-			<th>Status :</th>
-			<th>State : </th>
-			<th>Assignee :</th>
-			<th>Task Points :</th>
+			<th>Due Date</th>
+			<th>Status</th>
+			<th>State</th>
+			<th>Assignee</th>
+			<th>Task Points</th>
 		</tr>
-	    	{% for task in project.task_set.all %}
+	    	{% for task in project.task_set.all|dictsort:"created" %}
     			<tr>
 	    			<td><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a></td>
-	    			<td> {{task.due_date}}</td> 
+	    			<td> {{task.due_date|date:"j M 'y"}}</td> 
 					<td>  {{ task.status }}</td>
 					<td> {{ task.state }}</td>
 					<td> {{task.assign }}</td>

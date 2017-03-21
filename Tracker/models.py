@@ -95,3 +95,4 @@ class tag(models.Model):
 class comment(models.Model):
      task = models.ForeignKey(task, on_delete=models.CASCADE)
      comment = models.CharField(max_length=500)
+     ccreated = models.DateTimeField(auto_now_add=True)

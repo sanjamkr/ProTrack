@@ -180,12 +180,12 @@ optgroup {
   font-weight: bold;
 }
 table {
-  border-spacing: 0;
+  border-spacing: 10px;
   border-collapse: collapse;
 }
 td,
 th {
-  padding: 0;
+  padding:0px;
 }
 /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 @media print {
