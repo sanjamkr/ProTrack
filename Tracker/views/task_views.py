@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import Http404,HttpResponse,HttpResponseRedirect
-
+from datetime import datetime, timezone, timedelta 
 from Tracker.models import task,project
 from Tracker.forms import NewTask,NewComment,NewTag
 
@@ -21,10 +21,13 @@ def edit_task(request,task_id):
         form = NewTask(request.POST,instance=t)
         if form.is_valid():
             form.save()
+
     else:
         t = get_object_or_404(task,pk=task_id)
         form = NewTask(instance=t)
-    return render(request, 'Tracker/edit_task.html', {'task': t,'form': form})
+        today = datetime.today()
+        days = (t.due_date - datetime.date(today)).days
+    return render(request, 'Tracker/edit_task.html', {'task': t,'form': form, 'days': days})
 
 def delete_task(request,task_id):
     t = get_object_or_404(task,pk=task_id)
