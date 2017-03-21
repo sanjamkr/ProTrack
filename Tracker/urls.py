@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^add_tag/(?P<task_id>[0-9]+)/$',views.add_tag, name='add_tag'),
     #Sprint
     url(r'^edit_sprint/(?P<sprint_id>[0-9]+)/$',views.edit_sprint, name='edit_sprint'),
+    url(r'^spchart/(?P<sprint_id>[0-9]+)/$',views.sprintchart, name='sprintchart'),
     url(r'^delete_sprint/(?P<sprint_id>[0-9]+)/$',views.delete_sprint, name='delete_sprint'),
     ]
 

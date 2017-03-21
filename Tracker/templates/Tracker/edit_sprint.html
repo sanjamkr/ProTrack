@@ -47,11 +47,15 @@
     		{% endfor %}
     	</table>
 		<h2>Add task to this sprint</h2>
-		<list>
+		<ul>
 			{% for task in sprint.project.task_set.all %}
     			<ul><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a></ul>
     		{% endfor %}
-    	</list>
+    	</ul>
+        <form>
+			<button formaction="{% url 'sprintchart' sprint.id %}">Analysis</button>
+		</form>
     	<a href="{% url 'delete_sprint' sprint.id %}" >Delete Sprint</a>
+        
     	<br><a href="{% url 'edit_project' sprint.project.id %}" >Back</a>
 {% endblock %}

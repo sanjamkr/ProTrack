@@ -45,8 +45,8 @@ State_Choices = (
 class sprint(models.Model): 
     project = models.ForeignKey(project, on_delete=models.CASCADE)
     sname = models.CharField(max_length=100,verbose_name='Sprint Name')
-    start_date =models.DateField('start date')
-    end_date =models.DateField('end date')
+    start_date = models.DateField('start date')
+    end_date = models.DateField('end date')
     status = models.CharField(max_length=10,default='Green',choices=Status_Choices)
 
     def __str__(self):
