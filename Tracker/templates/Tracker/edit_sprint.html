@@ -6,7 +6,7 @@
 		<h1>Sprint View</h1>
 		<form action="{% url 'edit_sprint' sprint.id %}" method="post">
 		    {% csrf_token %}
-			<table>
+			<table onload="stat();">
 				<tr style="display:none">
 					<td> {{form.project}}</td>
 				</tr>
@@ -24,7 +24,7 @@
 				</tr>
 				<tr>
 					<th>Status : </th>
-					<td> {{sprint.status}}</td>
+					<td id = "td1" > {{sprint.status}}</td>
 				</tr>
 			</table>
 		    <input type="submit" value="Submit" />
@@ -37,6 +37,7 @@
 				<th>Task Assignee</th>
 				<th>Task Points</th>
 			</tr>
+			
 			{% for task in sprint.task_set.all %}
     			<tr>
     			<td><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a></td>
@@ -44,18 +45,46 @@
     			<td>{{ task.assign }}</td>
     			<td>{{ task.tp }}</td>
     			</tr>
+				
+			<script type="text/javascript">
+			var newvalues= function findStatus()
+			{
+				var i = 0;
+				var j = 0;
+				var statusflag = 0;
+				i = i + task.getElementById("tp");
+				if(task.getElementById("state") == 'Completed')
+					j += task.getElementById("tp");
+				return [i, j]
+			}
+			</script>
+			
     		{% endfor %}
+			<script type="text/javascript">
+			var values = newvalues();
+			var x = values[0];
+			var y = values[1];
+			var prop = y/x;
+			var status = '';
+			function stat()
+			{
+				if(prop >= 0.7)
+					status = 'Green';
+				else if(prop >= 0.4)
+					status ='Yellow';
+				else
+					status ='Red'	;
+					document.getElementById('td1')= status;
+			}
+			</script>
+			
     	</table>
 		<h2>Add task to this sprint</h2>
-		<ul>
+		<list>
 			{% for task in sprint.project.task_set.all %}
     			<ul><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a></ul>
     		{% endfor %}
-    	</ul>
-        <form>
-			<button formaction="{% url 'sprintchart' sprint.id %}">Analysis</button>
-		</form>
+    	</list>
     	<a href="{% url 'delete_sprint' sprint.id %}" >Delete Sprint</a>
-        
     	<br><a href="{% url 'edit_project' sprint.project.id %}" >Back</a>
 {% endblock %}
