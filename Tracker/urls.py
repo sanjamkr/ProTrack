@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'^add_sprint/(?P<project_id>[0-9]+)/$',views.add_sprint, name='add_sprint'),
     url(r'^search_tag/$',views.search_tag, name='search_tag'),
     url(r'^chart/(?P<project_id>[0-9]+)/$',views.pieview, name='chart'),
+    url(r'^calendar/(?P<project_id>[0-9]+)/$',views.calendar, name='calendar'),
     #Task
     url(r'^edit_task/(?P<task_id>[0-9]+)/$',views.edit_task, name='edit_task'),
     url(r'^delete_task/(?P<task_id>[0-9]+)/$',views.delete_task, name='delete_task'),

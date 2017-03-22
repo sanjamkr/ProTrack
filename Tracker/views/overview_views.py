@@ -1,9 +1,17 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse,Http404,HttpResponseRedirect
-from datetime import datetime, timezone, timedelta 
+#from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta
+from django.utils import timezone 
 from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
 from Tracker.models import group,member,project,sprint,task,tag
 from Tracker.forms import NewGroup,NewMember,NewProject
+from django.shortcuts import render_to_response
+from django.utils.safestring import mark_safe
+from calendar import HTMLCalendar
+from datetime import date
+from itertools import groupby
+from django.utils.html import conditional_escape as esc
 
 #...............Login..................
 
@@ -143,3 +151,54 @@ def pieview(request,project_id):
     else:
         return render(request, 'Tracker/nochart.html', context)
 
+
+class Calendar(HTMLCalendar):
+
+    def __init__(self, my_tasks):
+        super(Calendar, self).__init__()
+        self.my_tasks = self.group_by_day(my_tasks)
+
+    def formatday(self, day, weekday):
+        if day != 0:
+            cssclass = self.cssclasses[weekday]
+            if date.today() == date(self.year, self.month, day):
+                cssclass += ' today'
+            if day in self.my_tasks:
+                cssclass += ' filled'
+                body = ['<ul class="sample">']
+                for workout in self.my_tasks[day]:
+                    body.append('<li>')
+                    #body.append('<a href="%s">' % workout.get_absolute_url())
+                    #body.append('<a href="Tracker/calendar1/">')
+                    body.append(esc(workout.tname))
+                    body.append('</a></li>')
+                    #body.append('</li>')
+                body.append('</ul>')
+                return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)))
+            return self.day_cell(cssclass, day)
+        return self.day_cell('noday', '&nbsp;')
+	
+    def formatmonth(self, year, month):
+        self.year, self.month = year, month
+        return super(Calendar, self).formatmonth(year, month)
+
+    def group_by_day(self,my_tasks):
+        field = lambda workout: workout.due_date.day
+        return dict(
+            [(day, list(items)) for day, items in groupby(my_tasks, field)]
+        )
+
+    def day_cell(self, cssclass, body):
+        return '<td class="%s">%s</td>' % (cssclass, body)
+
+
+def calendar(request,project_id):
+	q = task.objects.filter(tproject = project_id)
+	t=q.earliest('due_date')
+	year=t.due_date.year
+	month=t.due_date.month
+	my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
+	cal = Calendar(my_tasks).formatmonth(year, month)
+	#return render_to_response('Tracker/calendar.html', {'calendar':(cal),})
+	return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),})
+	                   
