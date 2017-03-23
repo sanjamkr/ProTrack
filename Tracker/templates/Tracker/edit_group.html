@@ -17,10 +17,10 @@
 		<h3>Group Projects:</h3>	
 		<ul>
 			{% for project in group.project_set.all %}
-				<li><a href= "{% url 'edit_project' project.id %}">{{ project.pname }}</a></li>
+				<li><a href= "{% url 'edit_project' project.id member.id %}">{{ project.pname }}</a></li>
 			{% endfor %}
 		</ul>
-	    <a href="{% url 'add_project' group.id %}">Add New Project</a>
+	    <a href="{% url 'add_project' group.id  member.id %}">Add New Project</a>
         
         
         
@@ -37,7 +37,7 @@
 		</tr>
 	    	{% for t in all_tasks %}
     			<tr>
-	    			<td><a href= "{% url 'edit_task' t.id %}">{{ t.tname }}</a></td>
+	    			<td><a href= "{% url 'edit_task' t.id member.id %}">{{ t.tname }}</a></td>
                     <td>{{t.tproject}}</td>
 	    			<td> {{t.due_date|date:"j M 'y"}}</td> 
 					<td> {{ t.get_state_display  }}</td>
@@ -57,7 +57,7 @@
                         {% if task %}
                         <ul>
                           {% for t in task %}
-                            <li><a href= "{% url 'edit_task' t.id %}">{{ t.tname }}</a>  Project: {{t.tproject}}</li>
+                            <li><a href= "{% url 'edit_task' t.id member.id%}">{{ t.tname }}</a>  Project: {{t.tproject}}</li>
                             
                           {% endfor %}
                         </ul>

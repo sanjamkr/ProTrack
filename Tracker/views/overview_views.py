@@ -15,7 +15,6 @@ from django.utils.html import conditional_escape as esc
 from django.db.models import Q
 
 
-
 #...............Login..................
 
 def login(request):
@@ -65,26 +64,21 @@ def edit_group(request,group_id,member_id):
     t_count = task.objects.filter(is_member & (is_blocked | is_open)).count()
     return render(request, 'Tracker/edit_group.html', {'group': g,'member':m, 'task':t, 'all_tasks':all_tasks, 't_count':t_count})
 
-def delete_project(request,project_id):
-    p = get_object_or_404(project,pk=project_id)
-    g = get_object_or_404(group,pk=p.pgroup.id)
-    project.objects.filter(id=project_id).delete()
-    return HttpResponseRedirect('/Tracker/edit_group/'+str(g.id)+'/')
-
 #.........Project Views..................
 
-def add_project(request,group_id):
+def add_project(request,group_id,member_id):
     if request.method == 'POST':
         form = NewProject(request.POST)
         if form.is_valid():
             new_project = form.save()
-            return HttpResponseRedirect('/Tracker/edit_project/'+str(new_project.id)+'/')
+            return HttpResponseRedirect('/Tracker/edit_project/'+str(new_project.id)+'/'+member_id+'/')
     else:
         g = get_object_or_404(group,pk=group_id)
+        m = get_object_or_404(member,pk=member_id)
         form = NewProject(initial={'pgroup': g})
-    return render(request, 'Tracker/add_project.html', {'form': form,'group_id':group_id})
+    return render(request, 'Tracker/add_project.html', {'form': form,'group_id':group_id, 'member':m})
 
-def edit_project(request,project_id):
+def edit_project(request,project_id,member_id):
     if request.method == 'POST':
         p = get_object_or_404(project,pk=project_id)
         form = NewProject(request.POST,instance=p)
@@ -93,6 +87,7 @@ def edit_project(request,project_id):
     else:
         p = get_object_or_404(project,pk=project_id)
         form = NewProject(instance=p)
+    m = get_object_or_404(member,pk=member_id)
     completed_tp = 0
     total_tp = 0
     t = task.objects.filter(tproject = project_id)
@@ -114,9 +109,16 @@ def edit_project(request,project_id):
     context ={
         'project': p,
         'form': form,
-        'ps': ps
+        'ps': ps,
+        'member':m
       }
     return render(request, 'Tracker/edit_project.html', context)
+
+def delete_project(request,project_id,member_id):
+    p = get_object_or_404(project,pk=project_id)
+    g = get_object_or_404(group,pk=p.pgroup.id)
+    project.objects.filter(id=project_id).delete()
+    return HttpResponseRedirect('/Tracker/edit_group/'+str(g.id)+'/'+member_id+'/')
 
 def search_tag(request):
     tag_name = request.POST.get('textfield', None)

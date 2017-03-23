@@ -5,7 +5,7 @@
 
 {% block content %}
 	<h1>New Task</h1> 
-	<form action="{% url 'add_task' project.id %}" method="post">
+	<form action="{% url 'add_task' project.id member.id %}" method="post">
 		{% csrf_token %}
 		<table>
 	    		<tr>

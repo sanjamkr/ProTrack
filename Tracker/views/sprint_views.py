@@ -4,21 +4,22 @@ from django.http import Http404,HttpResponse,HttpResponseRedirect
 from datetime import datetime, timedelta
 from django.utils import timezone 
 from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
-from Tracker.models import sprint,project,task
+from Tracker.models import sprint,project,task,member
 from Tracker.forms import NewSprint
 
-def add_sprint(request,project_id):
+def add_sprint(request,project_id,member_id):
     if request.method == 'POST':
         form = NewSprint(request.POST)
         if form.is_valid():
             new_sprint = form.save()
-            return HttpResponseRedirect('/Tracker/edit_project/'+str(new_sprint.project.id)+'/')
+            return HttpResponseRedirect('/Tracker/edit_project/'+str(new_sprint.project.id)+'/'+member_id+'/')
     else:
         p = get_object_or_404(project,pk=project_id)
+        m = get_object_or_404(member,pk=member_id)
         form = NewSprint(initial={'project':p})
-    return render(request, 'Tracker/add_sprint.html', {'form': form,'project_id':project_id})
+    return render(request, 'Tracker/add_sprint.html', {'form': form,'project_id':project_id,'member':m})
 
-def edit_sprint(request,sprint_id):
+def edit_sprint(request,sprint_id,member_id):
     if request.method == 'POST':
         sp = get_object_or_404(sprint,pk=sprint_id)
         form = NewSprint(request.POST,instance=sp)
@@ -27,6 +28,7 @@ def edit_sprint(request,sprint_id):
     else:
         sp = get_object_or_404(sprint,pk=sprint_id)
         form = NewSprint(instance=sp)
+    m = get_object_or_404(member,pk=member_id)
     completed_tp = 0
     total_tp = 0
     t = task.objects.filter(tsprint = sprint_id)
@@ -35,28 +37,32 @@ def edit_sprint(request,sprint_id):
             completed_tp = completed_tp + tk.tp
         total_tp = total_tp + tk.tp
     today = datetime.today()
-    pdays = (datetime.date(today) - sp.start_date).days
     tdays = (sp.end_date - sp.start_date).days
-    ideal_tp = total_tp/tdays*pdays
-    real_tp = completed_tp
-    if ideal_tp <= real_tp:
-        st = 'Green'
-    elif ideal_tp <= real_tp+ideal_tp*0.3 :
-        st = 'Yellow'
+    if tdays>0:
+        pdays = (datetime.date(today) - sp.start_date).days
+        ideal_tp = total_tp/tdays*pdays
+        real_tp = completed_tp
+        if ideal_tp <= real_tp:
+            st = 'Green'
+        elif ideal_tp <= real_tp+ideal_tp*0.3 :
+            st = 'Yellow'
+        else:
+            st = 'Red'
     else:
-        st = 'Red'
+        st ="Sprint has already ended" 
     context ={
         'sprint': sp,
         'form': form,
-        'st': st
+        'st': st,
+        'member':m
       }
     return render(request, 'Tracker/edit_sprint.html', context)
 
-def delete_sprint(request,sprint_id):
+def delete_sprint(request,sprint_id,member_id):
     s = get_object_or_404(sprint,pk=sprint_id)
     p = get_object_or_404(project,pk=s.project.id)
     sprint.objects.filter(id=sprint_id).delete()
-    return HttpResponseRedirect('/Tracker/edit_project/'+str(p.id)+'/')
+    return HttpResponseRedirect('/Tracker/edit_project/'+str(p.id)+'/'+member_id+'/')
 
 def sprintchart(request,sprint_id):
     open_tasks = 0
