@@ -93,7 +93,30 @@ def edit_project(request,project_id):
     else:
         p = get_object_or_404(project,pk=project_id)
         form = NewProject(instance=p)
-    return render(request, 'Tracker/edit_project.html', {'project': p,'form': form})
+    completed_tp = 0
+    total_tp = 0
+    t = task.objects.filter(tproject = project_id)
+    for tk in t:
+        if tk.state == 'completed':
+            completed_tp = completed_tp + tk.tp
+        total_tp = total_tp + tk.tp
+    today = datetime.today()
+    tdays = (p.pdeadline - p.pcreated).days
+    pdays = (datetime.date(today) - datetime.date(p.pcreated)).days
+    ideal_tp = total_tp/tdays*pdays
+    real_tp = completed_tp
+    if ideal_tp <= real_tp:
+        ps = 'Green'
+    elif ideal_tp <= real_tp+ideal_tp*0.3 :
+        ps = 'Yellow'
+    else:
+        ps = 'Red'
+    context ={
+        'project': p,
+        'form': form,
+        'ps': ps
+      }
+    return render(request, 'Tracker/edit_project.html', context)
 
 def search_tag(request):
     tag_name = request.POST.get('textfield', None)

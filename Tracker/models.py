@@ -31,9 +31,6 @@ class project(models.Model):
         return self.pname
 #........................................
 
-Status_Choices = (
-    ('red','Red'),('yellow','Yellow'),('green','Green'),
-)
 Priority_Choices = (
     ('high','High'),('medium','Medium'),('low','Low'),
 )
@@ -47,8 +44,7 @@ class sprint(models.Model):
     sname = models.CharField(max_length=100,verbose_name='Sprint Name')
     start_date = models.DateField('start date')
     end_date = models.DateField('end date')
-    status = models.CharField(max_length=10,default='Green',choices=Status_Choices)
-
+  
     def __str__(self):
         return self.sname
 
@@ -60,7 +56,6 @@ class task(models.Model):
     desc = models.CharField(max_length=200,blank=True)
     due_date = models.DateField('due date')
     risk = models.CharField(max_length=200,blank=True)
-    status = models.CharField(max_length=50,default='yellow',choices=Status_Choices)
     priority = models.CharField(max_length=50,choices=Priority_Choices)
     state = models.CharField(max_length=50, default='open',choices=State_Choices)
     assign =  models.ForeignKey(member, blank=True, null=True)
@@ -94,5 +89,6 @@ class tag(models.Model):
 # Task's associated comments
 class comment(models.Model):
      task = models.ForeignKey(task, on_delete=models.CASCADE)
+     member = models.ForeignKey(member)
      comment = models.CharField(max_length=500)
      ccreated = models.DateTimeField(auto_now_add=True)

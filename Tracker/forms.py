@@ -26,24 +26,15 @@ class NewSprint(ModelForm):
     end_date = forms.DateField(widget=SelectDateWidget)
     class Meta:
         model = sprint
-        fields = ['project','sname','start_date','end_date','status']
+        fields = ['project','sname','start_date','end_date']
 
 class NewTask(ModelForm):
     due_date = forms.DateField(widget=SelectDateWidget)
     class Meta:
         model = task
-        fields = ['tsprint','tproject','tname','desc','due_date','risk','status','priority',
+        fields = ['tsprint','tproject','tname','desc','due_date','risk','priority',
                   'state','assign','remainder','heading','dep_task','tp']
-'''
-        def __init__(self, *args, **kwargs):
-            super(NewTask, self).__init__(*args, **kwargs)
-            #if self.instance:
-            self.fields['tsprint'].queryset = sprint.objects.filter(project__id=request.tproject.id)
-'''
-'''    def __init__(self, *args, **kwargs):
-        super (NewTask,self ).__init__(project,*args,**kwargs)
-        self.fields['tsprint'].queryset = sprint.objects.filter(project=task.tproject)
-'''
+
 class NewTag(ModelForm):
 	class Meta:
 		model = tag
@@ -52,4 +43,4 @@ class NewTag(ModelForm):
 class NewComment(ModelForm):
     class Meta:
         model = comment
-        fields = ['task','comment']
+        fields = ['task','member','comment']

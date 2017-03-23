@@ -6,7 +6,7 @@ admin.site.register(group)
 admin.site.register(member)
 
 class projectAdmin(admin.ModelAdmin):
-	list_display = ('pname','pgroup')
+	list_display = ('id','pname','pgroup')
 admin.site.register(project,projectAdmin)
 
 class sprintAdmin(admin.ModelAdmin):
@@ -14,8 +14,7 @@ class sprintAdmin(admin.ModelAdmin):
 admin.site.register(sprint,sprintAdmin)
 
 class taskAdmin(admin.ModelAdmin):
-	list_display = ('tname','tproject', 'due_date', 'status','priority')
-	list_filter = ('due_date','status')
+	list_display = ('id','tname','tproject', 'due_date','priority')
 admin.site.register(task,taskAdmin)
 
 admin.site.register(tag)

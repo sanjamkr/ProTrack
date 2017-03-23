@@ -39,7 +39,6 @@
                     {% endif %}
                     </td>
 				<tr><th>Risk :</th><td>  {{ form.risk }}</td></tr>
-				<tr><th>Status :</th><td>  {{ form.status }}</td></tr>
 				<tr><th>Priority : </th><td> {{ form.priority }}</td></tr>
 				<tr><th>State : </th><td> {{ form.state }}</td></tr>
 				<tr><th>Assignee :</th><td> {{form.assign }}</td></tr>
@@ -59,7 +58,7 @@
 		{% endif %}
         
 		{% for c in task.comment_set.all|dictsort:"ccreated"%}
-			<p><strong>{{ c.comment }}</strong> &nbsp {{ c.ccreated|timesince|upto:','}} ago</p>
+			<p><strong>{{ c.comment }}</strong> &nbsp {{ c.ccreated|timesince|upto:','}} ago &nbsp Posted By: {{c.member}}</p>
 		{% endfor %}
         
 		<a href="{% url 'add_comment' task.id %}">Add Comment</a>
