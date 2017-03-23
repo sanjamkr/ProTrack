@@ -19,6 +19,8 @@ urlpatterns = [
     url(r'^chart/(?P<project_id>[0-9]+)/$',views.pieview, name='chart'),
     url(r'^calendar/(?P<project_id>[0-9]+)/$',views.calendar, name='calendar'),
     #Task
+    url(r'^tsr/(?P<task_id>[0-9]+)/(?P<member_id>[0-9]+)/(?P<sprint_id>[0-9]+)/$',views.tsr, name='tsr'),
+    url(r'^ts/(?P<task_id>[0-9]+)/(?P<member_id>[0-9]+)/(?P<sprint_id>[0-9]+)/$',views.ts, name='ts'),
     url(r'^edit_task/(?P<task_id>[0-9]+)/(?P<member_id>[0-9]+)/$',views.edit_task, name='edit_task'),
     url(r'^delete_task/(?P<task_id>[0-9]+)/(?P<member_id>[0-9]+)/$',views.delete_task, name='delete_task'),
     url(r'^add_comment/(?P<task_id>[0-9]+)/(?P<member_id>[0-9]+)/$',views.add_comment, name='add_comment'),

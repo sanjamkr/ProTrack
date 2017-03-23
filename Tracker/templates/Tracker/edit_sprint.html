@@ -50,8 +50,8 @@
 		<h2>Add task to this sprint</h2>
 		<ul>
 			{% for task in sprint.project.task_set.all %}
-    			<li><a href= "{% url 'edit_task' task.id member.id %}">{{ task.tname }}</a></li>
-    		{% endfor %}
+    			<li><a href= "{% url 'edit_task' task.id member.id %}">{{ task.tname }}</a> &nbsp <a href= "{% url 'ts' task.id member.id sprint.id %}">Add</a>&nbsp <a href= "{% url 'tsr' task.id member.id sprint.id %}">Remove</a></li>
+			{% endfor %}
     	</ul>
 	        <form>
 			<button formaction="{% url 'sprintchart' sprint.id %}">Analysis</button>
