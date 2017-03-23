@@ -18,7 +18,9 @@ urlpatterns = [
     url(r'^search_tag/$',views.search_tag, name='search_tag'),
     url(r'^chart/(?P<project_id>[0-9]+)/$',views.pieview, name='chart'),
     url(r'^calendar/(?P<project_id>[0-9]+)/$',views.calendar, name='calendar'),
-    #Task
+    url(r'^calendar1/(?P<project_id>[0-9]+)/(?P<year>[0-9]+)/(?P<month>[0-9]+)/$',views.calendar1, name='calendar1'),
+    url(r'^calendar2/(?P<project_id>[0-9]+)/(?P<year>[0-9]+)/(?P<month>[0-9]+)/$',views.calendar2, name='calendar2'),
+#Task
     url(r'^tsr/(?P<task_id>[0-9]+)/(?P<member_id>[0-9]+)/(?P<sprint_id>[0-9]+)/$',views.tsr, name='tsr'),
     url(r'^ts/(?P<task_id>[0-9]+)/(?P<member_id>[0-9]+)/(?P<sprint_id>[0-9]+)/$',views.ts, name='ts'),
     url(r'^edit_task/(?P<task_id>[0-9]+)/(?P<member_id>[0-9]+)/$',views.edit_task, name='edit_task'),
