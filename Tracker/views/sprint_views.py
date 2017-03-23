@@ -27,7 +27,30 @@ def edit_sprint(request,sprint_id):
     else:
         sp = get_object_or_404(sprint,pk=sprint_id)
         form = NewSprint(instance=sp)
-    return render(request, 'Tracker/edit_sprint.html', {'sprint': sp,'form': form})
+    completed_tp = 0
+    total_tp = 0
+    t = task.objects.filter(tsprint = sprint_id)
+    for tk in t:
+        if tk.state == 'completed':
+            completed_tp = completed_tp + tk.tp
+        total_tp = total_tp + tk.tp
+    today = datetime.today()
+    pdays = (datetime.date(today) - sp.start_date).days
+    tdays = (sp.end_date - sp.start_date).days
+    ideal_tp = total_tp/tdays*pdays
+    real_tp = completed_tp
+    if ideal_tp <= real_tp:
+        st = 'Green'
+    elif ideal_tp <= real_tp+ideal_tp*0.3 :
+        st = 'Yellow'
+    else:
+        st = 'Red'
+    context ={
+        'sprint': sp,
+        'form': form,
+        'st': st
+      }
+    return render(request, 'Tracker/edit_sprint.html', context)
 
 def delete_sprint(request,sprint_id):
     s = get_object_or_404(sprint,pk=sprint_id)
