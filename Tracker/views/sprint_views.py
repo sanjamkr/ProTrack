@@ -65,7 +65,7 @@ def sprintchart(request,sprint_id):
     realdata = []
     for i in range(days+1):
         x = sum(e.tp for e in q if datetime.date(e.created) > (p.start_date + timedelta(days=i)))
-        y = sum(e.tp for e in q if (e.comp_time!=None) and (e.comp_time > (p.start_date) + timedelta(days=i)))
+        y = sum(e.tp for e in q if ((e.comp_time!=None) and (datetime.date(e.comp_time) > (p.start_date) + timedelta(days=i))))
         realdata.append(x-y)
         categories = [str(dt.day) + ' ' + dt.strftime("%b") for dt in dates]
         diff = int(round(total_tp/(days+1)))

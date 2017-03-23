@@ -43,7 +43,7 @@
 	    			<td><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a></td>
 	    			<td> {{task.due_date|date:"j M 'y"}}</td> 
 					<td>  {{ task.status }}</td>
-					<td> {{ task.state }}</td>
+					<td> {{ task.get_state_display }}</td>
 					<td> {{task.assign }}</td>
 					<td> {{task.tp}}</td>
 				</tr>
@@ -52,11 +52,11 @@
 		<a href="{% url 'add_task' project.id %}" >Add Task</a>
 		
 		<h2>Project Sprints:</h2>
-		<list>
+		<ul>
 			{% for sprint in project.sprint_set.all %}
-    			<ul><a href= "{% url 'edit_sprint' sprint.id %}">{{ sprint.sname }}</a></ul>
+    			<li><a href= "{% url 'edit_sprint' sprint.id %}">{{ sprint.sname }}</a></li>
     		{% endfor %}
-    	</list>
+    	</ul>
 		<a href= "{% url 'add_sprint' project.id %}" >Add Sprint</a> 
 		
 		<form method="POST" action="/Tracker/search_tag/">

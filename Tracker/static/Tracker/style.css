@@ -3,9 +3,26 @@ body {
    	height:100vh;
     background: #f2f0f1;
 }
+.taskpool {
+    width: 80%;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+}
 td {
     padding-top: 5px;
 }
 .taskpool td, .taskpool th {
     padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
 }
+.pending {
+    background-color: #fdfdfd;
+}
+.taskpool th {
+    background-color: #223c4c;
+    color: #fff;
+
+}
+.taskpool tr:nth-child(even) {background-color: #fff}
+

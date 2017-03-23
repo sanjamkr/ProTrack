@@ -1,6 +1,8 @@
 from django.forms import ModelForm
 from django import forms
 from .models import group,member,project,sprint,task,tag,comment
+from django.forms.extras.widgets import SelectDateWidget
+import datetime
 
 class NewGroup(ModelForm):
     class Meta:
@@ -14,16 +16,20 @@ class NewMember(ModelForm):
         fields = ['fname','lname','email','username','password','mgroup']
         
 class NewProject(ModelForm):
+    pdeadline = forms.DateField(widget=SelectDateWidget)
     class Meta:
         model = project
         fields = ['pgroup','pname','pdesc','pdeadline']
 
 class NewSprint(ModelForm):
+    start_date = forms.DateField(widget=SelectDateWidget)
+    end_date = forms.DateField(widget=SelectDateWidget)
     class Meta:
         model = sprint
         fields = ['project','sname','start_date','end_date','status']
 
 class NewTask(ModelForm):
+    due_date = forms.DateField(widget=SelectDateWidget)
     class Meta:
         model = task
         fields = ['tsprint','tproject','tname','desc','due_date','risk','status','priority',

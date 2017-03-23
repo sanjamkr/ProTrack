@@ -27,8 +27,8 @@ def edit_task(request,task_id):
     else:
         t = get_object_or_404(task,pk=task_id)
         form = NewTask(instance=t)
-        today = datetime.today()
-        days = (t.due_date - datetime.date(today)).days
+    today = datetime.today()
+    days = (t.due_date - datetime.date(today)).days
     return render(request, 'Tracker/edit_task.html', {'task': t,'form': form, 'days': days})
 
 def delete_task(request,task_id):

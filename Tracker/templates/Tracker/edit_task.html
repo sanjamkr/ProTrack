@@ -11,9 +11,10 @@
 			<table>
 				<tr>
 					<td  hidden>{{form.tproject}}</td>
-				</tr>
+
 				<tr>
-					<td  hidden>{{form.tsprint}}</td>
+                    <th>Sprint : </th>
+					<td>{{form.tsprint}}</td>
 				</tr>
 				<tr>
 					<th>Name : </th>
@@ -26,28 +27,17 @@
 					<td> {{ form.desc }}</td>
 				</tr>
                 
-			<!--	<tr>
-			        <meta charset="utf-8" />
-			        <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-			        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-			        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-			        <script>
-			        $(function() {
-			            $( "#id_date" ).datepicker();
-			        });
-			        </script>
-					<th> Due Date: </th>
-					<td><input name='date' type="text" id="id_date"></td>
-			    </tr>-->
-				<tr><th>Due_date :</th><td> {{form.due_date}}</td></tr>
+                
+				<tr><th>Due date :</th><td> {{form.due_date}}</td></tr>
 				<tr>
                 <th></th>
-					<td>{{days}} Day 
-                    {% if days > 1 %}
-                        s
-                     {% endif %}
-                    left</td>
-                
+					<td>{% if days >= 0 %}
+                    {{days}} Day{% if days > 1 %}s{% endif %}
+                    left
+                    {% else %}
+                    Task is Overdue
+                    {% endif %}
+                    </td>
 				<tr><th>Risk :</th><td>  {{ form.risk }}</td></tr>
 				<tr><th>Status :</th><td>  {{ form.status }}</td></tr>
 				<tr><th>Priority : </th><td> {{ form.priority }}</td></tr>

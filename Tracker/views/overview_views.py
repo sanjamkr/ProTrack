@@ -12,6 +12,9 @@ from calendar import HTMLCalendar
 from datetime import date
 from itertools import groupby
 from django.utils.html import conditional_escape as esc
+from django.db.models import Q
+
+
 
 #...............Login..................
 
@@ -54,7 +57,13 @@ def add_group(request):
 def edit_group(request,group_id,member_id):
     g = get_object_or_404(group,pk=group_id)
     m = get_object_or_404(member,pk=member_id)
-    return render(request, 'Tracker/edit_group.html', {'group': g,'member':m})
+    is_member = Q(assign = member_id)
+    is_open = Q(state = "open")
+    is_blocked = Q(state = "blocked")
+    all_tasks = task.objects.filter(is_member)
+    t = task.objects.filter(is_member & (is_blocked | is_open))
+    t_count = task.objects.filter(is_member & (is_blocked | is_open)).count()
+    return render(request, 'Tracker/edit_group.html', {'group': g,'member':m, 'task':t, 'all_tasks':all_tasks, 't_count':t_count})
 
 def delete_project(request,project_id):
     p = get_object_or_404(project,pk=project_id)
