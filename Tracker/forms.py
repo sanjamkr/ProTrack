@@ -20,6 +20,15 @@ class NewProject(ModelForm):
     class Meta:
         model = project
         fields = ['pgroup','pname','pdesc','pdeadline']
+        
+        '''def __init__(self, *args, **kwargs):
+            super(NewProject, self).__init__(*args, **kwargs)
+            self.__old_pdeadline = self.pdeadline
+            
+        def clean(self):
+            " Make sure expiry time cannot be in the past "
+            if (self.__old_pdeadline != self.pdeadline) and self.pdeadline < timezone.now():
+                raise ValidationError('Deadline cannot be a date in the past')'''
 
 class NewSprint(ModelForm):
     start_date = forms.DateField(widget=SelectDateWidget)
@@ -27,6 +36,12 @@ class NewSprint(ModelForm):
     class Meta:
         model = sprint
         fields = ['project','sname','start_date','end_date']
+    def clean(self):
+        cleaned_data = super(NewSprint, self).clean()
+        start_date = cleaned_data.get("start_date")
+        end_date = cleaned_data.get("end_date")
+        if  end_date < start_date:
+            raise forms.ValidationError("Sprint cannot end before starting")
 
 class NewTask(ModelForm):
     due_date = forms.DateField(widget=SelectDateWidget)

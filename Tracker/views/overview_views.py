@@ -136,14 +136,16 @@ def pieview(request,project_id):
     open_tp = 0
     complete_tp = 0
     blocked_tp = 0
+    errorchart = 0
     p = get_object_or_404(project,pk=project_id)
     q = task.objects.filter(tproject = project_id)
-    now = datetime.now(timezone.utc)
-    days = (p.pdeadline - p.pcreated).days
-    months = [dt for dt in rrule(MONTHLY, dtstart=p.pcreated, until=p.pdeadline)]
-    dates = [dt for dt in rrule(DAILY, dtstart=p.pcreated, until=p.pdeadline)]
-    years = months = [dt for dt in rrule(YEARLY, dtstart=p.pcreated, until=p.pdeadline)]
-
+    days = 0
+    months = []
+    dates = []
+    years = []
+    categories = []
+    idealdata = []
+    
     for e in q:
         if e.state == 'open':
             open_tasks = open_tasks + 1
@@ -154,16 +156,32 @@ def pieview(request,project_id):
         elif e.state == 'blocked':
             blocked_tasks = blocked_tasks + 1
             blocked_tp = blocked_tp + e.tp
+            
     total_tasks = open_tasks + complete_tasks + blocked_tasks
     total_tp = open_tp + complete_tp + blocked_tp
     realdata = []
-    for i in range(days+1):
-        x = sum(e.tp for e in q if e.created > (p.pcreated + timedelta(days=i)))
-        y = sum(e.tp for e in q if (e.comp_time!=None) and (e.comp_time > (p.pcreated + timedelta(days=i))))
-        realdata.append(x-y)
-        categories = [str(dt.day) + ' ' + dt.strftime("%b") for dt in dates]
-        diff = int(round(total_tp/(days+1)))
-        idealdata = [total_tp - (i*diff) for i in range(days+1)]
+
+    now = datetime.now(timezone.utc)
+    days = (p.pdeadline - p.pcreated).days
+    if (total_tasks > 0):
+        if (p.pcreated<=p.pdeadline):
+            months = [dt for dt in rrule(MONTHLY, dtstart=p.pcreated, until=p.pdeadline)]
+            dates = [dt for dt in rrule(DAILY, dtstart=p.pcreated, until=p.pdeadline)]
+            years = months = [dt for dt in rrule(YEARLY, dtstart=p.pcreated, until=p.pdeadline)]
+            errorchart = 0
+        else:
+
+            errorchart = 1
+
+        for i in range(days+1):
+            x = sum(e.tp for e in q if datetime.date(e.created) <= (datetime.date(p.pcreated) + timedelta(days=i)))
+            y = sum(e.tp for e in q if (e.comp_time!=None) and (datetime.date(e.comp_time) <= (datetime.date(p.pcreated) + timedelta(days=i))))
+            realdata.append(x-y)
+            categories = [str(dt.day) + ' ' + dt.strftime("%b") for dt in dates]
+            diff = int(round(total_tp/(days+1)))
+            idealdata = [total_tp - (i*diff) for i in range(days+1)]
+
+        
     
     '''elif days >= 365:
         categories = [dt.strftime("%b") + " '" + dt.strftime("%y") for dt in months]
@@ -178,7 +196,8 @@ def pieview(request,project_id):
         'dates' : dates,
         'categories' : categories,
         'idealdata' : idealdata,
-        'realdata': realdata
+        'realdata': realdata,
+        'errorchart': errorchart
     }
     if total_tasks>0:
         return render(request, 'Tracker/charts.html', context)

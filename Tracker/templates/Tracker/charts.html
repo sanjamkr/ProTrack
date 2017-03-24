@@ -65,6 +65,7 @@ $(function () {
     });
 });
 /*Burndown Chart*/
+{% if errorchart == 0%}
 $(function () {
   $('#Burndown').highcharts({
     title: {
@@ -122,6 +123,7 @@ $(function () {
     }]
   });
 });
+{% endif %}
 </script>
 </body>
 </html>
