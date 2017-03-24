@@ -33,8 +33,9 @@
     <body>
         {{ calendar }}
         <form>
-        <button formaction="{% url 'calendar1' project_id year month %}">Previous month</button>
-        <button formaction="{% url 'calendar2' project_id year month %}">Next month</button>
+        <button formaction="{% url 'calendar1' project_id member_id year month %}">Previous month</button>
+        <button formaction="{% url 'calendar2' project_id member_id year month %}">Next month</button>
+        <br><a href="{% url 'edit_project' project_id member_id %}" >Back</a>
     	</form>
     </body>
 </html>
