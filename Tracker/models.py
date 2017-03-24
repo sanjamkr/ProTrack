@@ -1,5 +1,12 @@
 from django.db import models
 import datetime
+
+#ImageUpload
+class ProfileImage(models.Model):
+    image = models.FileField(upload_to='profile/%Y/%m/%d')
+    def __str__(self):
+        return self.image
+	
 #Groups
 class group(models.Model):
     gname = models.CharField(max_length=100,verbose_name = "Group Name")

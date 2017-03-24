@@ -2,6 +2,10 @@ from django.forms import ModelForm
 from django import forms
 from .models import group,member,project,sprint,task,tag,comment
 
+
+class ProfileImageForm(forms.Form):
+    image = forms.FileField(label='Select an Image')
+
 class NewGroup(ModelForm):
     class Meta:
         model = group

@@ -1,9 +1,13 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse,Http404,HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from datetime import datetime, timezone, timedelta 
-from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
+#from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
 from Tracker.models import group,member,project,sprint,task,tag
 from Tracker.forms import NewGroup,NewMember,NewProject
+from django.views.generic import FormView, DetailView, ListView
+from Tracker.forms import ProfileImageForm
+from Tracker.models import ProfileImage
 
 #...............Login..................
 
@@ -55,6 +59,35 @@ def delete_project(request,project_id):
     return HttpResponseRedirect('/Tracker/edit_group/'+str(g.id)+'/')
 
 #.........Project Views..................
+
+
+class ProfileImageView(FormView):
+    template_name = 'Tracker/profile_image_form.html'
+    form_class = ProfileImageForm
+
+    def form_valid(self, form):
+        profile_image = ProfileImage(
+            image=self.get_form_kwargs().get('files')['image'])
+        profile_image.save()
+        self.id = profile_image.id
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse('profile_image', kwargs={'pk': self.id})
+
+class ProfileDetailView(DetailView):
+    model = ProfileImage
+    template_name = 'Tracker/profile_image_view.html'
+    context_object_name = 'image'
+
+
+class ProfileImageIndexView(ListView):
+    model = ProfileImage
+    template_name = 'Tracker/profile_image_view.html'
+    context_object_name = 'images'
+    queryset = ProfileImage.objects.all()
+
 
 def add_project(request,group_id):
     if request.method == 'POST':

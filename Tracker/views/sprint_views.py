@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.http import Http404,HttpResponse,HttpResponseRedirect
 from datetime import datetime, timezone, timedelta 
-from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
+#from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
 from Tracker.models import sprint,project,task
 from Tracker.forms import NewSprint
 
