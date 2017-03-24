@@ -246,14 +246,17 @@ class Calendar(HTMLCalendar):
 
 
 def calendar(request,project_id):
-    q = task.objects.filter(tproject = project_id)
-    t = q.latest('due_date')
-    year=t.due_date.year
-    month=t.due_date.month
-    my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
-    cal = Calendar(my_tasks).formatmonth(year,month)
-    #return render_to_response('Tracker/calendar.html', {'calendar':(cal),})
-    return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'year':year,'month':month})
+	try:
+		q = task.objects.filter(tproject = project_id)
+		t =	q.latest('due_date')
+		year=t.due_date.year
+		month=t.due_date.month
+		my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
+		cal = Calendar(my_tasks).formatmonth(year,month)
+		#return render_to_response('Tracker/calendar.html', {'calendar':(cal),})
+		return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'year':year,'month':month})
+	except task.DoesNotExist:
+		return HttpResponse("There is no task associated with this project")  
                        
 def calendar1(request,project_id,year,month):
 	year=int(year)
