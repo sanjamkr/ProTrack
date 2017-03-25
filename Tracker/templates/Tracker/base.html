@@ -21,7 +21,7 @@
       <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-list-alt"></span> Projects<b class="caret"></b></a>
                 <ul role="menu" class="dropdown-menu">
-                    {% for project in group.project_set.all %}
+                    {% for project in user.groups.all.0.project_set.all %}
                 
 				<li><a href= "{% url 'edit_project' project.id%}">{{ project.pname }}</a></li>
 			{% endfor %}
