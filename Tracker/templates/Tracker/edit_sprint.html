@@ -7,7 +7,7 @@
         {% if form.errors %}
             <div class="text-danger">Error: End Date cannot be before Start Date</div>
         {% endif %}
-		<form action="{% url 'edit_sprint' sprint.id member.id %}" method="post">
+		<form action="{% url 'edit_sprint' sprint.id  %}" method="post">
 		    {% csrf_token %}
 			<table>
 				<tr>
@@ -51,7 +51,7 @@
 			
 			{% for task in sprint.task_set.all %}
     			<tr>
-    			<td><a href= "{% url 'edit_task' task.id member.id %}">{{ task.tname }}</a></td>
+    			<td><a href= "{% url 'edit_task' task.id  %}">{{ task.tname }}</a></td>
     			<td>{{ task.get_state_display }}</td>
     			<td>{{ task.assign.fname }}</td>
     			<td>{{ task.tp }}</td>
@@ -61,12 +61,12 @@
 		<h2>Add task to this sprint</h2>
 		<ul>
 			{% for task in sprint.project.task_set.all %}
-    			<li><a href= "{% url 'edit_task' task.id member.id %}">{{ task.tname }}</a> &nbsp <a href= "{% url 'ts' task.id member.id sprint.id %}">Add</a>&nbsp <a href= "{% url 'tsr' task.id member.id sprint.id %}">Remove</a></li>
+    			<li><a href= "{% url 'edit_task' task.id  %}">{{ task.tname }}</a> &nbsp <a href= "{% url 'ts' task.id  sprint.id %}">Add</a>&nbsp <a href= "{% url 'tsr' task.id  sprint.id %}">Remove</a></li>
 			{% endfor %}
     	</ul>
 	        <form>
 			<button formaction="{% url 'sprintchart' sprint.id %}">Analysis</button>
 		</form>
-    	<a href="{% url 'delete_sprint' sprint.id member.id %}" >Delete Sprint</a>
-    	<br><a href="{% url 'edit_project' sprint.project.id member.id %}" >Back</a>
+    	<a href="{% url 'delete_sprint' sprint.id  %}" >Delete Sprint</a>
+    	<br><a href="{% url 'edit_project' sprint.project.id  %}" >Back</a>
 {% endblock %}

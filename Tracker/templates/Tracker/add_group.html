@@ -1,15 +1,12 @@
-
 {% extends "Tracker/base.html" %}
 
-{% block title %} Add Group {% endblock %}
+{% block title %} Add GRoup {% endblock %}
 
 {% block content %}
-	<h1>New Group</h1> 
-	<form action="{% url 'add_group' %}" method="post">
+<form action="{% url 'add_group' %}" method="post">
 		{% csrf_token %}
-		<table>
-			{{ form.as_table }}
-		</table>
-		<input type="submit" value="Submit" />
-	</form>
+			<label>Group Name</label>
+			<input type=text name="group" />
+			<input type="submit" value="Submit" />
+</form>
 {% endblock %}

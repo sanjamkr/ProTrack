@@ -1,34 +1,14 @@
 from django.forms import ModelForm
 from django import forms
-from .models import group,member,project,sprint,task,tag,comment
+from .models import project,sprint,task,tag,comment
 from django.forms.extras.widgets import SelectDateWidget
 import datetime
 
-class NewGroup(ModelForm):
-    class Meta:
-        model = group
-        fields = ['gname']
-
-class NewMember(ModelForm):
-    password=forms.CharField(widget=forms.PasswordInput)
-    class Meta:
-        model = member
-        fields = ['fname','lname','email','username','password','mgroup']
-        
 class NewProject(ModelForm):
     pdeadline = forms.DateField(widget=SelectDateWidget)
     class Meta:
         model = project
         fields = ['pgroup','pname','pdesc','pdeadline']
-        
-        '''def __init__(self, *args, **kwargs):
-            super(NewProject, self).__init__(*args, **kwargs)
-            self.__old_pdeadline = self.pdeadline
-            
-        def clean(self):
-            " Make sure expiry time cannot be in the past "
-            if (self.__old_pdeadline != self.pdeadline) and self.pdeadline < timezone.now():
-                raise ValidationError('Deadline cannot be a date in the past')'''
 
 class NewSprint(ModelForm):
     start_date = forms.DateField(widget=SelectDateWidget)

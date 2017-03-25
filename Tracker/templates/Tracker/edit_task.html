@@ -6,7 +6,7 @@
 {% block content %}
 		<h1>Task View </h1>
         
-		<form action="{% url 'edit_task' task.id member.id %}" method="post">
+		<form action="{% url 'edit_task' task.id  %}" method="post">
 			{% csrf_token %}
 			<table>
 				<tr>
@@ -48,7 +48,7 @@
 			</table>
 		   	<input type="submit" value="Submit" />
 		</form>
-		<a href="{% url 'delete_task' task.id member.id %}" >Delete Task</a>
+		<a href="{% url 'delete_task' task.id  %}" >Delete Task</a>
 
 	<!-- COMMENTS FOR THIS TASK-->		
 		<h2>Comments: </h2>
@@ -60,7 +60,7 @@
 			<p><strong>{{ c.comment }}</strong> &nbsp {{ c.ccreated|timesince|upto:','}} ago &nbsp Posted By: {{c.member}}</p>
 		{% endfor %}
         
-		<a href="{% url 'add_comment' task.id member.id %}">Add Comment</a>
+		<a href="{% url 'add_comment' task.id  %}">Add Comment</a>
 
 	<!-- TAGS FOR THIS TASK-->
 		<h2>Tags associated with {{ task.tname }}</h2>
@@ -70,6 +70,6 @@
 		{% for c in task.tag_set.all %}
     		<label>{{ c.tag }}</label>
 		{% endfor %}
-		<a href="{% url 'add_tag' task.id member.id %}">Add Another Tag</a>
-		<br><a href="{% url 'edit_project' task.tproject.id member.id %}" >Back</a>
+		<a href="{% url 'add_tag' task.id  %}">Add Another Tag</a>
+		<br><a href="{% url 'edit_project' task.tproject.id  %}" >Back</a>
 {% endblock %}

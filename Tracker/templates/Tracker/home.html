@@ -1,0 +1,73 @@
+{% extends "Tracker/base.html" %}
+
+{% block title %} Home {% endblock %}
+
+{% block content %}
+		<div class="container">
+        <div class="col-md-9">
+        <h1>Homepage</h1>
+		<h2>Hello {{user.username}}!</h2>
+		<ul>
+		<h3>Group Members</h3>
+		{% for user in group.user_set.all %}
+			<li>{{user.first_name}} {{user.last_name}}</li>
+		{% endfor %}
+		</ul>
+
+		<h3>Group Projects:</h3>	
+		<ul>
+		{% for project in group.project_set.all %}
+			<li><a href="{% url 'edit_project' project.id %}">{{project.pname}}</li>
+		{% endfor %}
+		</ul>
+	
+	<a href="{% url 'add_project'  %}">Add New Project</a>
+         {% if all_tasks %}
+	    <h3>Your Tasks</h3>
+        <table class="taskpool">
+        <tr>
+			<th>Name</th>
+            <th>Project</th>
+			<th>Due Date</th>
+			<th>State</th>
+		</tr>
+	    	{% for t in all_tasks %}
+    			<tr>
+	    			<td><a href= "{% url 'edit_task' t.id %}">{{ t.tname }}</a></td>
+                    <td>{{t.tproject}}</td>
+	    			<td> {{t.due_date|date:"j M 'y"}}</td> 
+					<td> {{ t.get_state_display  }}</td>
+				</tr>			
+			{% endfor %}
+		</table>
+        {% endif %}
+	</div>
+    <!--PENDING TASKS-->        
+        <div class="col-md-2">
+            <div class="sidebar-nav-fixed pull-right affix">
+                <div class="well pending ">
+                    <ul class="nav ">
+                        <li class="nav-header"><strong>Pending Tasks</strong></li>
+                        <li> You have {{t_count}} Pending Task{% if t_count > 1 %}s{% endif %}</li>
+                        {% if task %}
+                        <ul>
+                          {% for t in task %}
+                            <li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a>  Project: {{t.tproject}}</li>
+                            
+                          {% endfor %}
+                        </ul>
+
+                        {% else %}
+                        <p> Hurray! No Pending Tasks </p>
+                        {% endif %}
+                </div>
+                <!--/.well -->
+            </div>
+            <!--/sidebar-nav-fixed -->
+        </div>
+    </div>
+	
+	<a href="{% url 'logout' %}" >Logout</a>
+	
+	{% endblock %}
+

@@ -1,25 +1,33 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import Http404,HttpResponse,HttpResponseRedirect
+from django.shortcuts import render,get_object_or_404
+from django.http import HttpResponse,Http404,HttpResponseRedirect
 #from datetime import datetime, timezone, timedelta
 from datetime import datetime, timedelta
 from django.utils import timezone 
 from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
-from Tracker.models import sprint,project,task,member
+from Tracker.models import sprint,project,task
 from Tracker.forms import NewSprint
+from django.contrib.auth.decorators import login_required
 
-def add_sprint(request,project_id,member_id):
+from django.contrib.auth.models import User, Group
+from django.contrib.auth import authenticate, login
+
+
+@login_required
+def add_sprint(request,project_id):
     if request.method == 'POST':
         form = NewSprint(request.POST)
         if form.is_valid():
             new_sprint = form.save()
-            return HttpResponseRedirect('/Tracker/edit_project/'+str(new_sprint.project.id)+'/'+member_id+'/')
+            return HttpResponseRedirect('/Tracker/edit_project/'+str(new_sprint.project.id)+'/')
     else:
+        user = User.objects.get(username=request.user.username)
         p = get_object_or_404(project,pk=project_id)
-        m = get_object_or_404(member,pk=member_id)
         form = NewSprint(initial={'project':p})
-    return render(request, 'Tracker/add_sprint.html', {'form': form,'project_id':project_id,'member':m})
+    return render(request, 'Tracker/add_sprint.html', {'form': form,'project_id':project_id,'user':user})
 
-def edit_sprint(request,sprint_id,member_id):
+
+@login_required
+def edit_sprint(request,sprint_id):
     if request.method == 'POST':
         sp = get_object_or_404(sprint,pk=sprint_id)
         form = NewSprint(request.POST,instance=sp)
@@ -28,7 +36,7 @@ def edit_sprint(request,sprint_id,member_id):
     else:
         sp = get_object_or_404(sprint,pk=sprint_id)
         form = NewSprint(instance=sp)
-    m = get_object_or_404(member,pk=member_id)
+    user = User.objects.get(username=request.user.username)
     completed_tp = 0
     total_tp = 0
     t = task.objects.filter(tsprint = sprint_id)
@@ -56,16 +64,19 @@ def edit_sprint(request,sprint_id,member_id):
         'sprint': sp,
         'form': form,
         'st': st,
-        'member':m
+        'user':user,
       }
     return render(request, 'Tracker/edit_sprint.html', context)
 
-def delete_sprint(request,sprint_id,member_id):
+
+@login_required
+def delete_sprint(request,sprint_id):
     s = get_object_or_404(sprint,pk=sprint_id)
     p = get_object_or_404(project,pk=s.project.id)
     sprint.objects.filter(id=sprint_id).delete()
-    return HttpResponseRedirect('/Tracker/edit_project/'+str(p.id)+'/'+member_id+'/')
+    return HttpResponseRedirect('/Tracker/edit_project/'+str(p.id)+'/')
 
+@login_required
 def sprintchart(request,sprint_id):
     open_tasks = 0
     complete_tasks = 0
@@ -136,4 +147,3 @@ def sprintchart(request,sprint_id):
         return render(request, 'Tracker/spcharts.html', context)
     else:
         return render(request, 'Tracker/nochart.html', context)
-

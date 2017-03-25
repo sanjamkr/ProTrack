@@ -4,7 +4,7 @@
 
 {% block content %}
 		<h1>Project View</h1>
-		<form action="{% url 'edit_project' project.id member.id %}" method="post">
+		<form action="{% url 'edit_project' project.id %}" method="post">
 		    {% csrf_token %}
 			<table>
 				<tr>
@@ -30,7 +30,7 @@
 			<input type="submit" value="Submit" />
 		</form>
 		
-		<a href="{% url 'delete_project' project.id member.id %}" >Delete Project</a>
+		<a href="{% url 'delete_project' project.id %}" >Delete Project</a>
 
 		<h2>Project's Task Pool:</h2>
 		<table class = "taskpool">
@@ -44,7 +44,7 @@
 		</tr>
 	    	{% for task in project.task_set.all|dictsort:"created" %}
     			<tr>
-	    			<td><a href= "{% url 'edit_task' task.id member.id %}">{{ task.tname }}</a></td>
+	    			<td><a href= "{% url 'edit_task' task.id  %}">{{ task.tname }}</a></td>
 	    			<td> {{task.due_date|date:"j M 'y"}}</td> 
 					<td>  {{ task.status }}</td>
 					<td> {{ task.get_state_display }}</td>
@@ -53,15 +53,15 @@
 				</tr>
     		{% endfor %}
 		</table>
-		<a href="{% url 'add_task' project.id member.id %}" >Add Task</a>
+		<a href="{% url 'add_task' project.id  %}" >Add Task</a>
 		
 		<h2>Project Sprints:</h2>
 		<ul>
 			{% for sprint in project.sprint_set.all %}
-    			<li><a href= "{% url 'edit_sprint' sprint.id member.id %}">{{ sprint.sname }}</a></li>
+    			<li><a href= "{% url 'edit_sprint' sprint.id  %}">{{ sprint.sname }}</a></li>
     		{% endfor %}
     	</ul>
-		<a href= "{% url 'add_sprint' project.id member.id %}" >Add Sprint</a> 
+		<a href= "{% url 'add_sprint' project.id  %}" >Add Sprint</a> 
 		
 		<form method="POST" action="/Tracker/search_tag/">
 			{% csrf_token %}
@@ -71,6 +71,6 @@
 
 		<form>
 			<button formaction="{% url 'chart' project.id %}">Analysis</button>
-			<button formaction="{% url 'calendar' project.id member.id %}">Calendar View</button>
+			<button formaction="{% url 'calendar' project.id  %}">Calendar View</button>
 		</form>
 {% endblock %}

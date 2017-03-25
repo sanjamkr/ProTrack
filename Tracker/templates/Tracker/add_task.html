@@ -5,7 +5,7 @@
 
 {% block content %}
 	<h1>New Task</h1> 
-	<form action="{% url 'add_task' project.id member.id %}" method="post">
+	<form action="{% url 'add_task' project.id %}" method="post">
 		{% csrf_token %}
 		<table>
 	    		<tr>
@@ -14,12 +14,14 @@
 				<tr>
 					<th>Add to Sprint : </th>
 					<td>
-						<select id="id_tsprint" name="tsprint">
+				<!--		<select id="id_tsprint" name="tsprint">
 						<option value="" selected="selected">---------</option>
 						{% for s in project.sprint_set.all %}
 							<option value="{{s.id}}">{{s.sname}}</option>
 						{% endfor %}
 						</select>
+					-->
+						{{form.tsprint}}
 					</td>
 				</tr>
 				<tr>
@@ -36,12 +38,16 @@
 				<tr><th>State : </th><td> {{ form.state }}</td></tr>
 				<tr>
 				<th>Assignee :</th>
-				<td><select id="id_assign" name="assign">
+				<td>
+{{form.assign}}
+			<!--	<select id="id_assign" name="assign">
 					<option value="" selected="selected">---------</option>
 					{% for m in project.pgroup.member_set.all %}
 						<option value="{{m.id}}">{{m.username}}</option>
 					{% endfor %}
-				</select></td>
+				</select>
+-->
+				</td>
 				</tr>
 				<tr><th>Remainder :</th><td> {{form.remainder}}</td></tr>
 				<tr><th>Heading :</th><td> {{form.heading}}</td></tr>

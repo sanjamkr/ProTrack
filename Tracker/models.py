@@ -1,27 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User,Group
+
 import datetime
-#Groups
-class group(models.Model):
-    gname = models.CharField(max_length=100,verbose_name = "Group Name")
-
-    def __str__(self):
-        return self.gname
-
-#Registration and Login
-class member(models.Model):
-    fname = models.CharField(max_length=100,verbose_name = "First Name")
-    lname = models.CharField(max_length=100,verbose_name = "Last Name")
-    email = models.EmailField(max_length=254,verbose_name = "Email")
-    username = models.CharField(max_length=100,verbose_name = "UserName")
-    password = models.CharField(max_length=50,verbose_name = "Password")
-    mgroup = models.ForeignKey(group, on_delete=models.CASCADE,verbose_name = "Group")
-    
-    def __str__(self):
-        return self.username
 
 #Projects associated with a Group
+
 class project(models.Model):                                                                 
-    pgroup = models.ForeignKey(group, on_delete=models.CASCADE,verbose_name = "Group")
+    pgroup = models.ForeignKey(Group)
     pname = models.CharField(max_length=100,verbose_name = "Project Name")
     pdesc = models.CharField(max_length=100,blank=True,verbose_name = "Project Description")
     pcreated = models.DateTimeField(auto_now_add=True,verbose_name = "Create time")
@@ -29,7 +14,8 @@ class project(models.Model):
     
     def __str__(self):
         return self.pname
-#........................................
+
+#.................................
 
 Priority_Choices = (
     ('high','High'),('medium','Medium'),('low','Low'),
@@ -58,7 +44,7 @@ class task(models.Model):
     risk = models.CharField(max_length=200,blank=True)
     priority = models.CharField(max_length=50,choices=Priority_Choices)
     state = models.CharField(max_length=50, default='open',choices=State_Choices)
-    assign =  models.ForeignKey(member, blank=True, null=True)
+    assign =  models.ForeignKey(User,blank=True, null=True)
     remainder = models.CharField(max_length=200,blank=True)
     heading = models.CharField(max_length=200,blank=True)
     dep_task = models.CharField(max_length=100,blank=True)
@@ -89,6 +75,6 @@ class tag(models.Model):
 # Task's associated comments
 class comment(models.Model):
      task = models.ForeignKey(task, on_delete=models.CASCADE)
-     member = models.ForeignKey(member)
+     member = models.ForeignKey(User)
      comment = models.CharField(max_length=500)
      ccreated = models.DateTimeField(auto_now_add=True)

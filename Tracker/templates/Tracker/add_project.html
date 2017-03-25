@@ -4,7 +4,7 @@
 
 {% block content %}
 		<h1>New Project</h1> 
-		<form action="{% url 'add_project' group_id member.id %}" method="post">
+		<form action="{% url 'add_project' %}" method="post">
 			{% csrf_token %}
 			<table>
 				<tr>

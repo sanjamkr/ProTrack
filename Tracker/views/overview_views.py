@@ -1,11 +1,13 @@
 from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse,Http404,HttpResponseRedirect
+from django.contrib.auth.models import User, Group
+from Tracker.models import project,sprint,task,tag
+from django.contrib.auth import authenticate, login
 #from datetime import datetime, timezone, timedelta
 from datetime import datetime, timedelta
 from django.utils import timezone 
 from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
-from Tracker.models import group,member,project,sprint,task,tag
-from Tracker.forms import NewGroup,NewMember,NewProject
+from Tracker.forms import NewProject
 from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
 from calendar import HTMLCalendar
@@ -13,72 +15,109 @@ from datetime import date
 from itertools import groupby
 from django.utils.html import conditional_escape as esc
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
-
-#...............Login..................
+#............Login...............
 
 def login(request):
-    context = {    
+    context = {
     }
     return render(request,'Tracker/login.html',context)
 
 def login_next(request):
     name = request.POST.get('name', None)
     pwd = request.POST.get('pwd', None)
-    try:
-        user = member.objects.get(username = name,password = pwd)
-        return edit_group(request,user.mgroup.id,user.id)
-    except member.DoesNotExist:
+    user = authenticate(username=name, password=pwd)
+    if user is not None:
+        g = user.groups.all()[0]
+        is_member = Q(assign = user)
+        is_open = Q(state = "open")
+        is_blocked = Q(state = "blocked")
+        all_tasks = task.objects.filter(is_member)
+        t = task.objects.filter(is_member & (is_blocked | is_open))
+        t_count = task.objects.filter(is_member & (is_blocked | is_open)).count()
+        context ={
+            'group': g,
+            'user': user,
+            'task':t,
+            'all_tasks':all_tasks,
+            't_count':t_count
+        }
+        return render(request,'Tracker/home.html',context)
+    else:
         return HttpResponseRedirect('/Tracker/')
-    
+
+def logout(request):
+    return HttpResponseRedirect('/Tracker/')
+
 def signup(request):
     if request.method == 'POST':
-        form = NewMember(request.POST)
-        if form.is_valid():
-            new_member = form.save()
-            return HttpResponseRedirect('/Tracker/')
+        username= request.POST.get('username', None)
+        pwd = request.POST.get('password', None)
+        email = request.POST.get('email', None)
+        user = User.objects.create_user(username, email, pwd)
+        user.last_name = request.POST.get('lname', None)
+        user.first_name = request.POST.get('fname', None)
+        user.save()
+        group_name = request.POST.get('group',None)
+        g = Group.objects.get(name=group_name) 
+        g.user_set.add(user)
+        return HttpResponseRedirect('/Tracker/')
     else:
-        form = NewMember()
-    return render(request, 'Tracker/signup.html', {'form': form})
-
-#............Group View.................
+        l = Group.objects.all()
+        context = {
+            'groups':l,
+        }
+        return render(request, 'Tracker/signup.html',context)
 
 def add_group(request):
     if request.method == 'POST':
-        form = NewGroup(request.POST)
-        if form.is_valid():
-            new_group = form.save()
-            return HttpResponseRedirect('../../Tracker/signup')
+        group_name = request.POST.get('group',None)
+        g = Group.objects.create(name=group_name)
+        g.save()
+        return HttpResponseRedirect('/Tracker/signup')
     else:
-        form = NewGroup()
-    return render(request, 'Tracker/add_group.html', {'form': form})
+        context = {
+        }
+        return render(request, 'Tracker/add_group.html',context)
 
-def edit_group(request,group_id,member_id):
-    g = get_object_or_404(group,pk=group_id)
-    m = get_object_or_404(member,pk=member_id)
-    is_member = Q(assign = member_id)
+@login_required
+def home(request):
+    user = User.objects.get(username=request.user.username)
+    g = user.groups.all()[0]
+    is_member = Q(assign = user)
     is_open = Q(state = "open")
     is_blocked = Q(state = "blocked")
     all_tasks = task.objects.filter(is_member)
     t = task.objects.filter(is_member & (is_blocked | is_open))
     t_count = task.objects.filter(is_member & (is_blocked | is_open)).count()
-    return render(request, 'Tracker/edit_group.html', {'group': g,'member':m, 'task':t, 'all_tasks':all_tasks, 't_count':t_count})
+    context ={
+        'group': g,
+        'user': user,
+        'task':t,
+        'all_tasks':all_tasks,
+        't_count':t_count
+    }
+    return render(request,'Tracker/home.html',context)
 
 #.........Project Views..................
 
-def add_project(request,group_id,member_id):
+@login_required
+def add_project(request):
     if request.method == 'POST':
         form = NewProject(request.POST)
         if form.is_valid():
             new_project = form.save()
-            return HttpResponseRedirect('/Tracker/edit_project/'+str(new_project.id)+'/'+member_id+'/')
+            return HttpResponseRedirect('/Tracker/home')
     else:
-        g = get_object_or_404(group,pk=group_id)
-        m = get_object_or_404(member,pk=member_id)
+        user = User.objects.get(username=request.user.username)
+        g = request.user.groups.all()[0]
         form = NewProject(initial={'pgroup': g})
-    return render(request, 'Tracker/add_project.html', {'form': form,'group_id':group_id, 'member':m})
+        return render(request, 'Tracker/add_project.html', {'form': form,'user':user})
 
-def edit_project(request,project_id,member_id):
+@login_required
+def edit_project(request,project_id):
+    user = User.objects.get(username=request.user.username)
     if request.method == 'POST':
         p = get_object_or_404(project,pk=project_id)
         form = NewProject(request.POST,instance=p)
@@ -87,7 +126,7 @@ def edit_project(request,project_id,member_id):
     else:
         p = get_object_or_404(project,pk=project_id)
         form = NewProject(instance=p)
-    m = get_object_or_404(member,pk=member_id)
+
     completed_tp = 0
     total_tp = 0
     t = task.objects.filter(tproject = project_id)
@@ -110,16 +149,17 @@ def edit_project(request,project_id,member_id):
         'project': p,
         'form': form,
         'ps': ps,
-        'member':m
+        'user':user,
       }
     return render(request, 'Tracker/edit_project.html', context)
 
-def delete_project(request,project_id,member_id):
+@login_required
+def delete_project(request,project_id):
     p = get_object_or_404(project,pk=project_id)
-    g = get_object_or_404(group,pk=p.pgroup.id)
     project.objects.filter(id=project_id).delete()
-    return HttpResponseRedirect('/Tracker/edit_group/'+str(g.id)+'/'+member_id+'/')
+    return HttpResponseRedirect('/Tracker/home/')
 
+@login_required
 def search_tag(request):
     tag_name = request.POST.get('textfield', None)
     try:
@@ -129,6 +169,7 @@ def search_tag(request):
     except tag.DoesNotExist:
         return HttpResponse("There is no task associated with this tag")  
 
+@login_required
 def pieview(request,project_id):
     open_tasks = 0
     complete_tasks = 0
@@ -204,7 +245,7 @@ def pieview(request,project_id):
     else:
         return render(request, 'Tracker/nochart.html', context)
 
-
+@login_required
 class Calendar(HTMLCalendar):
 
     def __init__(self, my_tasks):
@@ -230,7 +271,7 @@ class Calendar(HTMLCalendar):
                 return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)))
             return self.day_cell(cssclass, day)
         return self.day_cell('noday', '&nbsp;')
-	
+    
     def formatmonth(self, year, month):
         self.year, self.month = year, month
         return super(Calendar, self).formatmonth(year, month)
@@ -244,42 +285,47 @@ class Calendar(HTMLCalendar):
     def day_cell(self, cssclass, body):
         return '<td class="%s">%s</td>' % (cssclass, body)
 
+@login_required
+def calendar(request,project_id):
+    try:
+        user = User.objects.get(username=request.user.username)
+        q = task.objects.filter(tproject = project_id)
+        t = q.latest('due_date')
+        year=t.due_date.year
+        month=t.due_date.month
+        my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
+        cal = Calendar(my_tasks).formatmonth(year,month)
+        #return render_to_response('Tracker/calendar.html', {'calendar':(cal),})
+        return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'user':user,'year':year,'month':month})
+    except task.DoesNotExist:
+        return HttpResponse("There is no task associated with this project")  
 
-def calendar(request,project_id,member_id):
-	try:
-		q = task.objects.filter(tproject = project_id)
-		t =	q.latest('due_date')
-		year=t.due_date.year
-		month=t.due_date.month
-		my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
-		cal = Calendar(my_tasks).formatmonth(year,month)
-		#return render_to_response('Tracker/calendar.html', {'calendar':(cal),})
-		return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'member_id':member_id,'year':year,'month':month})
-	except task.DoesNotExist:
-		return HttpResponse("There is no task associated with this project")  
-                       
-def calendar1(request,project_id,member_id,year,month):
-	year=int(year)
-	month=int(month)
-	if month<2:	
-		month=12
-		year=year-1
-	else:
-		month=month-1
-	q = task.objects.filter(tproject = project_id)
-	my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
-	cal = Calendar(my_tasks).formatmonth(year,month)
-	return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'member_id':member_id,'year':year,'month':month})
+@login_required                       
+def calendar1(request,project_id,year,month):
+    year=int(year)
+    month=int(month)
+    if month<2: 
+        month=12
+        year=year-1
+    else:
+        month=month-1
+    q = task.objects.filter(tproject = project_id)
+    user = User.objects.get(username=request.user.username)
+    my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
+    cal = Calendar(my_tasks).formatmonth(year,month)
+    return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'user':user,'year':year,'month':month})
 
-def calendar2(request,project_id,member_id,year,month):
-	year=int(year)
-	month=int(month)
-	if month>11:	
-		month=1
-		year=year+1
-	else:
-		month=month+1
-	q = task.objects.filter(tproject = project_id)
-	my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
-	cal = Calendar(my_tasks).formatmonth(year,month)
-	return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'member_id':member_id,'year':year,'month':month})
+@login_required
+def calendar2(request,project_id,year,month):
+    year=int(year)
+    month=int(month)
+    if month>11:    
+        month=1
+        year=year+1
+    else:
+        month=month+1
+    user = User.objects.get(username=request.user.username)
+    q = task.objects.filter(tproject = project_id)
+    my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
+    cal = Calendar(my_tasks).formatmonth(year,month)
+    return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'user':user,'year':year,'month':month})
