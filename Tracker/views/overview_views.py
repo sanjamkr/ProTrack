@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from django.contrib.auth.models import User, Group
 from Tracker.models import project,sprint,task,tag
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 #from datetime import datetime, timezone, timedelta
 from datetime import datetime, timedelta
 from django.utils import timezone 
@@ -19,7 +19,7 @@ from django.contrib.auth.decorators import login_required
 
 #............Login...............
 
-def login(request):
+def log(request):
     context = {
     }
     return render(request,'Tracker/login.html',context)
@@ -29,6 +29,7 @@ def login_next(request):
     pwd = request.POST.get('pwd', None)
     user = authenticate(username=name, password=pwd)
     if user is not None:
+        login(request, user)
         g = user.groups.all()[0]
         is_member = Q(assign = user)
         is_open = Q(state = "open")
@@ -47,7 +48,8 @@ def login_next(request):
     else:
         return HttpResponseRedirect('/Tracker/')
 
-def logout(request):
+def log_end(request):
+    logout(request)
     return HttpResponseRedirect('/Tracker/')
 
 def signup(request):
@@ -81,7 +83,7 @@ def add_group(request):
         }
         return render(request, 'Tracker/add_group.html',context)
 
-@login_required
+
 def home(request):
     user = User.objects.get(username=request.user.username)
     g = user.groups.all()[0]
@@ -153,11 +155,13 @@ def edit_project(request,project_id):
       }
     return render(request, 'Tracker/edit_project.html', context)
 
+
 @login_required
 def delete_project(request,project_id):
     p = get_object_or_404(project,pk=project_id)
     project.objects.filter(id=project_id).delete()
     return HttpResponseRedirect('/Tracker/home/')
+
 
 @login_required
 def search_tag(request):
@@ -168,6 +172,7 @@ def search_tag(request):
         return HttpResponse(html)
     except tag.DoesNotExist:
         return HttpResponse("There is no task associated with this tag")  
+
 
 @login_required
 def pieview(request,project_id):
@@ -245,6 +250,7 @@ def pieview(request,project_id):
     else:
         return render(request, 'Tracker/nochart.html', context)
 
+
 @login_required
 class Calendar(HTMLCalendar):
 
@@ -285,6 +291,7 @@ class Calendar(HTMLCalendar):
     def day_cell(self, cssclass, body):
         return '<td class="%s">%s</td>' % (cssclass, body)
 
+
 @login_required
 def calendar(request,project_id):
     try:
@@ -300,7 +307,8 @@ def calendar(request,project_id):
     except task.DoesNotExist:
         return HttpResponse("There is no task associated with this project")  
 
-@login_required                       
+
+@login_required        
 def calendar1(request,project_id,year,month):
     year=int(year)
     month=int(month)
@@ -314,6 +322,7 @@ def calendar1(request,project_id,year,month):
     my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
     cal = Calendar(my_tasks).formatmonth(year,month)
     return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'user':user,'year':year,'month':month})
+
 
 @login_required
 def calendar2(request,project_id,year,month):

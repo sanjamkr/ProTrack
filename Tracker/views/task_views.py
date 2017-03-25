@@ -7,7 +7,7 @@ from Tracker.models import task,project,sprint
 from Tracker.forms import NewTask,NewComment,NewTag,NewSprint
 
 from django.contrib.auth.models import User, Group
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 @login_required

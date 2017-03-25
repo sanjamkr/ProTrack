@@ -4,11 +4,11 @@ from . import views
 
 urlpatterns = [
     #Login
-    url(r'^$',views.login, name='login'),
+    url(r'^$',views.log, name='log'),
     url(r'^signup/$',views.signup,name='signup'),
     url(r'^authentication/$', views.login_next, name='login_next'),
     url(r'^home/$',views.home,name='home'),
-    url(r'^logout/$',views.logout,name='logout'),
+    url(r'^log_end/$',views.log_end,name='logout'),
     url(r'^add_group/$',views.add_group, name='add_group'),
     #Others
     url(r'^add_project/$',views.add_project, name='add_project'),
