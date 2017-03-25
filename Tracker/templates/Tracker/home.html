@@ -72,7 +72,7 @@
                         <ul>
                           {% for t in task %}
                             
-                            <li><a href= "{% url 'edit_task'%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
+                            <li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
                             
                           {% endfor %}
                         </ul>

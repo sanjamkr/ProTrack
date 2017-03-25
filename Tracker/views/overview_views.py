@@ -94,6 +94,8 @@ def home(request):
     t = task.objects.filter(is_member & (is_blocked | is_open))
     t_count = task.objects.filter(is_member & (is_blocked | is_open)).count()
     nt_task = task.objects.filter(is_member)
+    today = datetime.today()
+    now = datetime.now()
     near_deadline = []
     over_due = []
     new_task = []
