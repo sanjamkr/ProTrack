@@ -3,27 +3,43 @@
 {% block title %} Home {% endblock %}
 
 {% block content %}
-		<div class="container">
+		
+<div class="container">
+        <div class = "row">
         <div class="col-md-9">
-        <h1>Homepage</h1>
-		<h2>Hello {{user.username}}!</h2>
-		<ul>
-		<h3>Group Members</h3>
-		{% for user in group.user_set.all %}
+
+        <div class = "row">
+
+        <div class= "col">
+        <form>
+			<button formaction="{% url 'add_project' %}" class="btn pull-right btn-primary"> Add Project&nbsp; <span class="glyphicon glyphicon-plus"></span></button>
+	    </form>
+            <h3>{{group.gname}} Projects</h3>	
+            
+            <ul class = "grouplist">
+                <li class = "prolist">Name <span class = "prodate pull-right">Deadline</li>
+			{% for project in group.project_set.all %}
+                
+				<li><a href= "{% url 'edit_project' project.id%}">{{ project.pname }} <span class = "prodate pull-right"> {{project.pdeadline|date:"j M 'y"}} </span> </a></li>
+			{% endfor %}
+            </ul>
+        </div>
+        
+        <!--<div class= "col-md-4">
+		<h3>Members</h3>	
+		<ul  class = "grouplist">
+			{% for user in group.user_set.all %}
 			<li>{{user.first_name}} {{user.last_name}}</li>
 		{% endfor %}
 		</ul>
-
-		<h3>Group Projects:</h3>	
-		<ul>
-		{% for project in group.project_set.all %}
-			<li><a href="{% url 'edit_project' project.id %}">{{project.pname}}</li>
-		{% endfor %}
-		</ul>
-	
-	<a href="{% url 'add_project'  %}">Add New Project</a>
-         {% if all_tasks %}
-	    <h3>Your Tasks</h3>
+	    </div>-->
+        </div>
+        
+        <!--ALL TASKS-->
+        <div class="row"> 
+        {% if all_tasks %}
+        <div class = "col whitecard">
+	    <h3 class="center">Your Tasks</h3>
         <table class="taskpool">
         <tr>
 			<th>Name</th>
@@ -40,34 +56,77 @@
 				</tr>			
 			{% endfor %}
 		</table>
+       </div>
         {% endif %}
-	</div>
+	<!--<a href="/Tracker/">Logout</a>-->
+            </div>
+    </div>
     <!--PENDING TASKS-->        
         <div class="col-md-2">
             <div class="sidebar-nav-fixed pull-right affix">
                 <div class="well pending ">
                     <ul class="nav ">
                         <li class="nav-header"><strong>Pending Tasks</strong></li>
-                        <li> You have {{t_count}} Pending Task{% if t_count > 1 %}s{% endif %}</li>
+                        <li> You have <strong>{{t_count}}</strong> Pending Task{% if t_count > 1 %}s{% endif %}</li>
                         {% if task %}
                         <ul>
                           {% for t in task %}
-                            <li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a>  Project: {{t.tproject}}</li>
+                            
+                            <li><a href= "{% url 'edit_task'%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
                             
                           {% endfor %}
                         </ul>
 
                         {% else %}
-                        <p> Hurray! No Pending Tasks </p>
+                        <p></p>
                         {% endif %}
+                </div>
+                <div class="well pending ">
+
+                    <ul class="nav ">
+                    <li class="nav-header"><strong>Notifications&nbsp;</strong><div class = "noti_circle"><strong>{{ noti }}</strong></div></li>
+                    <br>
+                   {% if nd_count > 0 %} 
+                    <li> <strong>{{nd_count}} Task{% if nd_count > 1 %}s{% endif %} approaching deadline</strong> </li>
+                        <ul>
+                          {% for t in near_deadline %}
+                            
+                            <li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
+                            
+                          {% endfor %}
+                        </ul>
+                        <br>
+                    {% endif %}
+                    {% if nt_count > 0 %}
+                    <li> <strong>{{nt_count}} New Task{% if nt_count > 1 %}s{% endif %} Assigned</strong> </li>
+                        <ul>
+                          {% for t in new_task %}
+                            
+                            <li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
+                            
+                          {% endfor %}
+                        </ul>
+                     {% endif %}
+                     
+                     {% if od_count > 0 %} 
+                     <br>
+                    <li> <strong>{{od_count}} Task{% if nd_count > 1 %}s{% endif %} Overdue</strong> </li>
+                        <ul>
+                          {% for t in over_due %}
+                            
+                            <li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
+                            
+                          {% endfor %}
+                        </ul>
+                        <br>
+                    {% endif %}
+                    </ul>
                 </div>
                 <!--/.well -->
             </div>
             <!--/sidebar-nav-fixed -->
         </div>
+        
+       </div>
     </div>
-	
-	<a href="{% url 'logout' %}" >Logout</a>
-	
-	{% endblock %}
-
+{% endblock content %}

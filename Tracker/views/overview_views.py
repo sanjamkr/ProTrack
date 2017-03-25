@@ -93,12 +93,43 @@ def home(request):
     all_tasks = task.objects.filter(is_member)
     t = task.objects.filter(is_member & (is_blocked | is_open))
     t_count = task.objects.filter(is_member & (is_blocked | is_open)).count()
+    nt_task = task.objects.filter(is_member)
+    near_deadline = []
+    over_due = []
+    new_task = []
+    
+    nd_count = 0
+    nt_count = 0
+    od_count = 0
+    
+    for t1 in t:
+        if ((t1.due_date - datetime.date(today) ).days <= 2 ):
+            if (((t1.due_date - datetime.date(today) ).days >= 0 ) ):
+                near_deadline.append(t1)
+                nd_count = nd_count+1
+            else:
+                over_due.append(t1)
+                od_count = od_count+1
+            
+    for t2 in nt_task:
+        if(( datetime.date(today) - datetime.date(t2.created) ).days <= 2 ):
+            new_task.append(t2)
+            nt_count = nt_count+1
+            
+    noti = nd_count + nt_count + od_count
     context ={
         'group': g,
         'user': user,
         'task':t,
         'all_tasks':all_tasks,
-        't_count':t_count
+        't_count':t_count, 
+        'near_deadline':near_deadline, 
+        'nd_count':nd_count, 
+        'new_task':new_task, 
+        'nt_count':nt_count, 
+        'od_count':od_count, 
+        'over_due':over_due, 
+        'noti':noti
     }
     return render(request,'Tracker/home.html',context)
 

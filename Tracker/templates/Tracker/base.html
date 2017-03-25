@@ -4,10 +4,40 @@
 <html>
 	<head>
 	    <title>{% block title %}{% endblock %}</title>
-	    <link rel="stylesheet" type="text/css" href="{% static 'Tracker/css/bootstrap.min.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'Tracker/css/bootstrap.min.css' %}" />
 	    <link rel="stylesheet" type="text/css" href="{% static 'Tracker/style.css' %}" />
+        <script src="{% static 'Tracker/js/jquery-3.2.0.min.js' %}"></script>
+        <script src="{% static 'Tracker/js/bootstrap.min.js' %}"></script>
+
 	</head>
 	<body>
+        <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #fff ">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">ProTrack</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span> Dashboard</a></li>
+      <li class="dropdown">
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-list-alt"></span> Projects<b class="caret"></b></a>
+                <ul role="menu" class="dropdown-menu">
+                    {% for project in group.project_set.all %}
+                
+				<li><a href= "{% url 'edit_project' project.id%}">{{ project.pname }}</a></li>
+			{% endfor %}
+                </ul>
+            </li>
+         </ul>   
+        		<ul class="nav navbar-nav navbar-right">
+      <li><a href="#"><span class="glyphicon glyphicon-bell"></span> Notifications</a></li>
+      <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+    </ul>
+
+
+
+    </ul>
+  </div>
+</nav>
     	{% block content %}{% endblock %}
 	</body>
 </html>

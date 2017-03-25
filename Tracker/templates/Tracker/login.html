@@ -1,8 +1,12 @@
-{% extends "Tracker/base.html" %}
-
-{% block title %} Login {% endblock %}
+{% load static %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
+		<link rel="stylesheet" type="text/css" href="{% static 'Tracker/css/bootstrap.min.css' %}" />
+	    <link rel="stylesheet" type="text/css" href="{% static 'Tracker/style.css' %}" />
+        <script src="{% static 'Tracker/js/jquery-3.2.0.min.js' %}"></script>
+        <script src="{% static 'Tracker/js/bootstrap.min.js' %}"></script>
+
 	<script>
 		function fpassoverlay(){
 				alert("Please Contact Admin");
