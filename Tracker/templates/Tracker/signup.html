@@ -1,8 +1,18 @@
-{% extends "Tracker/base.html" %}
 
-{% block title %} SignUp {% endblock %}
+{% load static %}
 
+<!DOCTYPE html>
 {% block content %}
+<html>
+	<head>
+	    <title>Sign Up - ProTrack</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'Tracker/css/bootstrap.min.css' %}" />
+	    <link rel="stylesheet" type="text/css" href="{% static 'Tracker/style.css' %}" />
+        <script src="{% static 'Tracker/js/jquery-3.2.0.min.js' %}"></script>
+        <script src="{% static 'Tracker/js/bootstrap.min.js' %}"></script>
+
+	</head>
+	<body>
 <script>
 	function confirm(){
 		var x=document.getElementById("id_password").value;
