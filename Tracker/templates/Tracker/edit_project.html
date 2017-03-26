@@ -1,6 +1,6 @@
 {% extends "Tracker/base.html" %}
 {% block nav-project %} active {% endblock %}
-{% block title %}{{project.pname}}{% endblock %}
+{% block title %}Project {{project.pname}}{% endblock %}
 
 {% block content %}
 <script>
@@ -20,16 +20,30 @@ if (result == true) {
 
 }
 </script>
-    <div class= "container">
+        <!--Tab Navigation-->
+        <ul class="nav nav-tabs project-nav">
+			<li class="active">
+        <a  href="{% url 'edit_project' project.id  %}">Overview</a>
+			</li>
+			<li><a href="{% url 'calendar' project.id  %}">Calendar</a>
+			</li>
+			<li><a href="{% url 'chart' project.id  %}">Analytics</a>
+			</li>
+		</ul>
+        <!--Tab Navigation-->
+
+    <div class= "container project-content">
+    
      <div class = "row">
         <div class="col-md-8">
-
+        <!--Task table-->
 		<h3>Tasks 
         <span class = "pull-right" >         
         <form>
 			<button formaction="{% url 'add_task' project.id %}" class="btn btn-primary"> Add Task&nbsp; <span class="glyphicon glyphicon-plus"></span></button>
 	    </form></span>
         </h3>
+        {% if project.task_set.all %}
 		<table class = "taskpool">
 		<tr>
 			<th>Name</th>
@@ -49,14 +63,18 @@ if (result == true) {
 				</tr>
     		{% endfor %}
 		</table>
-		
-		
-		<h3>Sprints
-        <span class = "pull-right" >         
+        {% else %}
+            <h4> No Tasks Added </h4>
+		{% endif %}
+        <!--Task table-->
+        
+        <!--Sprint Table-->
+		<h3>Sprints<span class = "pull-right" >         
         <form>
 			<button formaction="{% url 'add_sprint' project.id %}" class="btn btn-primary"> Add Sprint&nbsp; <span class="glyphicon glyphicon-plus"></span></button>
 	    </form></span>
         </h3>
+        {% if project.sprint_set.all %}
         <table class = "taskpool">
 		<tr>
 			<th>Name</th>
@@ -73,17 +91,13 @@ if (result == true) {
 				</tr>
     		{% endfor %}
 		</table>
- 
-		
-
-
-		<form>
-			<button formaction="{% url 'chart' project.id %}">Analysis</button>
-			<button formaction="{% url 'calendar' project.id  %}">Calendar View</button>
-		</form>
+         {% else %}
+            <h4> No Sprints Added </h4>
+		{% endif %}
+        <!--Sprint Table-->
         </div>
         
-        
+        <!--Project Info-->
         <div class = "col-md-3 proj-details ">
         <!--Not Edittable-->
         <div id="not_edittable" class = "projectdetails">

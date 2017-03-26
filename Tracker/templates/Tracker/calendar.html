@@ -1,44 +1,73 @@
-<!DOCTYPE html>
-<html>
-    <head>
+{% extends "Tracker/base.html" %}
+{% block nav-project %} active {% endblock %}
+{% block title %}Calendar{% endblock %}
+
+{% block content %}
+
         <style>
         .filled{
-            background-color: pink;
+            background-color: #c1495e;
+            color: #fff;
+            
         }
         .today {
-            background-color: #66ccff;
+            background-color: #337ab7;
+            color: #fff;
         }
         .noday{
             background-color: #f0f0f5;
         }
         .month {
-            border:1px solid navy;
-            width: 70%;
-            text-align: center;
+
+                border: 1px solid #ddd;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                transition: 0.3s;
+                text-align: center;
         }
         .month th {
             text-align: center;
             width:100px;
-            height:20px;
+            height:40px;
+            font-size:16px;
+            -webkit-box-shadow: 1px 1px 2px 0 #B0B0B0;
+            box-shadow: 1px 1px 2px 0 #B0B0B0;
+            border: 1px solid #dcdada;
         }
         .month td {
             width: 100px;
-            height: 100px;
+            height: 80px;
             vertical-align: top;
-            text-align: right;
-            border: 1px solid #c6c6ec;
+            text-align: left;
+            padding-left:5px;
+            font-size:14px;
+            -webkit-box-shadow: 1px 1px 2px 0 #B0B0B0;
+            box-shadow: 1px 1px 2px 0 #B0B0B0;
+            border: 1px solid #dcdada;
+            text-overflow: ellipsis
         }
         </style>
-    </head>
-    <body>
+        <ul class="nav nav-tabs project-nav">
+			<li>
+        <a  href="{% url 'edit_project' project_id  %}">Overview</a>
+			</li>
+			<li  class="active"><a href="{% url 'calendar' project_id  %}">Calendar</a>
+			</li>
+			<li><a href="{% url 'chart' project_id  %}">Analytics</a>
+			</li>
+		</ul>
+        <div class="container project-content">
+        
+
         {{ calendar }}
+        
         <form>
-        <button formaction="{% url 'calendar1' project_id member_id year month %}">Previous month</button>
-        <button formaction="{% url 'calendar2' project_id member_id year month %}">Next month</button>
-        <br><a href="{% url 'edit_project' project_id member_id %}" >Back</a>
+        <span class = "pull-left"><button class= "btn monthbutton" formaction="{% url 'calendar1' project_id year month %}"><i class="glyphicon glyphicon-arrow-left" style="font-size:14px;"></i>&nbsp;Previous Month</button></span>
+        <span class = "pull-right"><button class = "btn monthbutton" formaction="{% url 'calendar2' project_id year month %}">Next Month&nbsp;<i class="glyphicon glyphicon-arrow-right" style="font-size:14px;"></i></button></span>
     	</form>
+
+        </div>
     </body>
-</html>
+{% endblock %}
 
 
 

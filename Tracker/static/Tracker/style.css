@@ -10,6 +10,7 @@ body {
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
+    margin-bottom: 40px;
 }
 td, th{
     padding-top: 5px;
@@ -25,7 +26,7 @@ td, th{
     /*box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;*/
 }
-.pending ul {
+.pending ul , .sample, .add-to-sprint{
     padding-left: 0px;
     list-style-type: none;
     
@@ -127,7 +128,7 @@ td, th{
 .prodate{
     padding-right: 10px;
 }
-<<<<<<< HEAD
+
 #login_brand{
     margin-right:12px;
 
@@ -137,8 +138,7 @@ td, th{
     top:50%;
     margin-top:-12%;
 }
-=======
->>>>>>> b9ff88c4d9fd8c25afe17bd89556683f1f54772a
+
 .btn {
   -webkit-border-radius: 1;
   -moz-border-radius: 1;
@@ -157,26 +157,27 @@ td, th{
 
   text-decoration: none;
 }
-<<<<<<< HEAD
-#editbutton, #backbutton, #deletebutton{
+
+#editbutton, #backbutton, #deletebutton, .monthbuton{
     background-color: #fff;
     border:none;
     box-shadow:none;
 }
-#editbutton:hover, #backbutton:hover{
+#editbutton:hover, #backbutton:hover, .monthbutton{
     color:#337ab7;
+    background-color: #fff;
 }
-.proj-details, .chartcard{
+.proj-details, .chartcard, .sprint-details, .whitecard{
     background:#fff;
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     padding-bottom: 10px;
 }
-.proj-details th, #proj-details td {
+.proj-details th, .proj-details td, .sprint-details {
     vertical-align: top;
 }
-.proj-details th 
+.proj-details th, .sprint-details 
 {
     padding-right:10px;
 }
@@ -185,6 +186,7 @@ td, th{
 }
 #deletebutton:hover{
     color: #ff6969;
+    background-color: #fff;
 }
 #search-tag-card{
     margin-top:20px;
@@ -202,6 +204,49 @@ td, th{
     outline: none;
     box-radius: 2px;
 }
-=======
 
->>>>>>> b9ff88c4d9fd8c25afe17bd89556683f1f54772a
+.nodata{
+    color:#ada2a2;
+    left: 40%;
+    top: 80%;
+    text-align: center;
+
+}
+.mon, .tue, .wed, .thu, .fri, .sat, .sun, .noday{
+    background-color:#fff;
+    -webkit-box-shadow: 1px 1px 2px 0 #B0B0B0;
+    box-shadow: 1px 1px 2px 0 #B0B0B0;
+    transition: 0.3s;
+}
+.container .month{
+    margin: 0 auto;
+}
+.project-nav>li>a{
+  border: 1px solid rgb(212, 208, 208);
+  border-bottom: #dddddd;
+  background-color: #fff;
+  
+}
+.project-nav>li>a:hover{
+  border: 1px solid rgb(212, 208, 208);
+  border-bottom: #dddddd;
+  background-color: #337ab7;
+  color: #fff;
+  
+}
+.project-nav>li.active>a, 
+.project-nav>li.active>a:focus, 
+.project-nav>li.active>a:hover
+{
+    background-color: #f2f0f1;
+}
+
+.project-content
+{
+    padding-top:10px;
+}
+.add-to-sprint li{
+    padding-bottom: 8px;
+    font-size: 16px;
+}
+

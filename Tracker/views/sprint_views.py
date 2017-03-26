@@ -40,6 +40,14 @@ def edit_sprint(request,sprint_id):
     user = User.objects.get(username=request.user.username)
     completed_tp = 0
     total_tp = 0
+    open_tasks = 0
+    complete_tasks = 0
+    blocked_tasks = 0
+    open_tp = 0
+    complete_tp = 0
+    blocked_tp = 0
+    errorchart = 0
+    now = datetime.now(timezone.utc)
     t = task.objects.filter(tsprint = sprint_id)
     for tk in t:
         if tk.state == 'completed':
@@ -60,12 +68,63 @@ def edit_sprint(request,sprint_id):
     elif datetime.date(today) >= sp.end_date:
         st ="Sprint has Ended" 
     else: 
-        st=" " 
+        st=" "
+    #...........Charts..........
+    
+    if (sp.start_date<=sp.end_date):
+        days = (sp.end_date - sp.start_date).days
+        months = [dt for dt in rrule(MONTHLY, dtstart=sp.start_date, until=sp.end_date)]
+        dates = [dt for dt in rrule(DAILY, dtstart=sp.start_date, until=sp.end_date)]
+        years = months = [dt for dt in rrule(YEARLY, dtstart=sp.start_date, until=sp.end_date)]
+        errorchart = 0
+        
+    else:
+        months = []
+        dates = []
+        years = []
+        categories = []
+        idealdata = []
+        errorchart = 1
+
+    for e in t:
+        if e.state == 'open':
+            open_tasks = open_tasks + 1
+            open_tp = open_tp + e.tp
+        elif e.state == 'completed':
+            complete_tasks = complete_tasks + 1
+            complete_tp = complete_tp + e.tp
+        elif e.state == 'blocked':
+            blocked_tasks = blocked_tasks + 1
+            blocked_tp = blocked_tp + e.tp
+            
+    total_tasks = open_tasks + complete_tasks + blocked_tasks
+    total_tps = open_tp + complete_tp + blocked_tp
+    realdata = []
+    
+    for i in range(days+1):
+        x = sum(e.tp for e in t if datetime.date(e.created) <= (sp.start_date + timedelta(days=i)))
+        y = sum(e.tp for e in t if ((e.comp_time!=None) and (datetime.date(e.comp_time) <= (sp.start_date + timedelta(days=i) )) ))
+        realdata.append(x-y)
+        categories = [str(dt.day) + ' ' + dt.strftime("%b") for dt in dates]
+        diff = int(round(total_tps/(days+1)))
+        idealdata = [total_tps - (i*diff) for i in range(days+1)]
+    if total_tasks==0:
+        errorchart = 1
     context ={
         'sprint': sp,
         'form': form,
         'st': st,
         'user':user,
+        'complete_tasks': complete_tasks, 
+        'blocked_tasks': blocked_tasks, 
+        'open_tasks': open_tasks,
+        'days' : days,
+        'months': months,
+        'dates' : dates,
+        'categories' : categories,
+        'idealdata' : idealdata,
+        'realdata': realdata,
+        'errorchart': errorchart
       }
     return render(request, 'Tracker/edit_sprint.html', context)
 
@@ -117,7 +176,7 @@ def sprintchart(request,sprint_id):
             blocked_tp = blocked_tp + e.tp
             
     total_tasks = open_tasks + complete_tasks + blocked_tasks
-    total_tp = open_tp + complete_tp + blocked_tp
+    total_tps = open_tp + complete_tp + blocked_tp
     realdata = []
     
     for i in range(days+1):
@@ -125,8 +184,8 @@ def sprintchart(request,sprint_id):
         y = sum(e.tp for e in q if ((e.comp_time!=None) and (datetime.date(e.comp_time) <= (p.start_date + timedelta(days=i) )) ))
         realdata.append(x-y)
         categories = [str(dt.day) + ' ' + dt.strftime("%b") for dt in dates]
-        diff = int(round(total_tp/(days+1)))
-        idealdata = [total_tp - (i*diff) for i in range(days+1)]
+        diff = int(round(total_tps/(days+1)))
+        idealdata = [total_tps - (i*diff) for i in range(days+1)]
     
     '''elif days >= 365:
         categories = [dt.strftime("%b") + " '" + dt.strftime("%y") for dt in months]

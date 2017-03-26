@@ -7,6 +7,7 @@
    <script src="http://code.highcharts.com/highcharts.js"></script>
    <script src="http://code.highcharts.com/highcharts-3d.js"></script>
     <script>
+    {% if errorchart == 0%}
     function openChart(evt, chartName) {
     var i, tablinks;
     var x = document.getElementsByClassName("chartcard");
@@ -17,23 +18,38 @@
     for (i = 0; i < x.length; i++) {
         tablinks[i].className = tablinks[i].className.replace("btn-tab", "");
     }
-    document.getElementById(chartName).style.display = ""; 
+    document.getElementById(chartName).style.display = "block"; 
     evt.currentTarget.className += " btn-tab";
 }
+    {% endif %}
     </script>
+    <ul class="nav nav-tabs project-nav">
+			<li>
+        <a  href="{% url 'edit_project' project_id  %}">Overview</a>
+			</li>
+			<li><a href="{% url 'calendar' project_id  %}">Calendar</a>
+			</li>
+			<li  class="active"><a href="{% url 'chart' project_id  %}">Analytics</a>
+			</li>
+		</ul>
     
-    <div class = "container">
+    <div class = "container project-content">
+    
     <div id = "row">
     <div>
-    <button class="btn tablink" onclick="openChart(event, 'task')">Task States</button>
-    <button class="btn btn-tab tablink" onclick="openChart(event, 'burn')">Burndown</button>
+    <button class="pull-right btn btn-tab tablink" onclick="openChart(event, 'task')">Task States</button>
+    {% if errorchart == 0%}
+    <button class="pull-right btn tablink" onclick="openChart(event, 'burn')">Burndown</button>
+    {% endif %}
     </div>
-    <div class = "col chartcard" id = "task" style = "height:400px;">
+    <div class = "col chartcard" id = "task" style = "height:460px;">
     <div id="StatePie" style = "width = 100%; height:300px;"></div>
     </div>
-    <div class="col chartcard" id = "burn" style = "height:400px;">
+    {% if errorchart == 0%}
+    <div class="col chartcard" id = "burn" style = "height:460px;">
     <div id="Burndown" style = "width = 100%; height:400px;"></div>
     </div>
+    {% endif %}
     </div>
     </div>
     <script>

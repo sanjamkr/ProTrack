@@ -338,7 +338,8 @@ def pieview(request,project_id):
     elif days > 730:
         categories = [str(dt.year) for dt in years]'''
         
-    context = { 'complete_tasks': complete_tasks, 
+    context = { 'project_id': project_id,
+        'complete_tasks': complete_tasks, 
         'blocked_tasks': blocked_tasks, 
         'open_tasks': open_tasks,
         'days' : days,
@@ -355,8 +356,9 @@ def pieview(request,project_id):
         return render(request, 'Tracker/nochart.html', context)
 
 
-@login_required
+
 #.................................Calendar View............................
+
 class Calendar(HTMLCalendar):
 
     def __init__(self, my_tasks):
@@ -373,6 +375,7 @@ class Calendar(HTMLCalendar):
                 body = ['<ul class="sample">']
                 for workout in self.my_tasks[day]:
                     body.append('<li>')
+                    
                     #body.append('<a href="%s">' % workout.get_absolute_url())
                     #body.append('<a href="Tracker/calendar1/">')
                     body.append(esc(workout.tname))
@@ -401,6 +404,9 @@ class Calendar(HTMLCalendar):
 def calendar(request,project_id):
     try:
         user = User.objects.get(username=request.user.username)
+        is_member = Q(assign = user)
+        is_project = Q(tproject = project_id)
+        q2 = task.objects.filter(is_member & is_project)
         q = task.objects.filter(tproject = project_id)
         t = q.latest('due_date')
         year=t.due_date.year
@@ -410,7 +416,7 @@ def calendar(request,project_id):
         #return render_to_response('Tracker/calendar.html', {'calendar':(cal),})
         return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'user':user,'year':year,'month':month})
     except task.DoesNotExist:
-        return HttpResponse("There is no task associated with this project")  
+        return render(request, 'Tracker/nochart.html', {'project_id':project_id})  
 
 
 @login_required        
@@ -422,8 +428,14 @@ def calendar1(request,project_id,year,month):
         year=year-1
     else:
         month=month-1
-    q = task.objects.filter(tproject = project_id)
     user = User.objects.get(username=request.user.username)
+    is_member = Q(assign = user)
+    is_project = Q(tproject = project_id)
+    q2 = task.objects.filter(is_member & is_project)
+    q = task.objects.filter(tproject = project_id)
+    t = q.latest('due_date')
+
+
     my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
     cal = Calendar(my_tasks).formatmonth(year,month)
     return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'user':user,'year':year,'month':month})
@@ -439,7 +451,13 @@ def calendar2(request,project_id,year,month):
     else:
         month=month+1
     user = User.objects.get(username=request.user.username)
+    is_member = Q(assign = user)
+    is_project = Q(tproject = project_id)
+    q2 = task.objects.filter(is_member & is_project)
     q = task.objects.filter(tproject = project_id)
+    t = q.latest('due_date')
+
+
     my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
     cal = Calendar(my_tasks).formatmonth(year,month)
     return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'user':user,'year':year,'month':month})
