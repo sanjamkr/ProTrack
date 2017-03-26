@@ -14,19 +14,17 @@
 				<tr>
 					<th>Add to Sprint </th>
 					<td>
-				<!--		<select id="id_tsprint" name="tsprint">
-						<option value="" selected="selected">---------</option>
-						{% for s in project.sprint_set.all %}
+						<select id="id_tsprint" name="tsprint">
+							<option value="" selected="selected">---------</option>
+							{% for s in project.sprint_set.all %}
 							<option value="{{s.id}}">{{s.sname}}</option>
-						{% endfor %}
+							{% endfor %}
 						</select>
-					-->
-						{{form.tsprint}}
 					</td>
 				</tr>
 				<tr>
 					<th>Name </th>
-					<td> {{ form.tname }}</td>
+					<td onchange="ca()" > {{ form.tname }}</td>
 				</tr>
 				<tr>
 					<th>Description  </th>
@@ -39,14 +37,12 @@
 				<tr>
 				<th>Assignee </th>
 				<td>
-{{form.assign}}
-			<!--	<select id="id_assign" name="assign">
+				<select id="id_assign" name="assign">
 					<option value="" selected="selected">---------</option>
-					{% for m in project.pgroup.member_set.all %}
-						<option value="{{m.id}}">{{m.username}}</option>
+						{% for s in project.pgroup.user_set.all %}
+					<option value="{{s.id}}" >{{s.username}}</option>
 					{% endfor %}
 				</select>
--->
 				</td>
 				</tr>
 				<tr><th>Remainder </th><td> {{form.remainder}}</td></tr>
