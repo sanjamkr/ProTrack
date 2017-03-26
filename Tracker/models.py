@@ -3,6 +3,9 @@ from django.contrib.auth.models import User,Group
 
 import datetime
 
+class ProfileImage(models.Model):
+    image = models.FileField(upload_to='profile/%Y/%m/%d')
+
 #Projects associated with a Group
 
 class project(models.Model):                                                                 

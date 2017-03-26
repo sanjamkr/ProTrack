@@ -4,6 +4,10 @@ from .models import project,sprint,task,tag,comment
 from django.forms.extras.widgets import SelectDateWidget
 import datetime
 
+
+class ProfileImageForm(forms.Form):
+    image = forms.FileField(label='Select a profile Image')
+
 class NewProject(ModelForm):
     pdeadline = forms.DateField(widget=SelectDateWidget)
     class Meta:
