@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404, redirect
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User, Group
@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from datetime import datetime, timedelta
 from django.utils import timezone 
 from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
-from Tracker.forms import NewProject
+from Tracker.forms import NewProject, SignUpForm
 from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
 from calendar import HTMLCalendar
@@ -19,7 +19,6 @@ from django.views.generic import ListView
 import operator
 import re
 from django.db.models import Q
-
 from django.contrib.auth.decorators import login_required
 from django.views.generic import FormView, DetailView, ListView
 from Tracker.forms import ProfileImageForm
@@ -97,23 +96,27 @@ def log_end(request):
 
 def signup(request):
     if request.method == 'POST':
-        username= request.POST.get('username', None)
-        pwd = request.POST.get('password', None)
-        email = request.POST.get('email', None)
-        user = User.objects.create_user(username, email, pwd)
-        user.last_name = request.POST.get('lname', None)
-        user.first_name = request.POST.get('fname', None)
-        user.save()
-        group_name = request.POST.get('group',None)
-        g = Group.objects.get(name=group_name) 
-        g.user_set.add(user)
-        return HttpResponseRedirect('/Tracker/')
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data['email']
+            password = form.cleaned_data.get('password1')
+            user.set_password(password)
+            user.save()
+            group_name = request.POST.get('group',None)
+            g = Group.objects.get(name=group_name) 
+            g.user_set.add(user)
+            user = authenticate(username=username, password=password)
+            return redirect('log')
     else:
-        l = Group.objects.all()
-        context = {
-            'groups':l,
-        }
-        return render(request, 'Tracker/signup.html',context)
+        form = SignUpForm()
+    gl = Group.objects.all()
+    context = {
+        'groups':gl,
+        'form':form,
+    }
+    return render(request, 'Tracker/signup.html',context)
 
 #.....................Group..........................
 def add_group(request):

@@ -1,8 +1,6 @@
-
 {% load static %}
 
 <!DOCTYPE html>
-{% block content %}
 <html>
 	<head>
 	    <title>Sign Up - ProTrack</title>
@@ -13,59 +11,20 @@
 
 	</head>
 	<body>
-<script>
-	function confirm(){
-		var x=document.getElementById("id_password").value;
-		var y=document.getElementById("cpwd").value;
-		if(x != y){
-			document.getElementById('Error').style.display = "block";
-			return false
-		}
-		else{
-			document.getElementById('Error').style.display = "none";
-			return true
-		}
-	}
-</script>
-	<h1>SignUp</h1> 
-	<form action="{% url 'signup' %}" method="post" onsubmit="return confirm()">
-		{% csrf_token %}
-		<table>
-			<tr>
-				<td>First Name</td>
-				<td><input type=text name="fname"></td>
-			</tr>
-			<tr>
-				<td>Last Name</td>
-				<td><input type=text name="lname"></td>
-			</tr>
-			<tr>
-				<td>Email</td>
-				<td><input type=email name="email" required></td>
-			</tr>
-			<tr>
-				<td>UserName</td>
-				<td><input type=text name="username" required></td>
-			</tr>
-			<tr>
-				<td>Password</td>
-				<td><input  id=id_password name="password" required="" type="password"></td>
-			</tr>
-			<tr>
-				<td>Confirm Password</td>
-				<td><input onblur="confirm()" type=password name=pwd id=cpwd /></td>
-				<td id="Error" style="display: none;">Password Does Not Match</td>
-			</tr>
-			<tr>
-			<td>Group</td>
-			<td><select id="group" name="group">
-					<option value="" selected="selected">---------</option>
+
+		<h2>Sign up</h2>
+  		<form method="post">
+    	{% csrf_token %}
+    	{{ form.as_p }}
+		    <label>Group</label>
+			<select id="group" name="group">
+				<option value="" selected="selected">---------</option>
 				{% for group in groups %}
 					<option value="{{group.name}}" required >{{group.name}}</option>
 				{% endfor %}
-			</tr> 
-		</table>
-		<input type="submit" value="Submit" />
-	</form>
+			</select>
+    <button type="submit">Sign up</button>
+ </form>
 	<a href="{% url 'add_group' %}" >Add New Group</a>
-{% endblock %}
+</body>
+</html>
