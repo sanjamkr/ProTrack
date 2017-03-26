@@ -11,7 +11,7 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
 }
-td {
+td, th{
     padding-top: 5px;
 }
 .taskpool td, .taskpool th {
@@ -126,4 +126,75 @@ td {
 }
 .prodate{
     padding-right: 10px;
+}
+#login_brand{
+    margin-right:12px;
+
+}
+.login_middle{
+    position:absolute;
+    top:50%;
+    margin-top:-12%;
+}
+.btn {
+  -webkit-border-radius: 1;
+  -moz-border-radius: 1;
+  border-radius: 1px;
+  -webkit-box-shadow: 1px 1px 2px #adaaad;
+  -moz-box-shadow: 1px 1px 2px #adaaad;
+  box-shadow: 1px 1px 2px #adaaad;
+  font-family: Roboto,Arial;
+
+  font-size: 14px;
+
+  text-decoration: none;
+}
+
+.btn:hover {
+
+  text-decoration: none;
+}
+#editbutton, #backbutton, #deletebutton{
+    background-color: #fff;
+    border:none;
+    box-shadow:none;
+}
+#editbutton:hover, #backbutton:hover{
+    color:#337ab7;
+}
+.proj-details, .chartcard{
+    background:#fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-bottom: 10px;
+}
+.proj-details th, #proj-details td {
+    vertical-align: top;
+}
+.proj-details th 
+{
+    padding-right:10px;
+}
+#deletebutton{
+    color: red;
+}
+#deletebutton:hover{
+    color: #ff6969;
+}
+#search-tag-card{
+    margin-top:20px;
+}
+.chartcard{
+    margin-bottom: 100px;
+}
+.btn-tab{
+    background-color: #fff;
+    color: #000;
+    border: none;
+}
+.btn-tab:focus, .btn-tab:active{
+    border: none;
+    outline: none;
+    box-radius: 2px;
 }

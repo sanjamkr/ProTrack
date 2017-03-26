@@ -11,14 +11,16 @@
 
 	</head>
 	<body>
+    
         <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #fff ">
   <div class="container">
     <div class="navbar-header">
       <a class="navbar-brand" href="#">ProTrack</a>
     </div>
+    {% block nav %}
     <ul class="nav navbar-nav">
-      <li class="active"><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span> Dashboard</a></li>
-      <li class="dropdown">
+      <li{% block nav-home %} {% endblock %}> <a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span> Dashboard</a></li>
+      <li class=" {% block nav-project  %} {% endblock %} dropdown"> 
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-list-alt"></span> Projects<b class="caret"></b></a>
                 <ul role="menu" class="dropdown-menu">
                     {% for project in user.groups.all.0.project_set.all %}
@@ -29,6 +31,7 @@
             </li>
                 
          </ul> 
+         {% endblock %}
         		<ul class="nav navbar-nav navbar-right">
                 
                  <form class="navbar-form navbar-left" id="mainsearch" action = "{% url 'search' %}" method="get" accept-charset="utf-8">
@@ -41,7 +44,7 @@
     </div>
   </div>
 </form>
-      <li><a href="#"><span class="glyphicon glyphicon-bell"></span> Notifications</a></li>
+      <li {% block nav-noti %}><a href="#"><span class="glyphicon glyphicon-bell"></span> Notifications</a>{% endblock %}</li>
       <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
 
