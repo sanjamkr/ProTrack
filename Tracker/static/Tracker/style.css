@@ -127,6 +127,7 @@ td, th{
 .prodate{
     padding-right: 10px;
 }
+<<<<<<< HEAD
 #login_brand{
     margin-right:12px;
 
@@ -136,6 +137,8 @@ td, th{
     top:50%;
     margin-top:-12%;
 }
+=======
+>>>>>>> b9ff88c4d9fd8c25afe17bd89556683f1f54772a
 .btn {
   -webkit-border-radius: 1;
   -moz-border-radius: 1;
@@ -154,6 +157,7 @@ td, th{
 
   text-decoration: none;
 }
+<<<<<<< HEAD
 #editbutton, #backbutton, #deletebutton{
     background-color: #fff;
     border:none;
@@ -198,3 +202,6 @@ td, th{
     outline: none;
     box-radius: 2px;
 }
+=======
+
+>>>>>>> b9ff88c4d9fd8c25afe17bd89556683f1f54772a
