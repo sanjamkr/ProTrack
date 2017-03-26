@@ -21,14 +21,26 @@
       <li class="dropdown">
                 <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-list-alt"></span> Projects<b class="caret"></b></a>
                 <ul role="menu" class="dropdown-menu">
-                    {% for project in group.project_set.all %}
+                    {% for project in user.groups.all.0.project_set.all %}
                 
 				<li><a href= "{% url 'edit_project' project.id%}">{{ project.pname }}</a></li>
 			{% endfor %}
                 </ul>
             </li>
-         </ul>   
+                
+         </ul> 
         		<ul class="nav navbar-nav navbar-right">
+                
+                 <form class="navbar-form navbar-left" id="mainsearch" action = "{% url 'search' %}" method="get" accept-charset="utf-8">
+  <div class="input-group">
+    <input type="text" id = "searchbox" class="form-control" placeholder="Search" name="q">
+    <div class="input-group-btn">
+      <button class="btn btn-default" id="searchbutton" type="submit">
+        <i class="glyphicon glyphicon-search" style="font-size:14px;"></i>
+      </button>
+    </div>
+  </div>
+</form>
       <li><a href="#"><span class="glyphicon glyphicon-bell"></span> Notifications</a></li>
       <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>

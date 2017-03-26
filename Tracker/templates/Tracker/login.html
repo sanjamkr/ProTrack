@@ -1,5 +1,4 @@
 {% load static %}
-{% block title %}Login{% endblock %}
 
 {% block content %}
 		<link rel="stylesheet" type="text/css" href="{% static 'Tracker/css/bootstrap.min.css' %}" />
@@ -12,25 +11,31 @@
 				alert("Please Contact Admin");
 			}
 	</script>
+    <div class = "container login-middle">
+    <div class = "row">
+    <div class = "col-xs-6">
+    <h1><span id="login_brand" class="pull-right">ProTrack</span></h1>
+    </div>
+    <div class = " login-right col-xs-6">
+    
 	<h1>Login</h1>
 	<form action="{% url 'login_next' %}" method="post">
 		{% csrf_token %}
 		<table>
+
 			<tr>
-				<td>UserName</td>
+				<td><input placeholder = "Username" type=text name=name></td>
 			</tr>
+
 			<tr>
-				<td><input type=text name=name></td>
-			</tr>
-			<tr>
-				<td>Password</td>
-			</tr>
-			<tr>
-				<td><input type=password name=pwd></td>
+				<td><input type=password name=pwd placeholder="Password"></td>
 			</tr>
 		</table>
-		<input type=submit value=Login />
+		<input class = "btn btn-success"type=submit value=Login />
 	</form>
 	<a href="{% url 'signup' %}" >Register</a>
 	<a href="" onclick="fpassoverlay()" >Forgot Password</a>
+    </div>
+    </div>
+    </div>
 {% endblock %}

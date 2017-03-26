@@ -4,11 +4,12 @@ from django.http import HttpResponse,Http404,HttpResponseRedirect
 from datetime import datetime, timedelta
 from django.utils import timezone 
 from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
-from Tracker.models import sprint,project,task
+from django.contrib.auth.models import User, Group
+from Tracker.models import project,sprint,task,tag
 from Tracker.forms import NewSprint
 from django.contrib.auth.decorators import login_required
 
-from django.contrib.auth.models import User, Group
+
 from django.contrib.auth import authenticate, login, logout
 
 

@@ -3,10 +3,9 @@ from django.http import HttpResponse,Http404,HttpResponseRedirect
 #from datetime import datetime, timezone, timedelta
 from datetime import datetime, timedelta
 from django.utils import timezone 
-from Tracker.models import task,project,sprint
 from Tracker.forms import NewTask,NewComment,NewTag,NewSprint
-
 from django.contrib.auth.models import User, Group
+from Tracker.models import project,sprint,task,tag
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 

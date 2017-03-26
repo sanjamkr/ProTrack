@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^add_group/$',views.add_group, name='add_group'),
     #Others
     url(r'^add_project/$',views.add_project, name='add_project'),
+    url(r'^search/$', views.search, name ='search'),
     #Project
     url(r'^edit_project/(?P<project_id>[0-9]+)/$',views.edit_project, name='edit_project'),
     url(r'^delete_project/(?P<project_id>[0-9]+)/$',views.delete_project, name='delete_project'),

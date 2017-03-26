@@ -1,6 +1,6 @@
 {% extends "Tracker/base.html" %}
 
-{% block title %} Project Screen{% endblock %}
+{% block title %}{{project.pname}}{% endblock %}
 
 {% block content %}
 		<h1>Project View</h1>
@@ -37,7 +37,7 @@
 		<tr>
 			<th>Name</th>
 			<th>Due Date</th>
-			<th>Status</th>
+
 			<th>State</th>
 			<th>Assignee</th>
 			<th>Task Points</th>
@@ -46,7 +46,6 @@
     			<tr>
 	    			<td><a href= "{% url 'edit_task' task.id  %}">{{ task.tname }}</a></td>
 	    			<td> {{task.due_date|date:"j M 'y"}}</td> 
-					<td>  {{ task.status }}</td>
 					<td> {{ task.get_state_display }}</td>
 					<td> {{task.assign }}</td>
 					<td> {{task.tp}}</td>

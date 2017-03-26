@@ -1,10 +1,11 @@
 {% extends "Tracker/base.html" %}
 
-{% block title %} Home {% endblock %}
+{% block title %} Dashboard{% endblock %}
 
 {% block content %}
 		
 <div class="container">
+
         <div class = "row">
         <div class="col-md-9">
 
@@ -14,7 +15,7 @@
         <form>
 			<button formaction="{% url 'add_project' %}" class="btn pull-right btn-primary"> Add Project&nbsp; <span class="glyphicon glyphicon-plus"></span></button>
 	    </form>
-            <h3>{{group.gname}} Projects</h3>	
+            <h3>{{group.name}} Projects</h3>	
             
             <ul class = "grouplist">
                 <li class = "prolist">Name <span class = "prodate pull-right">Deadline</li>

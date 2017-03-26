@@ -117,11 +117,7 @@ td {
     font-size:18px;
     top:4px;
 }
-.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand{
-    position:absolute;
-    left: 50%;
-    margin-left:-50px;
-}
+
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover{
     background-color: #fff;
     border-bottom:  4px solid #337ab7;
