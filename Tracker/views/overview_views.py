@@ -56,7 +56,7 @@ def login_next(request):
         t = task.objects.filter(is_member & (is_blocked | is_open))
         t_count = task.objects.filter(is_member & (is_blocked | is_open)).count()
         nt_task = task.objects.filter(is_member)
-    
+       
         for t1 in t:
             if ((t1.due_date - datetime.date(today) ).days <= 2 ):
                 if (((t1.due_date - datetime.date(today) ).days >= 0 ) ):
@@ -70,7 +70,20 @@ def login_next(request):
             if(( datetime.date(today) - datetime.date(t2.created) ).days <= 2 ):
                 new_task.append(t2)
                 nt_count = nt_count+1
-            
+                
+        user_tp = []    
+        for member in g.user_set.all:
+             is_m = Q(assign = member)
+             inc_tp =0
+             c_tp = 0
+             tl = task.objects.filter(is_m)
+             t = task.objects.filter(is_m & (is_blocked | is_open))
+             for task in tl:
+                 if( task.state != 'completed'):
+                     inc_tp= inc_tp +task.tp    
+                 c_tp= c_tp +task.tp
+             user_tp.append((inc_tp/c_tp))    
+        
         noti = nd_count + nt_count + od_count        
         context ={
             'group': g,
@@ -84,7 +97,8 @@ def login_next(request):
             'nt_count':nt_count, 
             'od_count':od_count, 
             'over_due':over_due, 
-            'noti':noti
+            'noti':noti,
+            'tp_list':user_tp
         }
         return render(request,'Tracker/home.html',context)
     else:
@@ -166,6 +180,18 @@ def home(request):
             nt_count = nt_count+1
             
     noti = nd_count + nt_count + od_count
+    user_tp = []    
+    for member in g.user_set.all:
+        is_m = Q(assign = member)
+        inc_tp =0
+        c_tp = 0
+        tl = task.objects.filter(is_m)
+        t = task.objects.filter(is_m & (is_blocked | is_open))
+        for task in tl:
+            if( task.state != 'completed'):
+                inc_tp= inc_tp +task.tp    
+            c_tp= c_tp +task.tp
+        user_tp.append((inc_tp/c_tp))   
     context ={
         'group': g,
         'user': user,
@@ -178,7 +204,8 @@ def home(request):
         'nt_count':nt_count, 
         'od_count':od_count, 
         'over_due':over_due, 
-        'noti':noti
+        'noti':noti,
+        'tp_list':user_tp
     }
     return render(request,'Tracker/home.html',context)
 
