@@ -83,3 +83,19 @@ class comment(models.Model):
      member = models.ForeignKey(User)
      comment = models.CharField(max_length=500)
      ccreated = models.DateTimeField(auto_now_add=True)
+     
+#Notifications
+Noti_Types = (
+    ('nt','NewTask'),('nc','NewComment'),('od','OverDue'),('nd','NearDeadline'), ('ss', 'SprintStart'),('se','SprintEnd'),
+)
+class notification(models.Model):
+    type = models.CharField(max_length=50,choices=Noti_Types)
+    member = models.ForeignKey(User)
+    content = models.CharField(max_length=500)
+    read = models.BooleanField(default=False)
+    noti_date = models.DateTimeField()
+    noti_create = models.DateTimeField(auto_now_add=True)
+    
+    
+    
+    
