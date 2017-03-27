@@ -27,14 +27,17 @@
             </ul>
         </div>
         
-        <!--<div class= "col-md-4">
+        <!--<div class= "col-md-4">-->
 		<h3>Members</h3>	
 		<ul  class = "grouplist">
 			{% for user in group.user_set.all %}
-			<li>{{user.first_name}} {{user.last_name}}</li>
-		{% endfor %}
+				<li>{{user.first_name}} {{user.last_name}}</li>
+			{% endfor %}
+			{% for tp in tp_list %}
+				<li>{{tp}}</li>
+			{% endfor %}
 		</ul>
-	    </div>-->
+	   <!-- </div>-->
         </div>
         
         <!--ALL TASKS-->

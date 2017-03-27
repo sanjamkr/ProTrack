@@ -1,14 +1,9 @@
 from django.conf.urls import include, url
 #from django.contrib.auth import views as auth_views
-from django.conf.urls.static import static
-from django.conf import settings
 from . import views
-from Tracker.views import ProfileImageIndexView
-
 from django.contrib import admin
 admin.autodiscover()
 
-from Tracker.views import ProfileImageView, ProfileDetailView
 urlpatterns = [
     #Login
     url(r'^$',views.log, name='log'),
@@ -41,11 +36,7 @@ urlpatterns = [
     url(r'^edit_sprint/(?P<sprint_id>[0-9]+)/$',views.edit_sprint, name='edit_sprint'),
     url(r'^delete_sprint/(?P<sprint_id>[0-9]+)/$',views.delete_sprint, name='delete_sprint'),
     #Image
-	url(r'^$', ProfileImageView.as_view(), name='home'),
-    url(r'^upload/', ProfileImageView.as_view(), name='profile_image_upload'),
-    url(
-        r'^uploaded/(?P<pk>\d+)/$', ProfileImageView.as_view(),
-        name='profile_image'),
-    
-	]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^upload/(?P<project_id>[0-9]+)/', views.FileView, name='file_upload'),
+    url(r'^files/(?P<project_id>[0-9]+)/', views.FilesList, name='files'),
+    ]
  
