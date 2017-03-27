@@ -44,7 +44,7 @@
     </div>
   </div>
 </form>
-      <li {% block nav-noti %}><a href="#"><span class="glyphicon glyphicon-bell"></span> Notifications</a>{% endblock %}</li>
+      <li {% block nav-noti %}><a href="{% url 'notifications' %}"><span class="glyphicon glyphicon-bell"></span> Notifications</a>{% endblock %}</li>
       <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
 

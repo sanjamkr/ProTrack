@@ -2,7 +2,7 @@ from django.shortcuts import render,get_object_or_404, redirect
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User, Group
-from Tracker.models import project,sprint,task,tag, project_file
+from Tracker.models import project,sprint,notification,task,tag, project_file
 from django.contrib.auth import authenticate, login, logout
 #from datetime import datetime, timezone, timedelta
 from datetime import datetime, timedelta
@@ -204,6 +204,10 @@ def FileView(request,project_id):
         form = NewFile(request.POST,request.FILES)
         if form.is_valid():
             form.save()
+            p = get_object_or_404(project,pk=project_id)            
+            user = User.objects.get(username=request.user.username)
+            g = user.groups.all()[0]
+            n = notification.objects.create(type='uf', membergroup=g, othermember = user.username, content=p.pname, urlid=p.id, read=False, noti_date = datetime.now())
             return HttpResponseRedirect('/Tracker/edit_project/'+project_id+'/')
     else:
         p = get_object_or_404(project,pk=project_id)
@@ -221,9 +225,12 @@ def FilesList(request,project_id):
 @login_required
 def add_project(request):
     if request.method == 'POST':
-        form = NewProject(request.POST)
-        if form.is_valid():
+        form = NewProject(request.POST)        
+        if form.is_valid():   
+            user = User.objects.get(username=request.user.username)
+            g = request.user.groups.all()[0]
             new_project = form.save()
+            n = notification.objects.create(type='np', membergroup=g, othermember = user.username, content=new_project.pname, urlid=new_project.id, read=False, noti_date = new_project.pcreated)
             return HttpResponseRedirect('/Tracker/home')
     else:
         user = User.objects.get(username=request.user.username)
@@ -520,3 +527,15 @@ def search(request):
         sprint_entries = sprint.objects.filter(is_group_sprint & sprint_query).order_by('-start_date')
     return render(request, 'Tracker/searchresults.html', { 'query_string': query_string, 'task_entries': task_entries, 'project_entries': project_entries, 'sprint_entries': sprint_entries })
 
+#...............Notification..............
+
+def notifications(request):
+    user = User.objects.get(username=request.user.username)
+    g = user.groups.all()[0]
+    is_member = Q(member = user)
+    is_group = Q(membergroup = g)
+    is_not_othermember = Q(othermember = user.username)
+    my_notis = notification.objects.filter(is_member | (is_group & ~(is_not_othermember))).order_by('-noti_create')
+    context = { 'my_notis': my_notis,
+    }
+    return render(request, 'Tracker/notifications.html', context)

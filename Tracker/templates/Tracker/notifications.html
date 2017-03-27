@@ -1,0 +1,32 @@
+{% extends "Tracker/base.html" %}
+
+{% block title %} Notifications {% endblock %}
+
+{% block content %}
+
+ <ul>
+                          {% for noti in my_notis %}
+                          
+                            {% if noti.type == "nt" %}
+                            <a href= "{% url 'edit_task' noti.urlid%}"><li>You were assigned a new task by {{noti.othermember}} : {{noti.content}}</li></a>
+                            {% endif %}
+                            {% if noti.type == "nc" %}
+                            <a href= "{% url 'edit_task' noti.urlid%}"><li>{{noti.othermember}} commented on your task : {{ noti.content }}</li></a>
+                            {% endif %}
+                            {% if noti.type == "mc" %}
+                            <a href= "{% url 'edit_task' noti.urlid%}"><li>{{noti.othermember}} mentioned you in a comment : {{ noti.content }}</li></a>
+                            {% endif %}
+                            {% if noti.type == "np" %}
+                            <a href= "{% url 'edit_project' noti.urlid%}"><li>{{noti.othermember}} added a new Project: {{ noti.content }}</li></a>
+                            {% endif %}
+                            {% if noti.type == "ns" %}
+                            <a href= "{% url 'edit_sprint' noti.urlid%}"><li>{{noti.othermember}} added a new Sprint : {{ noti.content }}</li></a>
+                            {% endif %}
+                            {% if noti.type == "uf" %}
+                            <a href= "{% url 'edit_project' noti.urlid%}"><li>{{noti.othermember}} uploaded a new file to project {{ noti.content }}</li></a>
+                            {% endif %}
+                            
+                          {% endfor %}
+                        </ul>
+</body>
+{% endblock %}

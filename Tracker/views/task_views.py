@@ -6,21 +6,26 @@ from datetime import datetime, timedelta
 from django.utils import timezone 
 from Tracker.forms import NewTask,NewComment,NewTag,NewSprint
 from django.contrib.auth.models import User, Group
-from Tracker.models import project,sprint,task,tag
+from Tracker.models import project,sprint,task,tag,notification
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 @login_required
 def add_task(request,project_id):
+    user = User.objects.get(username=request.user.username)
+    g = user.groups.all()[0]
     if request.method == 'POST':
         form = NewTask(request.POST)
         if form.is_valid():
             new_task = form.save()
+            if(new_task.assign != user):
+                n = notification.objects.create(type='nt', member=new_task.assign, othermember = user.username, content=new_task.tname, urlid=new_task.id, read=False, noti_date = new_task.created)
             return HttpResponseRedirect('/Tracker/edit_project/'+str(new_task.tproject.id)+'/')
     else:
         user = User.objects.get(username=request.user.username)
         p = get_object_or_404(project,pk=project_id)
         form = NewTask(initial={'tproject': p })
+
     return render(request, 'Tracker/add_task.html', {'form': form,'project':p,'user':user})
 
 @login_required
@@ -159,10 +164,18 @@ def delete_task(request,task_id):
 
 @login_required
 def add_comment(request,task_id):
+   
     if request.method == 'POST':
         form = NewComment(request.POST)
+        
         if form.is_valid():
             new_comment = form.save()
+            t = get_object_or_404(task,pk=task_id)
+            user = User.objects.get(username=request.user.username)
+            if(t.assign != user):
+                n = notification.objects.create(type='nc', member=t.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
+                if user.username in new_comment.comment:
+                    n2 = notification.objects.create(type='nc', member=t.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
             return HttpResponseRedirect('/Tracker/edit_task/'+str(new_comment.task.id)+'/')
     else:
         t = get_object_or_404(task,pk=task_id)

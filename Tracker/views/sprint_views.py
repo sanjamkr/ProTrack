@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from django.utils import timezone 
 from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
 from django.contrib.auth.models import User, Group
-from Tracker.models import project,sprint,task,tag
+from Tracker.models import project,sprint,task,tag,notification
 from Tracker.forms import NewSprint
 from django.contrib.auth.decorators import login_required
 
@@ -19,6 +19,9 @@ def add_sprint(request,project_id):
         form = NewSprint(request.POST)
         if form.is_valid():
             new_sprint = form.save()
+            user = User.objects.get(username=request.user.username)
+            g = request.user.groups.all()[0]            
+            n = notification.objects.create(type='ns', membergroup=g, othermember = user.username, content=new_sprint.sname, urlid=new_sprint.id, read=False, noti_date = new_sprint.screated)
             return HttpResponseRedirect('/Tracker/edit_project/'+str(new_sprint.project.id)+'/')
     else:
         user = User.objects.get(username=request.user.username)

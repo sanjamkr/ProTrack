@@ -39,5 +39,7 @@ urlpatterns = [
     #Image
     url(r'^upload/(?P<project_id>[0-9]+)/', views.FileView, name='file_upload'),
     url(r'^files/(?P<project_id>[0-9]+)/', views.FilesList, name='files'),
+    #Notifications
+    url(r'^notifications/$',views.notifications, name='notifications'),
     ]
  

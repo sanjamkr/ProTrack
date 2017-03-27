@@ -20,6 +20,7 @@ class project(models.Model):
 class project_file(models.Model):
     fproject = models.ForeignKey(project, on_delete=models.CASCADE)
     file = models.FileField(upload_to='ProjectFiles/%Y/%m')
+
 #.................................
 
 Priority_Choices = (
@@ -35,6 +36,7 @@ class sprint(models.Model):
     sname = models.CharField(max_length=100,verbose_name='Sprint Name')
     start_date = models.DateField('start date')
     end_date = models.DateField('end date')
+    screated = models.DateTimeField(auto_now_add=True)
   
     def __str__(self):
         return self.sname
@@ -86,12 +88,15 @@ class comment(models.Model):
      
 #Notifications
 Noti_Types = (
-    ('nt','NewTask'),('nc','NewComment'),('od','OverDue'),('nd','NearDeadline'), ('ss', 'SprintStart'),('se','SprintEnd'),
+    ('nt','NewTask'),('np', 'NewProject'),('ns', 'NewSprint'), ('nc','NewComment'),('mc','MentionComment'),('od','OverDue'),('nd','NearDeadline'), ('ss', 'SprintStart'),('se','SprintEnd'),('et', 'EditTask'),('ep','EditProject'),
 )
 class notification(models.Model):
     type = models.CharField(max_length=50,choices=Noti_Types)
-    member = models.ForeignKey(User)
+    member = models.ForeignKey(User, null=True)
+    membergroup = models.ForeignKey(Group, null=True)
     content = models.CharField(max_length=500)
+    urlid = models.CharField(max_length=500, null=True)
+    othermember = models.CharField(max_length=500, null=True)
     read = models.BooleanField(default=False)
     noti_date = models.DateTimeField()
     noti_create = models.DateTimeField(auto_now_add=True)
