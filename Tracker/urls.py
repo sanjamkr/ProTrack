@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^home/$',views.home,name='home'),
     url(r'^log_end/$',views.log_end,name='logout'),
     url(r'^add_group/$',views.add_group, name='add_group'),
+    url(r'^group/$',views.group, name='group'),
     #Others
     url(r'^add_project/$',views.add_project, name='add_project'),
     url(r'^search/$', views.search, name ='search'),

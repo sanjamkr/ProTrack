@@ -20,5 +20,6 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^Tracker/', include('Tracker.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
