@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import project,sprint,task,tag,comment
+from .models import project,sprint,task,tag,comment,project_file
 
 class projectAdmin(admin.ModelAdmin):
 	list_display = ('id','pname','pgroup','pcreated','pdeadline')
@@ -20,3 +20,5 @@ admin.site.register(tag,tagAdmin)
 class commentAdmin(admin.ModelAdmin):
         list_display = ('id','task','comment','member','ccreated')
 admin.site.register(comment,commentAdmin)
+
+admin.site.register(project_file)

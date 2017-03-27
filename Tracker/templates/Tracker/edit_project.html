@@ -29,9 +29,11 @@ if (result == true) {
 			</li>
 			<li><a href="{% url 'chart' project.id  %}">Analytics</a>
 			</li>
+			<li><a href="{% url 'files' project.id  %}">Project Files</a>
+			</li>
 		</ul>
         <!--Tab Navigation-->
-
+        <a href="{% url 'file_upload' project.id  %}">Upload a file</a>
     <div class= "container project-content">
     
      <div class = "row">

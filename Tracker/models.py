@@ -3,8 +3,6 @@ from django.contrib.auth.models import User,Group
 
 import datetime
 
-class ProfileImage(models.Model):
-    image = models.FileField(upload_to='profile/%Y/%m/%d')
 
 #Projects associated with a Group
 
@@ -18,6 +16,10 @@ class project(models.Model):
     def __str__(self):
         return self.pname
 
+
+class project_file(models.Model):
+    fproject = models.ForeignKey(project, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='ProjectFiles/%Y/%m')
 #.................................
 
 Priority_Choices = (

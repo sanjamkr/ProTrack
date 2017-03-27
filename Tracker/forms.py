@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 from django import forms
-from .models import project,sprint,task,tag,comment
+from .models import project,sprint,task,tag,comment,project_file
 from django.forms.extras.widgets import SelectDateWidget
 import datetime
 from django.contrib.auth.forms import UserCreationForm
@@ -15,8 +15,10 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
 
-class ProfileImageForm(forms.Form):
-    image = forms.FileField(label='Select a profile Image')
+class NewFile(ModelForm):
+     class Meta:
+        model = project_file
+        fields = ['fproject','file']
 
 class NewProject(ModelForm):
     pdeadline = forms.DateField(widget=SelectDateWidget)

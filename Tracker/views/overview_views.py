@@ -2,13 +2,13 @@ from django.shortcuts import render,get_object_or_404, redirect
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User, Group
-from Tracker.models import project,sprint,task,tag
+from Tracker.models import project,sprint,task,tag, project_file
 from django.contrib.auth import authenticate, login, logout
 #from datetime import datetime, timezone, timedelta
 from datetime import datetime, timedelta
 from django.utils import timezone 
 from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
-from Tracker.forms import NewProject, SignUpForm
+from Tracker.forms import NewProject, SignUpForm, NewFile
 from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
 from calendar import HTMLCalendar
@@ -21,8 +21,6 @@ import re
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.views.generic import FormView, DetailView, ListView
-from Tracker.forms import ProfileImageForm
-from Tracker.models import ProfileImage
 
 #............Login...............
 
@@ -71,18 +69,6 @@ def login_next(request):
                 new_task.append(t2)
                 nt_count = nt_count+1
                 
-        user_tp = []    
-        for member in g.user_set.all:
-             is_m = Q(assign = member)
-             inc_tp =0
-             c_tp = 0
-             tl = task.objects.filter(is_m)
-             t = task.objects.filter(is_m & (is_blocked | is_open))
-             for task in tl:
-                 if( task.state != 'completed'):
-                     inc_tp= inc_tp +task.tp    
-                 c_tp= c_tp +task.tp
-             user_tp.append((inc_tp/c_tp))    
         
         noti = nd_count + nt_count + od_count        
         context ={
@@ -98,7 +84,6 @@ def login_next(request):
             'od_count':od_count, 
             'over_due':over_due, 
             'noti':noti,
-            'tp_list':user_tp
         }
         return render(request,'Tracker/home.html',context)
     else:
@@ -180,18 +165,7 @@ def home(request):
             nt_count = nt_count+1
             
     noti = nd_count + nt_count + od_count
-    user_tp = []    
-    for member in g.user_set.all:
-        is_m = Q(assign = member)
-        inc_tp =0
-        c_tp = 0
-        tl = task.objects.filter(is_m)
-        t = task.objects.filter(is_m & (is_blocked | is_open))
-        for task in tl:
-            if( task.state != 'completed'):
-                inc_tp= inc_tp +task.tp    
-            c_tp= c_tp +task.tp
-        user_tp.append((inc_tp/c_tp))   
+    
     context ={
         'group': g,
         'user': user,
@@ -205,38 +179,30 @@ def home(request):
         'od_count':od_count, 
         'over_due':over_due, 
         'noti':noti,
-        'tp_list':user_tp
     }
     return render(request,'Tracker/home.html',context)
 
 #.........Project Views..................
 
-class ProfileImageView(FormView):
-    template_name = 'Tracker/profile_image_form.html'
-    form_class = ProfileImageForm
+@login_required
+def FileView(request,project_id):
+    if request.method == 'POST':
+        form = NewFile(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/Tracker/edit_project/'+project_id+'/')
+    else:
+        p = get_object_or_404(project,pk=project_id)
+        user = User.objects.get(username=request.user.username)
+        form = NewFile(initial={'fproject': p })
+        return render(request, 'Tracker/file_form.html', {'form': form,'project':p,'user':user})
 
-    def form_valid(self, form):
-        profile_image = ProfileImage(
-            image=self.get_form_kwargs().get('files')['image'])
-        profile_image.save()
-        self.id = profile_image.id
-
-        return HttpResponseRedirect(self.get_success_url())
-
-    def get_success_url(self):
-        return reverse('profile_image', kwargs={'pk': self.id})
-
-class ProfileDetailView(DetailView):
-    model = ProfileImage
-    template_name = 'Tracker/profile_image_view.html'
-    context_object_name = 'image'
-
-
-class ProfileImageIndexView(ListView):
-    model = ProfileImage
-    template_name = 'Tracker/profile_image_view.html'
-    context_object_name = 'images'
-    queryset = ProfileImage.objects.all()
+@login_required
+def FilesList(request,project_id):
+    p = get_object_or_404(project,pk=project_id)
+    files = project_file.objects.filter(fproject = p)
+    user = User.objects.get(username=request.user.username)
+    return render(request, 'Tracker/view_files.html', {'project':p,'user':user,'files':files})
 
 @login_required
 def add_project(request):
