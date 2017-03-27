@@ -1,11 +1,36 @@
 {% extends "Tracker/base.html" %}
-
+{% block nav-project %} active {% endblock %}
 {% block title %} View Files {% endblock %}
 
 {% block content %}
-<ul>
+        <ul class="nav nav-tabs project-nav">
+			<li>
+        <a  href="{% url 'edit_project' project.id  %}">{{project.pname}} Overview</a>
+			</li>
+			<li><a href="{% url 'calendar' project.id  %}">Calendar</a>
+			</li>
+			<li><a href="{% url 'chart' project.id  %}">Analytics</a>
+			</li>
+            <li  class="active"><a href="{% url 'files' project.id  %}">Files</a>
+			</li>
+		</ul>
+        <div class="container project-content">
+
+    <div class = "row filerow">
+    {% if files %}
 	{% for f in files %}
-			<li><a href={{f.file.url}}>{{ f.file }}</a></li>	
+			<div class = "col-sm-2 filecard">
+            
+            <a href="{{f.file.url}}">{{ f.filename }}</a>
+            </div>            
 	{% endfor %}
-</ul>
+    </div>
+    {% else %}
+            <p>No files uploaded</p>
+    {% endif %}
+    <form>
+    <button class="btn btn-primary" formaction="{% url 'file_upload' project.id  %}">Upload File</button>
+    </form>
+    </div>
+
 {% endblock %}

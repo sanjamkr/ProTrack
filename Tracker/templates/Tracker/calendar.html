@@ -48,22 +48,24 @@
         </style>
         <ul class="nav nav-tabs project-nav">
 			<li>
-        <a  href="{% url 'edit_project' project_id  %}">Overview</a>
+        <a  href="{% url 'edit_project' project_id  %}">{{project.pname}} Overview</a>
 			</li>
 			<li  class="active"><a href="{% url 'calendar' project_id  %}">Calendar</a>
 			</li>
 			<li><a href="{% url 'chart' project_id  %}">Analytics</a>
 			</li>
+            <li><a href="{% url 'files' project_id  %}">Files</a>
+			</li>
 		</ul>
         <div class="container project-content">
         
-
-        {{ calendar }}
-        
+                
         <form>
         <span class = "pull-left"><button class= "btn monthbutton" formaction="{% url 'calendar1' project_id year month %}"><i class="glyphicon glyphicon-arrow-left" style="font-size:14px;"></i>&nbsp;Previous Month</button></span>
         <span class = "pull-right"><button class = "btn monthbutton" formaction="{% url 'calendar2' project_id year month %}">Next Month&nbsp;<i class="glyphicon glyphicon-arrow-right" style="font-size:14px;"></i></button></span>
     	</form>
+
+        {{ calendar }}
 
         </div>
     </body>

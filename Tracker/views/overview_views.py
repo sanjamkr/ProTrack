@@ -70,7 +70,7 @@ def login_next(request):
                 nt_count = nt_count+1
                 
         
-        noti = nd_count + nt_count + od_count        
+        noti = nd_count + od_count        
         context ={
             'group': g,
             'user': user,
@@ -178,7 +178,7 @@ def home(request):
             new_task.append(t2)
             nt_count = nt_count+1
             
-    noti = nd_count + nt_count + od_count
+    noti = nd_count + od_count
     
     context ={
         'group': g,
@@ -356,6 +356,7 @@ def pieview(request,project_id):
         categories = [str(dt.year) for dt in years]'''
         
     context = { 'project_id': project_id,
+        'project': p,
         'complete_tasks': complete_tasks, 
         'blocked_tasks': blocked_tasks, 
         'open_tasks': open_tasks,
@@ -375,7 +376,7 @@ def pieview(request,project_id):
 
 
 #.................................Calendar View............................
-@login_required
+
 class Calendar(HTMLCalendar):
 
     def __init__(self, my_tasks):
@@ -419,6 +420,7 @@ class Calendar(HTMLCalendar):
 
 @login_required
 def calendar(request,project_id):
+    p = get_object_or_404(project,pk=project_id)
     try:
         user = User.objects.get(username=request.user.username)
         is_member = Q(assign = user)
@@ -431,13 +433,14 @@ def calendar(request,project_id):
         my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
         cal = Calendar(my_tasks).formatmonth(year,month)
         #return render_to_response('Tracker/calendar.html', {'calendar':(cal),})
-        return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'user':user,'year':year,'month':month})
+        return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
     except task.DoesNotExist:
-        return render(request, 'Tracker/nochart.html', {'project_id':project_id})  
+        return render(request, 'Tracker/nochart.html', {'project_id':project_id,'project':p})  
 
 
 @login_required        
 def calendar1(request,project_id,year,month):
+    p = get_object_or_404(project,pk=project_id)
     year=int(year)
     month=int(month)
     if month<2: 
@@ -455,11 +458,12 @@ def calendar1(request,project_id,year,month):
 
     my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
     cal = Calendar(my_tasks).formatmonth(year,month)
-    return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'user':user,'year':year,'month':month})
+    return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
 
 
 @login_required
 def calendar2(request,project_id,year,month):
+    p = get_object_or_404(project,pk=project_id)
     year=int(year)
     month=int(month)
     if month>11:    
@@ -477,7 +481,7 @@ def calendar2(request,project_id,year,month):
 
     my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
     cal = Calendar(my_tasks).formatmonth(year,month)
-    return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project_id':project_id,'user':user,'year':year,'month':month})
+    return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
 
 #..............................Search....................................
 @login_required

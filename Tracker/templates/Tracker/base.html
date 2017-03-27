@@ -15,7 +15,7 @@
         <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #fff ">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">ProTrack</a>
+      <a class="navbar-brand" href="#"><img src="{% static 'Tracker/protrack.png'  %}" height = "30px"></a>
     </div>
     {% block nav %}
     <ul class="nav navbar-nav">
@@ -31,7 +31,7 @@
             </li>
                 
          </ul> 
-         {% endblock %}
+         
         		<ul class="nav navbar-nav navbar-right">
                 
                  <form class="navbar-form navbar-left" id="mainsearch" action = "{% url 'search' %}" method="get" accept-charset="utf-8">
@@ -44,9 +44,10 @@
     </div>
   </div>
 </form>
-      <li {% block nav-noti %}><a href="{% url 'notifications' %}"><span class="glyphicon glyphicon-bell"></span> Notifications</a>{% endblock %}</li>
+      <li class="{% block nav-noti %} {% endblock %}"><a href="{% url 'notifications' %}"><span class="glyphicon glyphicon-bell"></span> Notifications</a></li>
       <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
     </ul>
+    {% endblock %}
 
 
 

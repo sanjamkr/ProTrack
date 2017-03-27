@@ -1,5 +1,5 @@
 {% extends "Tracker/base.html" %}
-
+{% block nav-project %} active {% endblock %}
 {% block title %} Sprint Screen{% endblock %}
 
 {% block content %}
@@ -143,9 +143,9 @@ if (result == true) {
                 <form>
     			<li><a href= "{% url 'edit_task' task.id  %}">{{ task.tname }}</a> &nbsp 
                 {% if task in sprint.task_set.all %}
-                <button formaction="{% url 'tsr' task.id  sprint.id %}" class="btn btn-xs btn-danger sprintbtn"><span style="font-size:12px;" class="glyphicon glyphicon-minus-sign"></span>&nbsp;</button>
+                <button formaction="{% url 'tsr' task.id  sprint.id %}" class="btn btn-xs btn-danger pull-right sprintbtn"><span style="font-size:12px;" class="glyphicon glyphicon-minus-sign"></span>&nbsp;</button>
                 {% else %}
-                <button formaction="{% url 'ts' task.id  sprint.id %}" class="btn btn-xs btn-success sprintbtn"> <span style="font-size:12px;"class="glyphicon glyphicon-plus-sign"></span>&nbsp;</button>
+                <button formaction="{% url 'ts' task.id  sprint.id %}" class="btn btn-xs btn-success pull-right sprintbtn"> <span style="font-size:12px;"class="glyphicon glyphicon-plus-sign"></span>&nbsp;</button>
                 {% endif %}
                 </li>
                 </form>

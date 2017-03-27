@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User,Group
-
+import os
 import datetime
 
 
@@ -21,6 +21,8 @@ class project_file(models.Model):
     fproject = models.ForeignKey(project, on_delete=models.CASCADE)
     file = models.FileField(upload_to='ProjectFiles/%Y/%m')
 
+    def filename(self):
+        return os.path.basename(self.file.name)
 #.................................
 
 Priority_Choices = (

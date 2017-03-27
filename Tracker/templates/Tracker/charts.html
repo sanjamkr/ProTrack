@@ -25,11 +25,13 @@
     </script>
     <ul class="nav nav-tabs project-nav">
 			<li>
-        <a  href="{% url 'edit_project' project_id  %}">Overview</a>
+        <a  href="{% url 'edit_project' project_id  %}">{{project.pname}} Overview</a>
 			</li>
 			<li><a href="{% url 'calendar' project_id  %}">Calendar</a>
 			</li>
 			<li  class="active"><a href="{% url 'chart' project_id  %}">Analytics</a>
+			</li>
+            <li><a href="{% url 'files' project_id  %}">Files</a>
 			</li>
 		</ul>
     

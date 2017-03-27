@@ -23,17 +23,17 @@ if (result == true) {
         <!--Tab Navigation-->
         <ul class="nav nav-tabs project-nav">
 			<li class="active">
-        <a  href="{% url 'edit_project' project.id  %}">Overview</a>
+        <a  href="{% url 'edit_project' project.id  %}">{{project.pname}} Overview</a>
 			</li>
 			<li><a href="{% url 'calendar' project.id  %}">Calendar</a>
 			</li>
 			<li><a href="{% url 'chart' project.id  %}">Analytics</a>
 			</li>
-			<li><a href="{% url 'files' project.id  %}">Project Files</a>
+			<li><a href="{% url 'files' project.id  %}">Files</a>
 			</li>
 		</ul>
         <!--Tab Navigation-->
-        <a href="{% url 'file_upload' project.id  %}">Upload a file</a>
+        
     <div class= "container project-content">
     
      <div class = "row">
