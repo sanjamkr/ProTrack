@@ -283,17 +283,6 @@ def delete_project(request,project_id):
     project.objects.filter(id=project_id).delete()
     return HttpResponseRedirect('/Tracker/home/')
 
-
-@login_required
-def search_tag(request):
-    tag_name = request.POST.get('textfield', None)
-    try:
-        user = tag.objects.get(tag = tag_name)
-        html = ("<h1>Tasks Associated With Tag</h1>", user.task)
-        return HttpResponse(html)
-    except tag.DoesNotExist:
-        return HttpResponse("There is no task associated with this tag")  
-
 #..........................Project Analysis.............................
 @login_required
 def pieview(request,project_id):
@@ -517,6 +506,7 @@ def search(request):
     is_group = Q(pgroup = g)
     is_group_task= Q(tproject__pgroup__id = g.id)
     is_group_sprint = Q(project__pgroup__id=g.id)
+    is_group_tag = Q(task__tproject__pgroup__id = g.id)
     query_string = ''
     found_entries = None
     if ('q' in request.GET) and request.GET['q'].strip():
@@ -525,11 +515,31 @@ def search(request):
         task_query = get_query(query_string, ['tname', 'desc',])
         project_query = get_query(query_string, ['pname', 'pdesc',])
         sprint_query = get_query(query_string, ['sname',])
+        tag_query = get_query(query_string, ['tag',])
+        
         
         task_entries = task.objects.filter(is_group_task & task_query).order_by('-created')
         project_entries = project.objects.filter(is_group & project_query).order_by('-pdeadline')
         sprint_entries = sprint.objects.filter(is_group_sprint & sprint_query).order_by('-start_date')
-    return render(request, 'Tracker/searchresults.html', { 'query_string': query_string, 'task_entries': task_entries, 'project_entries': project_entries, 'sprint_entries': sprint_entries })
+        tag_entries = tag.objects.filter(is_group_tag & tag_query)
+        
+    return render(request, 'Tracker/searchresults.html', { 'query_string': query_string, 'task_entries': task_entries, 'project_entries': project_entries, 'sprint_entries': sprint_entries, 'tag_entries': tag_entries })
+@login_required
+def search_tag(request):
+    user = User.objects.get(username=request.user.username)
+    g = user.groups.all()[0]
+    is_group = Q(pgroup = g)
+    is_group_tag = Q(task__tproject__pgroup__id = g.id)
+    query_string = ''
+    found_entries = None
+    tag_entries=[]
+    if ('q' in request.GET) and request.GET['q'].strip():
+        query_string = request.GET['q']
+        tag_query = get_query(query_string, ['tag',])
+        tag_entries = tag.objects.filter(is_group_tag & tag_query)
+    return render(request, 'Tracker/searchresults.html', { 'query_string': query_string, 'tag_entries': tag_entries})
+
+
 
 #...............Notification..............
 @login_required

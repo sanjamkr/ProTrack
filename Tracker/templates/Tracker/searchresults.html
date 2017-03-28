@@ -67,16 +67,34 @@
 
 </div>
 {% endif %}
+{% if tag_entries %}
+    <div class="col-md-4">
+    <h3>Task Tags</h3>
+    {% for entry in tag_entries %}
+    <div class = "searchcard">
+    <span class= "tags searchtag">{{entry.tag}}</span>
+    <a href= "{% url 'edit_task' entry.task.id%}"><strong>{{ entry.task.tname }}</strong></a>
+        <p class = "tdetails">
+        {{entry.task.desc}}
+        <br>
+        Project: {{entry.task.tproject}}
+        </p>
+    </div>
+{% endfor %}
+{% endif %}
 </div>
 <!--No Results-->
-{%if task_entries|length <= 0 %}
-    {% if project_entries|length <= 0%}
+{% if task_entries|length <= 0 %}
+    {% if project_entries|length <= 0 %}
         {% if sprint_entries|length <= 0 %}
+            {% if tag_entries|length <= 0 %}
         <h3> No Results Found </h3>
         {% endif %}
     {% endif %}
-</div>
+   {% endif %}
+
 {% endif %}
+</div>
 
 </div>
 </div>
