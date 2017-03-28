@@ -1,0 +1,23 @@
+{% extends "Tracker/base.html" %}
+
+{% block title %}{{project.pname}}{% endblock %}
+
+{% block content %}
+<div class ="container">
+<div class = "row">
+{% if tag_entries %}
+    <h3>Tasks</h3>
+    <ul>
+    {% for entry in tag_entries%}
+        <li>{{ entry }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{%if tag_entries|length <= 0 %}
+    <h3> No Results Found </h3>
+
+{% endif %}
+</div>
+</div>
+{% endblock %}
