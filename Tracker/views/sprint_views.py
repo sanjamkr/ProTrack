@@ -58,7 +58,9 @@ def edit_sprint(request,sprint_id):
         total_tp = total_tp + tk.tp
     today = datetime.today()
     tdays = (sp.end_date - sp.start_date).days
-    if tdays>0:
+    if datetime.date(today) >= sp.end_date:
+        st ="Sprint has Ended" 
+    elif tdays>0:
         pdays = (datetime.date(today) - sp.start_date).days
         ideal_tp = total_tp/tdays*pdays
         real_tp = completed_tp
@@ -68,8 +70,6 @@ def edit_sprint(request,sprint_id):
             st = 'Yellow'
         else:
             st = 'Red'
-    elif datetime.date(today) >= sp.end_date:
-        st ="Sprint has Ended" 
     else: 
         st=" "
     #...........Charts..........

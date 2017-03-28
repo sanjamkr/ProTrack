@@ -43,15 +43,23 @@ class NewTask(ModelForm):
     due_date = forms.DateField(widget=SelectDateWidget)
     class Meta:
         model = task
-        fields = ['tsprint','tproject','tname','desc','due_date','risk','priority',
-                  'state','assign','remainder','heading','dep_task','tp']
-
-class NewTag(ModelForm):
-	class Meta:
-		model = tag
-		fields = ['task','tag']
+        fields = ['tsprint','tproject','tname','desc','due_date','risk','priority','state','assign','remainder','heading','dep_task','tp']
+        exclude = ('newcomment','newtag',)
 
 class NewComment(ModelForm):
     class Meta:
         model = comment
         fields = ['task','member','comment']
+        exclude = ('newtask','newtag',)
+        widgets = {
+            'comment': forms.TextInput(attrs={'class': 'commentbox','placeholder':'Write a comment...'}),
+        }
+        
+class NewTag(ModelForm):
+    class Meta:
+        model = tag
+        fields = ['task','tag']
+        exclude = ('newcomment','newtask',)
+        widgets = {
+            'tag': forms.TextInput(attrs={'class': 'tagbox','placeholder':'Add a Tag...'}),
+        }

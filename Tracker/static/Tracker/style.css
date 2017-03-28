@@ -75,13 +75,9 @@ overflow-y: auto;}
     
 }
 .grouplist li a:hover{
-    color: #fff;
+    color: #223c4c;
     text-decoration: none;
     
-}
-.grouplist li:hover {
-    background: #337ab7;
-    color: #fff;
 }
 
 }
@@ -93,7 +89,6 @@ overflow-y: auto;}
 .noti_circle
 {
     border-radius: 50%;
-
     width: 22px;
     height: 22px;
     background: #337ab7;
@@ -106,11 +101,18 @@ overflow-y: auto;}
 .navbar-default{
     border-bottom: 2px solid rgba(0,0,0,0.15)
 }
+.navbar-default .navbar-nav a
+ {
+    border-bottom: 4px solid #fff;
+    -webkit-transition: border-bottom 0.6s, color 0.6s; /* Safari */
+    transition: border-bottom 0.6s, color 0.6s;
+}
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover
 {
     background-color: #fff;
     border-bottom: 4px solid #337ab7;
     color: #337ab7;
+
 
 }
 .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
@@ -273,4 +275,86 @@ overflow-y: auto;}
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
+}
+
+.searchcard {
+
+    background: #fff;
+    /*margin-left: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /*text-align: center;
+    padding-right:5px;*/
+    padding-top:10px;
+    padding-bottom:5px;
+    padding-left:5px;
+    /*box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);*/
+    border-bottom: 1px solid #e6e6ed;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+
+}
+.searchcard a{
+    font-size:16px;
+}
+
+.task-details th, .task-details td {
+    
+    padding-top:10px;
+    font-size: 16px;
+}
+.task-details td {
+    padding-left: 10px;
+}
+.taskdetails, .tag{
+    padding-left:20px;
+}
+ .commentcontent{
+ margin-bottom: 0px;}
+ 
+.commentinfo{
+    margin-bottom: 0px;
+    font-size: 12px;
+    padding-bottom: 4px;
+    
+    
+}
+.commentcard{
+    padding: 5px;
+    border-bottom: #eee 1px solid; 
+}
+.commentdiv{
+     background: #fff;
+}
+.commentdate{
+    color: #5d5c5c;
+}
+.commentname{
+    color:#000;
+}
+.commentbox{
+    
+    width: 100%;
+    padding: 5px 5px;
+    margin: 8px 0;
+    margin-bottom: 0px;
+    box-sizing: border-box;
+
+}
+.tags {
+    margin-bottom: 8px; 
+    background-color: #3c3d3e;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 3px;
+    color: #fff; 
+    display: inline-block;
+}
+.tagbox {
+    margin-top: 5px;
+    padding: 3px 3px;
+
 }

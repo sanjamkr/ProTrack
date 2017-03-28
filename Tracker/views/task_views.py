@@ -25,23 +25,52 @@ def add_task(request,project_id):
         user = User.objects.get(username=request.user.username)
         p = get_object_or_404(project,pk=project_id)
         form = NewTask(initial={'tproject': p })
+        
 
     return render(request, 'Tracker/add_task.html', {'form': form,'project':p,'user':user})
 
 @login_required
 def edit_task(request,task_id):
-    if request.method == 'POST':
-        t = get_object_or_404(task,pk=task_id)
-        form = NewTask(request.POST,instance=t)
+    t = get_object_or_404(task,pk=task_id)
+    user = User.objects.get(username=request.user.username)
+    
+    if request.method == 'POST':        
+        form = NewTask(request.POST,instance=t,prefix='newtask')
         if form.is_valid():
             form.save()
     else:
-        t = get_object_or_404(task,pk=task_id)
-        form = NewTask(instance=t)
-    user = User.objects.get(username=request.user.username)
+        form = NewTask(prefix='newtask',instance=t)
+
+    if request.method == 'POST' and not form.is_valid():                
+        formc = NewComment(request.POST, prefix='newcomment')
+        form = NewTask(prefix='newtask')
+        
+        if formc.is_valid():
+            new_comment = formc.save()       
+            
+            if(t.assign != user):
+                n = notification.objects.create(type='nc', member=t.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
+                if user.username in new_comment.comment:
+                    n2 = notification.objects.create(type='nc', member=t.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
+            return HttpResponseRedirect('/Tracker/edit_task/'+str(new_comment.task.id)+'/')
+
+        
+    else:
+        formc = NewComment(prefix='newcomment',initial={'task': t,'member':user})
+        
+    if request.method == 'POST' and not formc.is_valid():
+        formt = NewTag(request.POST, prefix='newtag')
+        formc = NewComment(prefix='newcomment')
+        form = NewTask(prefix='newtask')
+        if formt.is_valid():
+            new_tag = formt.save()
+            return HttpResponseRedirect('/Tracker/edit_task/'+str(new_tag.task.id)+'/')
+    else:
+        formt = NewTag(prefix='newtag',initial={'task': t}) 
+        
     today = datetime.today()
     days = (t.due_date - datetime.date(today)).days
-    return render(request, 'Tracker/edit_task.html', {'task': t,'form': form, 'days': days,'user':user})
+    return render(request, 'Tracker/edit_task.html', {'task': t,'form': form, 'formc':formc,'formt':formt,'days': days,'user':user})
 
 @login_required
 def edit_sprint(request,sprint_id):
@@ -162,27 +191,8 @@ def delete_task(request,task_id):
     task.objects.filter(id=task_id).delete()
     return HttpResponseRedirect('/Tracker/edit_project/'+str(p.id)+'/')
 
-@login_required
-def add_comment(request,task_id):
-   
-    if request.method == 'POST':
-        form = NewComment(request.POST)
-        
-        if form.is_valid():
-            new_comment = form.save()
-            t = get_object_or_404(task,pk=task_id)
-            user = User.objects.get(username=request.user.username)
-            if(t.assign != user):
-                n = notification.objects.create(type='nc', member=t.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
-                if user.username in new_comment.comment:
-                    n2 = notification.objects.create(type='nc', member=t.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
-            return HttpResponseRedirect('/Tracker/edit_task/'+str(new_comment.task.id)+'/')
-    else:
-        t = get_object_or_404(task,pk=task_id)
-        user = User.objects.get(username=request.user.username)
-        form = NewComment(initial={'task': t,'member':user})
-    return render(request, 'Tracker/add_comment.html',{'form':form,'task_id':task_id})
 
+'''
 @login_required
 def add_tag(request,task_id):
     if request.method == 'POST':
@@ -195,3 +205,4 @@ def add_tag(request,task_id):
         user = User.objects.get(username=request.user.username)
         form = NewTag(initial={'task': t })
     return render(request, 'Tracker/add_tag.html', {'form': form,'task_id':task_id,'user':user})
+'''

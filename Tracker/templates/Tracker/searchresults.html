@@ -1,42 +1,83 @@
 {% extends "Tracker/base.html" %}
 
-{% block title %}{{project.pname}}{% endblock %}
+{% block title %}Search Results for {{query_string}}{% endblock %}
 
 {% block content %}
+
 <div class ="container">
+<h3>Search Results for <strong>{{query_string}}</strong></h3>
 <div class = "row">
+<!---Task Results-->
 {% if task_entries %}
+
+    <div class="col-md-4">
     <h3>Tasks</h3>
-    <ul>
+    
     {% for entry in task_entries%}
-        <li><a href= "{% url 'edit_task' entry.id%}">{{ entry.tname }}</a> {{entry.tproject}}</li>
+        <div class = "searchcard">
+        <strong><a href= "{% url 'edit_task' entry.id%}">
+        {{entry.tname}}</a></strong>
+        <p class = "tdetails">
+        {{entry.desc}}
+        <br>
+        Project: {{entry.tproject}}
+        </p>
+       </p>
+        
+        
+        </div>
     {% endfor %}
-    </ul>
-{% endif %}
-{% if project_entries %}
-    <h3>Projects</h3>
-    <ul>
-    {% for entry in project_entries%}
-        <li><a href= "{% url 'edit_project' entry.id%}">{{ entry.pname }}</a></li>
-    {% endfor %}
-    </ul>
-{% endif %}
-{% if sprint_entries %}
-    <h3>Sprints</h3>
-    <ul>
-    {% for entry in sprint_entries%}
-        <li><a href= "{% url 'edit_sprint' entry.id%}">{{ entry.sname }}</a></li>
-    {% endfor %}
-    </ul>
+    </div>
+
 {% endif %}
 
+<!--Project Results-->
+{% if project_entries %}
+
+    <div class="col-md-4">
+    <h3>Projects</h3>
+
+    {% for entry in project_entries%}
+        <div class = "searchcard">
+       <strong><a href= "{% url 'edit_project' entry.id%}">{{ entry.pname }}</a></strong>
+       <p class = "tdetails">
+        {{entry.pdesc}}
+        </div>
+    {% endfor %}
+    </div>
+
+{% endif %}
+
+<!--Sprint Results-->
+{% if sprint_entries %}
+
+    <div class="col-md-4">
+    <h3>Sprints</h3>
+
+    {% for entry in sprint_entries%}
+    <div class = "searchcard">
+        <a href= "{% url 'edit_sprint' entry.id%}">
+        <strong>{{ entry.sname }}</strong></a>
+        <p class = "tdetails">
+        From {{entry.start_date|date:"j M"}} to {{entry.end_date|date:"j M Y"}}
+        </p>
+        
+    </div>
+    {% endfor %}
+
+</div>
+{% endif %}
+</div>
+<!--No Results-->
 {%if task_entries|length <= 0 %}
     {% if project_entries|length <= 0%}
         {% if sprint_entries|length <= 0 %}
         <h3> No Results Found </h3>
         {% endif %}
     {% endif %}
+</div>
 {% endif %}
+
 </div>
 </div>
 {% endblock %}

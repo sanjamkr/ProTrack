@@ -50,7 +50,7 @@ def login_next(request):
         is_open = Q(state = "open")
         is_blocked = Q(state = "blocked")
         
-        all_tasks = task.objects.filter(is_member)
+        all_tasks = task.objects.filter(is_member).order_by('due_date')
         t = task.objects.filter(is_member & (is_blocked | is_open))
         t_count = task.objects.filter(is_member & (is_blocked | is_open)).count()
         nt_task = task.objects.filter(is_member)
@@ -150,7 +150,7 @@ def home(request):
     is_member = Q(assign = user)
     is_open = Q(state = "open")
     is_blocked = Q(state = "blocked")
-    all_tasks = task.objects.filter(is_member)
+    all_tasks = task.objects.filter(is_member).order_by('due_date')
     t = task.objects.filter(is_member & (is_blocked | is_open))
     t_count = task.objects.filter(is_member & (is_blocked | is_open)).count()
     nt_task = task.objects.filter(is_member)
@@ -484,13 +484,13 @@ def calendar2(request,project_id,year,month):
     return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
 
 #..............................Search....................................
-@login_required
+
 def normalize_query(query_string,
                     findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
                     normspace=re.compile(r'\s{2,}').sub):
     return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)] 
 
-@login_required
+
 def get_query(query_string, search_fields):
 
     query = None # Query to search for every search term        
@@ -532,7 +532,7 @@ def search(request):
     return render(request, 'Tracker/searchresults.html', { 'query_string': query_string, 'task_entries': task_entries, 'project_entries': project_entries, 'sprint_entries': sprint_entries })
 
 #...............Notification..............
-
+@login_required
 def notifications(request):
     user = User.objects.get(username=request.user.username)
     g = user.groups.all()[0]

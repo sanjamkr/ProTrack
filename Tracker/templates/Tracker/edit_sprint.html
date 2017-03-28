@@ -23,7 +23,10 @@ if (result == true) {
 
 }
 </script>
-    <div class= "container">
+
+    <div class= "container project-content">
+  
+
     <!--Task Table-->
         <div class = "row">
             <div class="col-md-8">
@@ -136,6 +139,7 @@ if (result == true) {
         <div id="Burndown" class="chartcard" style="height:400px;"></div>
         {% endif %}
         </div>
+        {% if st != 'Sprint has Ended' %}
         <div class = "col-md-3 whitecard">
                         <h3>Add/Remove Tasks</h3>
                         <ul class="add-to-sprint">
@@ -152,6 +156,7 @@ if (result == true) {
 			{% endfor %}
                 </ul>
         </div>
+        {% endif %}
             
         
 

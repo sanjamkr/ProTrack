@@ -27,17 +27,7 @@
             </ul>
         </div>
         
-        <!--<div class= "col-md-4">-->
-		<h3>Members</h3>	
-		<ul  class = "grouplist">
-			{% for user in group.user_set.all %}
-				<li>{{user.first_name}} {{user.last_name}}</li>
-			{% endfor %}
-			{% for tp in tp_list %}
-				<li>{{tp}}</li>
-			{% endfor %}
-		</ul>
-	   <!-- </div>-->
+  
         </div>
         
         <!--ALL TASKS-->
@@ -66,9 +56,10 @@
 	<!--<a href="/Tracker/">Logout</a>-->
             </div>
     </div>
-    <!--PENDING TASKS-->        
-        <div class="col-md-2">
-            <div class="sidebar-nav-fixed pull-right affix">
+    <!--PENDING TASKS--> 
+
+        <div class="col-md-3">
+            <div class="sidebar-nav-fixed pull-right">
                 <div class="well pending ">
                     <ul class="nav ">
                         <li class="nav-header"><strong>Pending Tasks</strong></li>
@@ -127,6 +118,20 @@
                     {% endif %}
                     </ul>
                 </div>
+                              <div class= "well pending ">
+			
+		<ul  class = "nav ">
+            <li> <strong>Members</strong> </li>
+            <ul>
+			{% for user in group.user_set.all %}
+				<li>{{user.first_name}} {{user.last_name}}</li>
+			{% endfor %}
+			{% for tp in tp_list %}
+				<li>{{tp}}</li>
+			{% endfor %}
+            </ul>
+		</ul>
+	   </div>
                 <!--/.well -->
             </div>
             <!--/sidebar-nav-fixed -->
