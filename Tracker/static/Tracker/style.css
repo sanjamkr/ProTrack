@@ -1,10 +1,96 @@
 body {
-	/*width:100vh; 
-   	height:100vh;*/
+
     background: #f2f0f1;
     padding-top: 80px;
     padding-bottom: 80px;
 }
+
+.jumbotron.vertical-center {
+    
+  background: #000;
+  color: #fff;
+  margin-bottom: 0; 
+}
+.jumbotron.vertical-center p{
+    font-size: 14px;
+    
+}
+.jumbotron.vertical-center h1{
+    font-size: 40px;
+}
+
+.vertical-center {
+  min-height: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex; 
+  
+    -webkit-box-align : center;
+  -webkit-align-items : center;
+       -moz-box-align : center;
+       -ms-flex-align : center;
+          align-items : center;
+  
+  width: 100%;
+ 
+         -webkit-box-pack : center;
+            -moz-box-pack : center;
+            -ms-flex-pack : center;
+  -webkit-justify-content : center;
+          justify-content : center;
+
+}
+
+#loginpage, #signuppage,#grouppage{
+        padding: 0px;
+    
+
+}
+.imagediv{
+    text-align: center;
+    top: -20px;
+}
+.loginlogo {
+    width: 80%;
+}
+.vertical-align {
+  margin-top: 40px;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+    -webkit-box-align : center;
+  -webkit-align-items : center;
+       -moz-box-align : center;
+       -ms-flex-align : center;
+          align-items : center;  
+  
+  justify-content: center;
+  flex-direction: row;
+}
+
+.logininput, .signupinput {
+    width: 80%;
+    padding: 8px 5px;
+    margin-bottom: 0px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+    border: #eee 1px solid;
+    color: #000;
+}
+#group {
+    color: #757575
+}
+.logininput:focus {
+    border: #888 1px solid;
+    border-radius: 5px;
+    outline: none;
+}
+
 .taskpool {
     width: 100%;
     border: 1px solid #ddd;
@@ -139,11 +225,6 @@ overflow-y: auto;}
     margin-right:12px;
 
 }
-.login_middle{
-    position:absolute;
-    top:50%;
-    margin-top:-12%;
-}
 
 .btn {
   -webkit-border-radius: 1;
@@ -211,6 +292,27 @@ overflow-y: auto;}
     box-radius: 2px;
 }
 
+.loginbtn {
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 8px;
+    box-shadow: none;
+    border-radius: 5px;
+}
+.loginbtn:focus, .loginbtn:active{
+    border: none;
+    outline: 0;
+}
+.btn-fb{
+    background-color:#4267b2;
+    color: #fff;
+}
+.btn-fb:hover, .btn-fb:active, .btn-fb:focus, .btn-fb.active, .btn-fb:active:focus{
+    background-color: #3b5998;
+    border-color: #3b5998;
+    color: #fff;
+    outline: none;
+}
 .nodata{
     color:#ada2a2;
     left: 40%;

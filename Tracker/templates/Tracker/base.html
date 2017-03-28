@@ -20,9 +20,9 @@
     </div>
     {% block nav %}
     <ul class="nav navbar-nav">
-      <li{% block nav-home %} {% endblock %}> <a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span> Dashboard</a></li>
+      <li{% block nav-home %} {% endblock %}> <a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"> </span> <span> Dashboard</span></a></li>
       <li class=" {% block nav-project  %} {% endblock %} dropdown"> 
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-list-alt"></span> Projects<b class="caret"></b></a>
+                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-list-alt"> </span> <span> Projects </span><b class="caret"></b></a>
                 <ul role="menu" class="dropdown-menu">
                     {% for project in user.groups.all.0.project_set.all %}
                 
@@ -45,8 +45,8 @@
     </div>
   </div>
 </form>
-      <li class="{% block nav-noti %} {% endblock %}"><a href="{% url 'notifications' %}"><span class="glyphicon glyphicon-bell"></span> Notifications</a></li>
-      <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      <li class="{% block nav-noti %} {% endblock %}"><a href="{% url 'notifications' %}"><span class="glyphicon glyphicon-bell"> </span> <span> Notifications</span></a></li>
+      <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"> </span> <span> Logout</span></a></li>
     </ul>
     {% endblock %}
 

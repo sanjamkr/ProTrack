@@ -508,7 +508,11 @@ def search(request):
     is_group_sprint = Q(project__pgroup__id=g.id)
     is_group_tag = Q(task__tproject__pgroup__id = g.id)
     query_string = ''
-    found_entries = None
+    task_entries = None
+    tag_entries = None
+    project_entries = None
+    sprint_entries = None
+    
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
         
@@ -531,8 +535,7 @@ def search_tag(request):
     is_group = Q(pgroup = g)
     is_group_tag = Q(task__tproject__pgroup__id = g.id)
     query_string = ''
-    found_entries = None
-    tag_entries=[]
+    tag_entries=None
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
         tag_query = get_query(query_string, ['tag',])

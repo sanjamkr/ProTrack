@@ -1,5 +1,5 @@
 {% load static %}
-
+{% block content %}
 <!DOCTYPE html>
 <html>
 	<head>
@@ -10,21 +10,38 @@
         <script src="{% static 'Tracker/js/bootstrap.min.js' %}"></script>
 
 	</head>
-	<body>
-
-		<h2>Sign up</h2>
+	<body id="signuppage">
+    <div class="jumbotron vertical-center">
+         <div class = "container">
+      <div class="row vertical-align">
+    <div class="col-xs-12 col-md-6 imagediv">
+    <img class="loginlogo" src = "{% static 'Tracker/logo.png' %}">
+    </div>
+        <div class="col-xs-10 col-md-5  col-xs-offset-2 col-md-offset-1 formdiv">
+		<h1>Sign Up</h1>
   		<form method="post">
     	{% csrf_token %}
-    	{{ form.as_p }}
-		    <label>Group</label>
-			<select id="group" name="group">
-				<option value="" selected="selected">---------</option>
+    	{% for field in form %}
+        <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field }}
+
+    </div>
+{% endfor %}
+		    
+			<select class ="signupinput" id="group" name="group">
+				<option value="" selected="selected">Select Group*</option>
 				{% for group in groups %}
 					<option value="{{group.name}}" required >{{group.name}}</option>
 				{% endfor %}
 			</select>
-    <button type="submit">Sign up</button>
+    <button class = "loginbtn btn btn-success" type="submit">Sign Up</button>
  </form>
-	<a href="{% url 'add_group' %}" >Add New Group</a>
+	<a href="{% url 'add_group' %}" >Create Group</a>
+   </div>
+    </div>
+    </div>
+    </div>
 </body>
 </html>
+{% endblock %}
