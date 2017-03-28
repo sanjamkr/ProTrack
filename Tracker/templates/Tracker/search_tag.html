@@ -1,6 +1,5 @@
-{% extends "Tracker/base.html" %}
 
-{% block title %}{{project.pname}}{% endblock %}
+{% extends "Tracker/base.html" %}
 
 {% block content %}
 <div class ="container">
@@ -9,7 +8,7 @@
     <h3>Tasks</h3>
     <ul>
     {% for entry in tag_entries%}
-        <li>{{ entry }}</li>
+        <li>{{ entry.task }}</li>
     {% endfor %}
     </ul>
 {% endif %}

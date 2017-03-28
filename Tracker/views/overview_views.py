@@ -381,12 +381,12 @@ class Calendar(HTMLCalendar):
             if day in self.my_tasks:
                 cssclass += ' filled'
                 body = ['<ul class="sample">']
-                for workout in self.my_tasks[day]:
+                for tasks in self.my_tasks[day]:
                     body.append('<li>')
                     
-                    #body.append('<a href="%s">' % workout.get_absolute_url())
-                    #body.append('<a href="Tracker/calendar1/">')
-                    body.append(esc(workout.tname))
+                   	#body.append('<a href="/Tracker/edit_task/"+ {{tasks.id}} +"/">')
+                    #body.append('<a href="{% url 'edit_task' tasks.id %}">')
+                    body.append(esc(tasks.tname))
                     body.append('</a></li>')
                     #body.append('</li>')
                 body.append('</ul>')
@@ -527,18 +527,15 @@ def search_tag(request):
     g = user.groups.all()[0]
     is_member = Q(assign = user)
     is_group = Q(pgroup = g)
-    is_group_tag=Q(task__tproject__pgroup__id=g.id)
+    is_group_tag=Q(tag__task__tproject__pgroup__id = g.id)
     query_string = ''
     found_entries = None
+    tag_entries=[]
     if ('q' in request.GET) and request.GET['q'].strip():
         query_string = request.GET['q']
-        #task_query = get_query(query_string, ['tname', 'desc',])
         tag_query = get_query(query_string, ['tag'])
         tag_entries = tag.objects.filter(is_group_tag & tag_query)
-        tags=[]
-        for i in tag_entries:
-            tags.append(i.task)
-        return render(request, 'Tracker/search_tag.html', { 'query_string': query_string, 'tag_entries': tags})
+    return render(request, 'Tracker/search_tag.html', { 'query_string': query_string, 'tag_entries': tag_entries})
 
 
 
