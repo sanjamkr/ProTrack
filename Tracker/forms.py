@@ -20,7 +20,7 @@ class SignUpForm(UserCreationForm):
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
         
         widgets = {
-        'username': forms.TextInput(attrs={'class': 'signupinput username','placeholder':'Username'}),      
+        'username': forms.TextInput(attrs={'class': 'signupinput username','placeholder':'Username*'}),      
         }
 
 class NewFile(ModelForm):

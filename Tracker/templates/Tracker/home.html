@@ -11,20 +11,29 @@
         <div class="col-md-9">
 
         <div class = "row">
+        
 
         <div class= "col">
         <form>
 			<button formaction="{% url 'add_project' %}" class="btn pull-right btn-primary"> Add Project&nbsp; <span class="glyphicon glyphicon-plus"></span></button>
 	    </form>
-            <h3>{{group.name}} Projects</h3>	
-            
-            <ul class = "grouplist">
-                <li class = "prolist">Name <span class = "prodate pull-right">Deadline</li>
-			{% for project in group.project_set.all %}
-                
-				<li><a href= "{% url 'edit_project' project.id%}">{{ project.pname }} <span class = "prodate pull-right"> {{project.pdeadline|date:"j M 'y"}} </span> </a></li>
+            <h3>{{group.name}} Projects</h3>
+                {% if group.project_set.all %}
+            <table class = "taskpool">
+                <tr>
+                    <th> Name </th>
+                    <th> Description </th>
+                    <th> Deadline </th>
+                </tr>
+                <tr>
+                {% for project in group.project_set.all %}
+                <td><a href= "{% url 'edit_project' project.id%}">{{ project.pname }}  </td>
+                <td>{{project.pdesc}} </td>
+                <td>{{project.pdeadline|date:"j M 'y"}} </td>
+                </tr>
 			{% endfor %}
-            </ul>
+        </table>
+        {% endif %}
         </div>
         
   

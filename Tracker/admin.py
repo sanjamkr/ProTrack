@@ -22,7 +22,7 @@ class commentAdmin(admin.ModelAdmin):
 admin.site.register(comment,commentAdmin)
 
 class notificationAdmin(admin.ModelAdmin):
-        list_display = ('id','type','member','membergroup','urlid','content','noti_create','read','noti_date','noti_create')
+        list_display = ('id','type','member','othermember','membergroup','urlid','content','noti_create','read','noti_date','noti_create')
 admin.site.register(notification,notificationAdmin)
 
 admin.site.register(project_file)

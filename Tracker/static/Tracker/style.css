@@ -1,6 +1,6 @@
 body {
 
-    background: #f2f0f1;
+    background: #f2f2f2;
     padding-top: 80px;
     padding-bottom: 80px;
 }
@@ -346,7 +346,7 @@ overflow-y: auto;}
 .project-nav>li.active>a:focus, 
 .project-nav>li.active>a:hover
 {
-    background-color: #f2f0f1;
+    background-color: #f2f2f2;
 }
 
 .project-content
@@ -425,9 +425,14 @@ overflow-y: auto;}
 .commentcard{
     padding: 5px;
     border-bottom: #eee 1px solid; 
+
 }
 .commentdiv{
      background: #fff;
+     border: #eee 1px solid; 
+     border-radius: 4px;
+     padding-top: 4px;
+
 }
 .commentdate{
     color: #5d5c5c;
@@ -464,4 +469,35 @@ overflow-y: auto;}
      margin-bottom: 0px; 
      padding-top: 0px;
      padding-bottom: 0px;
+}
+.notidiv {
+     background: #fff;
+     border: #eee 1px solid; 
+     border-radius: 6px;
+     padding-top: 4px;
+     padding: 0px;
+}
+.notidiv h4{
+    padding-left: 15px;
+}
+
+.noticard {
+    padding:15px;
+    border-bottom: #eee 1px solid;
+}
+.notidivhead {
+    padding: 0px;
+}
+.notiheader {
+    margin: 0px;
+    font-size: 12px;
+}
+.notibody{
+    margin: 0px;
+}
+.notiextra{
+    padding-left: 5px;
+}
+.notitime {
+    color: #888;
 }

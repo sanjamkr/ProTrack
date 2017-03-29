@@ -132,7 +132,7 @@ if (result == true) {
         </div>
 
 	<!-- COMMENTS FOR THIS TASK-->	
-        <div class = "col-md-8">
+        <div id = "TaskComments" class = "col-md-8">
 		<h3>Comments</h3>
 		{% if error_message %}
 			<p>{{ error_message }}</p>
@@ -144,9 +144,11 @@ if (result == true) {
 			<p class = "commentinfo"><span class = "commentname"><strong>{{c.member.first_name}} {{c.member.last_name}}</strong></span> <span class="commentuname">@{{c.member.username}}</span> &#183;<span class = "commentdate"> {{ c.ccreated|timesince|upto:','}} ago </span> </p>
             <p class = "commentcontent">{{c.comment}}</p>
             
+            
             </div>
 		{% endfor %}
         </div>
+
 		<form action="{% url 'edit_task' task.id %}" method="post">
 			{% csrf_token %}
 			<table>
@@ -157,7 +159,7 @@ if (result == true) {
 					<td hidden>{{formc.member}}</td>
 				</tr>
 				</table>
-                 <p>{{formc.comment}}</p>
+                 <p id = "addcomment">{{formc.comment}}</p>
 					<button type="submit" name="commenttask" class="btn btn-sm btn-primary">Comment</button>
 		</form>
         </div>
