@@ -121,14 +121,16 @@
                               <div class= "well pending ">
 			
 		<ul  class = "nav ">
-            <li> <strong>Members</strong> </li>
+            <li> <strong>Member Rank</strong> </li>
             <ul>
-			{% for user in group.user_set.all %}
+			<!--{% for user in group.user_set.all %}
 				<li>{{user.first_name}} {{user.last_name}}</li>
 			{% endfor %}
-			{% for tp in tp_list %}
-				<li>{{tp}}</li>
+            -->
+            {% for k,v in user_tp.items %}
+            <li>{{k}} --> {{v}}</li>
 			{% endfor %}
+            
             </ul>
 		</ul>
 	   </div>

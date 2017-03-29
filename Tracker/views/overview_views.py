@@ -69,6 +69,23 @@ def login_next(request):
                 new_task.append(t2)
                 nt_count = nt_count+1
                 
+        user_tp = {}
+        for member in g.user_set.all():
+            is_m = Q(assign = member)
+            mem_name=member
+            completed_tp =0
+            total_tp = 0
+            tl = task.objects.filter(is_m)
+            for ts in tl:
+                total_tp=total_tp+ts.tp
+                if ts.state=='completed':
+                    completed_tp=completed_tp+ts.tp
+            if total_tp==0:
+                ratio=0
+            else:
+                ratio=completed_tp/total_tp
+            user_tp[mem_name]=ratio
+            #user_tp.append(ratio)
         
         noti = nd_count + od_count        
         context ={
@@ -84,6 +101,7 @@ def login_next(request):
             'od_count':od_count, 
             'over_due':over_due, 
             'noti':noti,
+            'user_tp':user_tp,
         }
         return render(request,'Tracker/home.html',context)
     else:
