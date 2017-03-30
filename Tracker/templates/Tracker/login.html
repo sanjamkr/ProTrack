@@ -46,16 +46,14 @@
     <form>
 	<button class = "loginbtn btn btn-primary" formaction = "{% url 'signup' %}">Register</button>
     <button class = "loginbtn btn btn-fb" formaction = "{% url 'social:begin' 'facebook' %}">Login with Facebook</button>
+     <button class = "loginbtn btn btn-google" formaction = "{% url 'social:begin' 'google-oauth2' %}">Login with Google+</button>
+ 
 	<p><a href="#" onclick="fpassoverlay()" >Forgot Password?</a></p>
 
     </form>
     </div>
 
     
-
-
-    
-	
     </div>
     </div>
     </div>

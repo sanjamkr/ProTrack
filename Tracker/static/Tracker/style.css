@@ -313,6 +313,16 @@ overflow-y: auto;}
     color: #fff;
     outline: none;
 }
+.btn-google{
+    background-color:#e15242;
+    color: #fff;
+}
+.btn-google:hover, .btn-google:active, .btn-google:focus, .btn-google.active, .btn-google:active:focus{
+    background-color: #cd483a;
+    border-color: #cd483a;
+    color: #fff;
+    outline: none;
+}
 .nodata{
     color:#ada2a2;
     left: 40%;

@@ -20,8 +20,12 @@ LOGOUT_URL = '/Tracker/'
 LOGIN_REDIRECT_URL = '/Tracker/home'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 SOCIAL_AUTH_FACEBOOK_KEY = '623441501188507'
 SOCIAL_AUTH_FACEBOOK_SECRET = '65c244e2d41850af890e570551e0b687'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1060656760400-q46mqoupomkcqsch2s3lf3j6k0tpn0jb.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'CBl1BQkljWdl_6wiG0i89ObR'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -113,6 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
 
