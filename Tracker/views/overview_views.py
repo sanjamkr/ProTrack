@@ -36,82 +36,9 @@ def login_next(request):
     name = request.POST.get('name', None)
     pwd = request.POST.get('pwd', None)
     user = authenticate(username=name, password=pwd)
-    request.session['username'] = request.user.username
     if user is not None:
         login(request, user)
-        g = user.groups.all()[0]
-        today = datetime.today()
-        now = datetime.now()
-        near_deadline = []
-        over_due = []
-        new_task = []
-    
-        nd_count = 0
-        nt_count = 0
-        od_count = 0
-    
-        is_member = Q(assign = user)
-        is_open = Q(state = "open")
-        is_blocked = Q(state = "blocked")
-        
-        all_tasks = task.objects.filter(is_member).order_by('due_date')
-        t = task.objects.filter(is_member & (is_blocked | is_open))
-        t_count = task.objects.filter(is_member & (is_blocked | is_open)).count()
-        nt_task = task.objects.filter(is_member)
-       
-        for t1 in t:
-            if ((t1.due_date - datetime.date(today) ).days <= 2 ):
-                if (((t1.due_date - datetime.date(today) ).days >= 0 ) ):
-                    near_deadline.append(t1)
-                    nd_count = nd_count+1
-                else:
-                    over_due.append(t1)
-                    od_count = od_count+1
-            
-        for t2 in nt_task:
-            if(( datetime.date(today) - datetime.date(t2.created) ).days <= 2 ):
-                new_task.append(t2)
-                nt_count = nt_count+1
-                
-        user_tp = {}
-        for member in g.user_set.all():
-            is_m = Q(assign = member)
-            mem_name=member.username
-            completed_tp =0
-            total_tp = 0
-            tl = task.objects.filter(is_m)
-            for ts in tl:
-                total_tp=total_tp+ts.tp
-                if ts.state=='completed':
-                    completed_tp=completed_tp+ts.tp
-            if total_tp==0:
-                ratio=0
-            else:
-                ratio=completed_tp/total_tp
-            user_tp[mem_name]=ratio
-            #user_tp.append(ratio)
-        r={key:rank for rank,key in enumerate(sorted(set(user_tp.values()),reverse=True),1)}
-        user_tp={k:r[v] for k,v in user_tp.items()}
-        user_tp = sorted(user_tp.items(), key=operator.itemgetter(1))
-
-        
-        noti = nd_count + od_count        
-        context ={
-            'group': g,
-            'user': user,
-            'task':t,
-            'all_tasks':all_tasks,
-            't_count':t_count,
-            'near_deadline':near_deadline, 
-            'nd_count':nd_count, 
-            'new_task':new_task, 
-            'nt_count':nt_count, 
-            'od_count':od_count, 
-            'over_due':over_due, 
-            'noti':noti,
-            'user_tp':user_tp,
-        }
-        return render(request,'Tracker/home.html',context)
+        return HttpResponseRedirect('/Tracker/home')
     else:
         del request.session['username']
         return HttpResponseRedirect('/Tracker/')
@@ -172,10 +99,10 @@ def add_group(request):
 
 @login_required
 def home(request):
-    if 'username' not in request.session:
-        request.session['username'] = request.user.username
     user = User.objects.get(username=request.user.username)
     if user.groups.all().exists():
+        if 'username' not in request.session:
+            request.session['username'] = request.user.username
         g = user.groups.all()[0]
         is_member = Q(assign = user)
         is_open = Q(state = "open")
