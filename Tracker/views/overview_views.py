@@ -172,6 +172,8 @@ def add_group(request):
 
 @login_required
 def home(request):
+    if 'username' not in request.session:
+        request.session['username'] = request.user.username
     user = User.objects.get(username=request.user.username)
     if user.groups.all().exists():
         g = user.groups.all()[0]
