@@ -19,7 +19,7 @@ LOGIN_URL='/Tracker/'
 LOGOUT_URL = '/Tracker/'
 LOGIN_REDIRECT_URL = '/Tracker/group'
 
-
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SOCIAL_AUTH_FACEBOOK_KEY = '623441501188507'
 SOCIAL_AUTH_FACEBOOK_SECRET = '65c244e2d41850af890e570551e0b687'
 
@@ -80,7 +80,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ProTrack.wsgi.application'
 
-
+SESSION_ENGINE = "django.contrib.sessions.backends.file" 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 

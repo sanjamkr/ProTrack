@@ -25,14 +25,18 @@ from django.views.generic import FormView, DetailView, ListView
 #............Login...............
 
 def log(request):
-    context = {
-    }
-    return render(request,'Tracker/login.html',context)
+    if 'username' in request.session:
+        return HttpResponseRedirect('/Tracker/home/')
+    else:
+        context = {
+        }
+        return render(request,'Tracker/login.html',context)
 
 def login_next(request):
     name = request.POST.get('name', None)
     pwd = request.POST.get('pwd', None)
     user = authenticate(username=name, password=pwd)
+    request.session['username'] = request.user.username
     if user is not None:
         login(request, user)
         g = user.groups.all()[0]
@@ -108,6 +112,7 @@ def login_next(request):
         }
         return render(request,'Tracker/home.html',context)
     else:
+        del request.session['username']
         return HttpResponseRedirect('/Tracker/')
 
 def log_end(request):
