@@ -76,7 +76,7 @@ def login_next(request):
         user_tp = {}
         for member in g.user_set.all():
             is_m = Q(assign = member)
-            mem_name=member
+            mem_name=member.username
             completed_tp =0
             total_tp = 0
             tl = task.objects.filter(is_m)
@@ -92,6 +92,7 @@ def login_next(request):
             #user_tp.append(ratio)
         r={key:rank for rank,key in enumerate(sorted(set(user_tp.values()),reverse=True),1)}
         user_tp={k:r[v] for k,v in user_tp.items()}
+        user_tp = sorted(user_tp.items(), key=operator.itemgetter(1))
 
         
         noti = nd_count + od_count        
@@ -210,7 +211,7 @@ def home(request):
         user_tp = {}
         for member in g.user_set.all():
             is_m = Q(assign = member)
-            mem_name=member
+            mem_name=member.username
             completed_tp =0
             total_tp = 0
             tl = task.objects.filter(is_m)
@@ -225,7 +226,8 @@ def home(request):
             user_tp[mem_name]=ratio
         r={key:rank for rank,key in enumerate(sorted(set(user_tp.values()),reverse=True),1)}
         user_tp={k:r[v] for k,v in user_tp.items()}
-            #user_tp.append(ratio)
+        user_tp = sorted(user_tp.items(), key=operator.itemgetter(1))
+
 
         context ={
             'group': g,
