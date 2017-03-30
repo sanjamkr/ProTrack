@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 LOGIN_URL='/Tracker/'
 LOGOUT_URL = '/Tracker/'
-LOGIN_REDIRECT_URL = '/Tracker/group'
+LOGIN_REDIRECT_URL = '/Tracker/home'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SOCIAL_AUTH_FACEBOOK_KEY = '623441501188507'
