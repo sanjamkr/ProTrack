@@ -23,6 +23,9 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SOCIAL_AUTH_FACEBOOK_KEY = '623441501188507'
 SOCIAL_AUTH_FACEBOOK_SECRET = '65c244e2d41850af890e570551e0b687'
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '672890181903-fqi0eegv28sp9iqjft1jm98ses10hshr'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'QxiTXVrRKEJAYlZDR40R9mY-'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
@@ -32,7 +35,19 @@ SECRET_KEY = '%q*myd3m!p+d4+=d2-&_(svm8!%#@xcgnzb!08*jpt^%v9n#uk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
+ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com','localhost']
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+	'social_django',
+	'social.apps.django_app.default'
+)
 
 # Application definition
 
@@ -114,6 +129,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
+	'social_core.backends.google.GoogleOAuth2'
 )
 
 # Internationalization

@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^oauth/', include('social_django.urls', namespace='social')),
     url(r'^Tracker/', include('Tracker.urls')),
+	url(r'^soc/', include("social.apps.django_app.urls", namespace="social"))
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
