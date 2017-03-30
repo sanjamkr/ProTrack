@@ -86,6 +86,9 @@ def login_next(request):
                 ratio=completed_tp/total_tp
             user_tp[mem_name]=ratio
             #user_tp.append(ratio)
+        r={key:rank for rank,key in enumerate(sorted(set(user_tp.values()),reverse=True),1)}
+        user_tp={k:r[v] for k,v in user_tp.items()}
+
         
         noti = nd_count + od_count        
         context ={
@@ -214,6 +217,8 @@ def home(request):
         else:
             ratio=completed_tp/total_tp
         user_tp[mem_name]=ratio
+    r={key:rank for rank,key in enumerate(sorted(set(user_tp.values()),reverse=True),1)}
+    user_tp={k:r[v] for k,v in user_tp.items()}
         #user_tp.append(ratio)
 
     context ={
