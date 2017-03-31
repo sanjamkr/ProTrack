@@ -185,7 +185,7 @@ overflow-y: auto;}
     display: inline-block;
 }
 .navbar-default{
-    border-bottom: 2px solid rgba(0,0,0,0.15)
+    border-bottom: 1px solid rgba(0,0,0,0.15)
 }
 .navbar-default .navbar-nav a
  {

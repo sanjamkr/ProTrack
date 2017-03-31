@@ -1,6 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
+
 <html>
 	<head>
 	    <title>{% block title %}{% endblock %}</title>
@@ -9,52 +10,43 @@
 	    <link rel="stylesheet" type="text/css" href="{% static 'Tracker/style.css' %}" />
         <script src="{% static 'Tracker/js/jquery-3.2.0.min.js' %}"></script>
         <script src="{% static 'Tracker/js/bootstrap.min.js' %}"></script>
-
 	</head>
-	<body>
-    
+
+	<body>    
         <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #fff ">
-  <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#"><img src="{% static 'Tracker/protrack.png'  %}" height = "30px"></a>
-    </div>
-    {% block nav %}
-    <ul class="nav navbar-nav">
-      <li{% block nav-home %} {% endblock %}> <a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"> </span> <span> Dashboard</span></a></li>
-      <li class=" {% block nav-project  %} {% endblock %} dropdown"> 
-                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-list-alt"> </span> <span> Projects </span><b class="caret"></b></a>
-                <ul role="menu" class="dropdown-menu">
-                    {% for project in user.groups.all.0.project_set.all %}
-                
-				<li><a href= "{% url 'edit_project' project.id%}">{{ project.pname }}</a></li>
-			{% endfor %}
-                </ul>
-            </li>
-                
-         </ul> 
-         
-        		<ul class="nav navbar-nav navbar-right">
-                
-                 <form class="navbar-form navbar-left" id="mainsearch" action = "{% url 'search' %}" method="get" accept-charset="utf-8">
-  <div class="input-group">
-    <input type="text" id = "searchbox" class="form-control" placeholder="Search" name="q">
-    <div class="input-group-btn">
-      <button class="btn btn-default" id="searchbutton" type="submit">
-        <i class="glyphicon glyphicon-search" style="font-size:14px;"></i>
-      </button>
-    </div>
-  </div>
-</form>
-      <li class="{% block nav-noti %} {% endblock %}"><a href="{% url 'notifications' %}"><span class="glyphicon glyphicon-bell"> </span> <span> Notifications</span></a></li>
-      <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"> </span> <span> Logout</span></a></li>
-    </ul>
-    {% endblock %}
-
-
-
-    </ul>
-  </div>
-</nav>
+	  		<div class="container">
+	    		<div class="navbar-header">
+	    	 		<a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'Tracker/protrack.png'  %}" height = "27px"></a>
+	    		</div>
+		    	{% block nav %}
+		    		<ul class="nav navbar-nav">
+		      			<li class=" {% block nav-project  %} {% endblock %} dropdown"> 
+			                <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-list-alt"> </span> <span> Projects </span><b class="caret"></b></a>
+			                <ul role="menu" class="dropdown-menu">
+			                    {% for project in user.groups.all.0.project_set.all %}
+									<li><a href= "{% url 'edit_project' project.id%}">{{ project.pname }}</a></li>
+								{% endfor %}
+			                </ul>
+		            	</li>
+		         	</ul> 
+		        	<ul class="nav navbar-nav navbar-right">    
+		                <form class="navbar-form navbar-left" id="mainsearch" action = "{% url 'search' %}" method="get" accept-charset="utf-8">
+						  	<div class="input-group">
+						    	<input type="text" id = "searchbox" class="form-control" placeholder="Search" name="q">
+						    	<div class="input-group-btn">
+						      		<button class="btn btn-default" id="searchbutton" type="submit">
+						        		<i class="glyphicon glyphicon-search" style="font-size:14px;"></i>
+						      		</button>
+						    	</div>
+						  	</div>
+						</form>
+						<li {% block nav-home %} {% endblock %}> <a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span></a></li>
+				      <li class="{% block nav-noti %} {% endblock %}"><a href="{% url 'notifications' %}"><span class="glyphicon glyphicon-bell"> </span></a></li>
+		    		  <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"> </span></a></li>
+		    		</ul>
+		    	{% endblock %}
+	  		</div>
+		</nav>
     	{% block content %}{% endblock %}
 	</body>
 </html>
