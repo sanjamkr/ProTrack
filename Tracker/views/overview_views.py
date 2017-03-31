@@ -151,7 +151,7 @@ def home(request):
             if total_tp==0:
                 ratio=0
             else:
-                ratio=completed_tp/total_tp
+                ratio=completed_tp/(total_tp-completed_tp)
             user_tp[mem_name]=ratio
         r={key:rank for rank,key in enumerate(sorted(set(user_tp.values()),reverse=True),1)}
         user_tp={k:r[v] for k,v in user_tp.items()}
