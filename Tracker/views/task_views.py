@@ -13,7 +13,8 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def add_task(request,project_id):
     user = User.objects.get(username=request.user.username)
-    g = user.groups.all()[0]
+    g = request.user.groups.all()[0]
+
     if request.method == 'POST':
         form = NewTask(request.POST)
         if form.is_valid():
@@ -51,7 +52,7 @@ def edit_task(request,task_id):
                 n = notification.objects.create(type='nc', member=new_comment.task.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
             #if user.username in new_comment.comment:
             #    n2 = notification.objects.create(type='mc', member=t.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
-            return HttpResponseRedirect('/Tracker/edit_task/'+str(new_comment.task.id)+'/')
+            return HttpResponseRedirect('/Tracker/edit_task/'+str(new_comment.task.id)+'/#TaskComments')
 
         
     else:

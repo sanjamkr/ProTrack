@@ -4,7 +4,7 @@
 {% block title %} Add Task {% endblock %}
 
 {% block content %}
-<div class= "container project-content">
+<div class= "container">
 
     <div class = "row">
         
@@ -16,10 +16,9 @@
 	<form action="{% url 'add_task' project.id %}" method="post">
 		{% csrf_token %}
 		<table class="addform taskform" align="center">
-        {% if form.errors %}
-            {{ form.errors }}
-        {% endif %}
+
 	    		<tr>
+                    <th></th>
 					<td hidden>{{form.tproject}}</td>
 				</tr>
 				<tr>

@@ -140,7 +140,7 @@ def home(request):
         user_tp = {}
         for member in g.user_set.all():
             is_m = Q(assign = member)
-            mem_name=member.username
+            mem_name=member.get_full_name()
             completed_tp =0
             total_tp = 0
             tl = task.objects.filter(is_m)
