@@ -48,7 +48,7 @@ def edit_task(request,task_id):
         
         if formc.is_valid():
             new_comment = formc.save()            
-            if(t.assign != user):
+            if(new_comment.task.assign != user):
                 n = notification.objects.create(type='nc', member=new_comment.task.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
             #if user.username in new_comment.comment:
             #    n2 = notification.objects.create(type='mc', member=t.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)

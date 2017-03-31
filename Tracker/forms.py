@@ -63,7 +63,6 @@ class NewTask(ModelForm):
         'tname': forms.TextInput(attrs={'class': 'taskinput taskname'}),
         'desc': forms.TextInput(attrs={'class': 'taskinput taskname'}),
         'tp': forms.NumberInput(attrs={'class': 'taskinput taskpoint'}),
-        'priority': forms.TextInput(attrs={'class': 'taskinput priority'}),
         'heading': forms.TextInput(attrs={'class': 'taskinput heading'}),
         'dep_task': forms.TextInput(attrs={'class': 'taskinput dep_task'}),
         'remainder': forms.TextInput(attrs={'class': 'taskinput remainder'}),
