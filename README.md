@@ -8,17 +8,9 @@ Web-based Project Tracking Application.
  
  3) From command prompt,change to Directory A/ProTrack
  
- 4) On command prompt,type- python manage.py createsuperuser (Enter any username and password)
-
- 5) On command prompt,type- python manage.py runserver
+ 4) On command prompt,type- python manage.py runserver
  
- TABLES:
-  - Go to 127.0.0.1:8000/admin (Enter above created username and password to login)
-  - Tracker section on home screen contains all database tables (Have read-write privileges here)
- 
-VIEWS:
-  - Go to 127.0.0.1:8000/Tracker from any browser (Login Screen)
-  - Go to 127.0.0.1:8000/Tracker/MemberId=1 (Member 1's Details)
- 
+# See in action:
+  - Go to 127.0.0.1:8000/Tracker from any browser 
 
 
