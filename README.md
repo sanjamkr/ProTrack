@@ -11,6 +11,6 @@ Web-based Project Tracking Application.
  4) On command prompt,type- python manage.py runserver
  
 # See in action:
-  - Go to 127.0.0.1:8000/Tracker from any browser 
+  - Go to localhost:8000/Tracker from any browser 
 
 
