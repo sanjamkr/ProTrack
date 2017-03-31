@@ -4,10 +4,21 @@
 {% block title %} Add Task {% endblock %}
 
 {% block content %}
-	<h1>New Task</h1> 
+<div class= "container project-content">
+
+    <div class = "row">
+        
+         <div class = "col-md-6  col-md-offset-3">   
+          <div class = "taskdetails whitecard" >
+        <h3  align="center"><span class="pull-left"><form><button class="btn btn-default" id="backbutton" formaction = "{% url 'edit_project' project.id %}" type="submit">
+        <i class=" glyphicon glyphicon-circle-arrow-left"></i>
+      </button></form></span>New Task</h3>
 	<form action="{% url 'add_task' project.id %}" method="post">
 		{% csrf_token %}
-		<table>
+		<table class="addform taskform" align="center">
+        {% if form.errors %}
+            {{ form.errors }}
+        {% endif %}
 	    		<tr>
 					<td hidden>{{form.tproject}}</td>
 				</tr>
@@ -49,7 +60,11 @@
 				<tr><th>Heading </th><td> {{form.heading}}</td></tr>
 				<tr><th>Dependent Task &nbsp;</th><td> {{form.dep_task}}</td></tr>
 				<tr><th>Task Points </th><td> {{form.tp}}</td></tr>
+                <tr><th></th><td><button class= "btn btn-sm btn-success tasksubmit" type="submit" value="Submit" name="edittask">Submit</button></td></tr>
 	    </table>
-	    <input type="submit" value="Submit" />
+	    
 	</form>
+
+        </div>
+        </div>
 {% endblock %}

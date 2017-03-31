@@ -1,28 +1,39 @@
+
 {% extends "Tracker/base.html" %}
 
-{% block title %} Add Project {% endblock %}
+{% block title %} Add Sprint {% endblock %}
 
 {% block content %}
-		<h1>New Project</h1> 
-		<form action="{% url 'add_project' %}" method="post">
+<div class= "container project-content">
+
+    <div class = "row">
+        
+         <div class = "col-md-6  col-md-offset-3">   
+          <div class = "taskdetails whitecard" >
+        <h3  align="center"><span class="pull-left"><form><button class="btn btn-default" id="backbutton" formaction = "{% url 'home' %}" type="submit">
+        <i class=" glyphicon glyphicon-circle-arrow-left"></i>
+      </button></form></span>New Project</h3>		
+      <form action="{% url 'add_project' %}" method="post">
 			{% csrf_token %}
-			<table>
+			<table class = "addform" align="center">
 				<tr>
 					<td  hidden>{{form.pgroup}}</td>
 				</tr>
 				<tr>
-					<th>Project Name : </th>
+					<th>Project Name </th>
 					<td>{{form.pname}}</td>
 				</tr>
 				<tr>
-					<th>Description: </th>
+					<th>Description </th>
 					<td> {{ form.pdesc }}</td>
 				</tr>
 				<tr>
-					<th>Deadline : </th>
+					<th>Deadline </th>
 					<td> {{ form.pdeadline }}</td>
 				</tr>
+                <td><button class= "btn btn-sm btn-success tasksubmit" type="submit" value="Submit" name="edittask">Submit</button></td>
 			</table>
-			<input type="submit" value="Submit" />
 		</form>
+        </div>
+        </div>
 {% endblock %}

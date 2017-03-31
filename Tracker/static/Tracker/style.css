@@ -511,3 +511,48 @@ overflow-y: auto;}
 .notitime {
     color: #888;
 }
+.taskinput, #id_state, #id_tsprint, #id_assign, .sprintinput, .sprintinput
+{
+    width: 100%;
+
+}
+/*Task Fields*/
+.taskinput, #id_state, #id_tsprint, #id_assign, #id_due_date_month,#id_due_date_day, #id_due_date_year{
+    border: #bbb 1px solid;
+    border-radius: 4px;
+    padding-left: 5px;
+}
+/*Sprint Fields*/
+.sprintinput, #id_start_date_month, #id_start_date_day, #id_start_date_year, /*Add Sprint Field */
+#id_end_date_month, #id_end_date_day, #id_end_date_year{
+    border: #bbb 1px solid;
+    border-radius: 4px;
+    padding-left: 5px;
+}
+/*Project Fields */
+.projectinput {
+    border: #bbb 1px solid;
+    border-radius: 4px;
+    padding-left: 5px;
+}
+/*Select Fields*/
+#id_state, #id_tsprint, #id_assign, #id_due_date_month,#id_due_date_day, /* Add Task Fields */
+#id_due_date_year, 
+#id_newtask-state, #id_newtask-tsprint, #id_newtask-assign, /*Edit Task Fields */
+#id_newtask-due_date_month,#id_newtask-due_date_day, #id_newtask-due_date_year,
+#id_start_date_month, #id_start_date_day, #id_start_date_year, /*Add Sprint Field */
+#id_end_date_month, #id_end_date_day, #id_end_date_year,
+#id_pdeadline_month, #id_pdeadline_day, #id_pdeadline_year /* Add Project Field*/
+ {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+/* Add Forms */
+.addform td, .addform th {
+    padding: 5px;
+
+}
+.tasksubmit{
+    margin-top: 10px;
+    
+}

@@ -29,17 +29,23 @@ class NewFile(ModelForm):
         fields = ['fproject','file']
 
 class NewProject(ModelForm):
-    pdeadline = forms.DateField(widget=SelectDateWidget)
+    pdeadline = forms.DateField(widget=SelectDateWidget(years=range(datetime.date.today().year, datetime.date.today().year+10 )),initial = datetime.date.today())
     class Meta:
         model = project
         fields = ['pgroup','pname','pdesc','pdeadline']
-
+        widgets = {
+        'pname': forms.TextInput(attrs={'class': 'projectinput projectname'}),
+        'pdesc': forms.TextInput(attrs={'class': 'projectinput projectdesc'}),
+        }
 class NewSprint(ModelForm):
-    start_date = forms.DateField(widget=SelectDateWidget)
-    end_date = forms.DateField(widget=SelectDateWidget)
+    start_date = forms.DateField(widget=SelectDateWidget(years=range(datetime.date.today().year, datetime.date.today().year+10 )),initial = datetime.date.today())
+    end_date = forms.DateField(widget=SelectDateWidget(years=range(datetime.date.today().year, datetime.date.today().year+10 )), initial = datetime.date.today()+datetime.timedelta(days=1))
     class Meta:
         model = sprint
         fields = ['project','sname','start_date','end_date']
+        widgets = {
+        'sname': forms.TextInput(attrs={'class': 'sprintinput sprintname'}),
+        }
     def clean(self):
         cleaned_data = super(NewSprint, self).clean()
         start_date = cleaned_data.get("start_date")
@@ -48,11 +54,22 @@ class NewSprint(ModelForm):
             raise forms.ValidationError("Sprint cannot end before starting")
 
 class NewTask(ModelForm):
-    due_date = forms.DateField(widget=SelectDateWidget)
+    due_date = forms.DateField(widget=SelectDateWidget(years=range(datetime.date.today().year, datetime.date.today().year+10 )), initial = datetime.date.today())
     class Meta:
         model = task
         fields = ['tsprint','tproject','tname','desc','due_date','risk','priority','state','assign','remainder','heading','dep_task','tp']
         exclude = ('newcomment','newtag',)
+        widgets = {
+        'tname': forms.TextInput(attrs={'class': 'taskinput taskname'}),
+        'desc': forms.TextInput(attrs={'class': 'taskinput taskname'}),
+        'tp': forms.NumberInput(attrs={'class': 'taskinput taskpoint'}),
+        'priority': forms.TextInput(attrs={'class': 'taskinput priority'}),
+        'heading': forms.TextInput(attrs={'class': 'taskinput heading'}),
+        'dep_task': forms.TextInput(attrs={'class': 'taskinput dep_task'}),
+        'remainder': forms.TextInput(attrs={'class': 'taskinput remainder'}),
+        'risk': forms.TextInput(attrs={'class': 'taskinput risk'}),
+
+        }        
 
 class NewComment(ModelForm):
     class Meta:
