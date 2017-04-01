@@ -46,7 +46,7 @@
 		<button class = "loginbtn btn btn-success" type="submit">Login</button>
 	</form>
     <form>
-	<button class = "loginbtn btn btn-primary" formaction = "{% url 'signup' %}">Register</button>
+	<button class = "loginbtn btn" formaction = "{% url 'signup' %}" style="background-color: #337ab7">Register</button>
     <button class = "loginbtn btn btn-fb" formaction = "{% url 'social:begin' 'facebook' %}">Login with Facebook</button>
      <button class = "loginbtn btn btn-google" formaction = "{% url 'social:begin' 'google-oauth2' %}">Login with Google+</button>
  
