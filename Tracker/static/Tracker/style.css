@@ -511,39 +511,60 @@ overflow-y: auto;}
 .notitime {
     color: #888;
 }
-.taskinput, #id_state, #id_tsprint, #id_assign, .sprintinput, .sprintinput, #id_priority{
+.taskinput, #id_state, #id_tsprint, #id_assign, .sprintinput, #id_priority{
     width: 100%;
 
 }
 /*Task Fields*/
-.taskinput, #id_state, #id_tsprint, #id_assign, #id_due_date_month,#id_due_date_day, #id_due_date_year,  #id_priority{
+.taskinput, #id_state, #id_tsprint, #id_assign, #id_due_date_month,#id_due_date_day, #id_due_date_year,  #id_priority,
+#id_newtask-state, #id_newtask-tsprint, #id_newtask-assign,  #id_newtask-priority,/*Edit Task Fields */
+#id_newtask-due_date_month,#id_newtask-due_date_day, #id_newtask-due_date_year
+{
     border: #bbb 1px solid;
     border-radius: 4px;
     padding-left: 5px;
+     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 }
+
 /*Sprint Fields*/
 .sprintinput, #id_start_date_month, #id_start_date_day, #id_start_date_year, /*Add Sprint Field */
 #id_end_date_month, #id_end_date_day, #id_end_date_year{
     border: #bbb 1px solid;
     border-radius: 4px;
     padding-left: 5px;
+     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 }
 /*Project Fields */
 .projectinput {
+    width: 80%;
     border: #bbb 1px solid;
     border-radius: 4px;
     padding-left: 5px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 }
 /*Select Fields*/
 #id_state, #id_tsprint, #id_assign, #id_due_date_month,#id_due_date_day, #id_priority, #id_due_date_year, /* Add Task Fields */ 
-#id_newtask-state, #id_newtask-tsprint, #id_newtask-assign, /*Edit Task Fields */
+#id_newtask-state, #id_newtask-tsprint, #id_newtask-assign,  #id_newtask-priority, /*Edit Task Fields */
 #id_newtask-due_date_month,#id_newtask-due_date_day, #id_newtask-due_date_year,
 #id_start_date_month, #id_start_date_day, #id_start_date_year, /*Add Sprint Field */
 #id_end_date_month, #id_end_date_day, #id_end_date_year,
 #id_pdeadline_month, #id_pdeadline_day, #id_pdeadline_year /* Add Project Field*/
  {
+    
     padding-top: 2px;
     padding-bottom: 2px;
+}
+#id_state:focus, #id_tsprint:focus, #id_assign:focus, #id_due_date_month:focus,#id_due_date_day:focus, #id_priority:focus, #id_due_date_year:focus, /* Add Task Fields */ 
+#id_newtask-state:focus, #id_newtask-tsprint:focus, #id_newtask-assign:focus,  #id_newtask-priority:focus, /*Edit Task Fields */
+#id_newtask-due_date_month:focus,#id_newtask-due_date_day:focus, #id_newtask-due_date_year:focus,
+#id_start_date_month:focus, #id_start_date_day:focus, #id_start_date_year:focus, /*Add Sprint Field */
+#id_end_date_month:focus, #id_end_date_day:focus, #id_end_date_year:focus,
+#id_pdeadline_month:focus, #id_pdeadline_day:focus, #id_pdeadline_year:focus /* Add Project Field*/{
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    
 }
 /* Add Forms */
 .addform td, .addform th {
@@ -554,6 +575,30 @@ overflow-y: auto;}
     margin-top: 10px;
     
 }
-#searchbox{
+#searchbox, #id_newtag-tag{
   border-radius: 4px;  
+
+}
+#id_newtag-tag{
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+border: 1px solid #ccc;}
+
+  #id_newtag-tag:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+}
+.deleteform{
+    display:inline;
+}
+.form-control {
+    margin-top: 4px;
+}
+.taskinput:focus, .projectinput:focus, .sprintinput:focus{
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }

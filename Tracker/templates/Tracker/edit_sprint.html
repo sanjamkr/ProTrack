@@ -3,35 +3,33 @@
 {% block title %} Sprint Screen{% endblock %}
 
 {% block content %}
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
    <script src="http://code.highcharts.com/highcharts.js"></script>
    <script src="http://code.highcharts.com/highcharts-3d.js"></script>
-<script>
-    function openForm(divName) {
-    var i;
-    var x = document.getElementsByClassName("sprintdetails");
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none"; 
-    }
-    document.getElementById(divName).style.display = "block"; 
-}
-function confirmDelete(){
-var result = confirm("Are you sure you want to delete this sprint?");
-if (result == true) {
-    window.location.href = "{% url 'delete_sprint' sprint.id %}";
-    return true;
-}
-else
-    return false;
 
-}
-</script>
 
     <div class= "container project-content">
   
 
     <!--Task Table-->
-        <div class = "row">
+     <div class = "row">
+     <div id="confirm" class="modal fade" role = "dialog">
+    <div class="modal-dialog">
+     <div class="modal-content">
+     <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm Delete</h4>
+      </div>
+        <div class="modal-body">
+    Are you sure you want to delete this sprint?
+    </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-danger" id="delete">Delete</button>
+    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+  </div>
+</div>
+    </div>
+  </div> 
             <div class="col-md-8">
              <h3>Sprint Tasks</h3>
              {% if sprint.task_set.all %}
@@ -62,7 +60,13 @@ else
         <!--Edittable-->
         <div class = "col-md-3 col-md-offset-1  sprint-details">
         <div id="edittable" class = "sprintdetails" style="display:none">
-        <h3><span class="pull-left"><button class="btn btn-default" id="backbutton" onclick="openForm('not_edittable')" type="submit">
+        <form class = "deleteform pull-right" action = "{% url 'delete_sprint' sprint.id %}">
+            <button class="btn btn-default"  name="deletesprint" id="deletebutton" type="submit">
+        <i class=" glyphicon glyphicon-trash"></i>
+      </button>
+      </form>
+        <h3><span class="pull-left">
+        <button class="btn btn-default" id="backbutton" onclick="openForm('not_edittable')" type="submit">
         <i class=" glyphicon glyphicon-circle-arrow-left"></i>
       </button></span>Sprint Details</h3>
         {% if form.errors %}
@@ -79,30 +83,28 @@ else
 					<td>{{form.sname}}</td>
 				</tr>
 				<tr>
-					<th>Start Date </th>
+					<th>Starts</th>
 					<td>  {{form.start_date}}</td>
 				</tr>
 				<tr>
 
 					{% if form.errors %}
                     <div class="text-danger">
-                    <th>End Date </th>
+                    <th>Ends</th>
                     </div>
                     {% else %}
-                    <th>End Date </th>
+                    <th>Ends</th>
                     {% endif %}
                     
 					<td> {{form.end_date}}</td>
 				</tr>
 				<tr>
-					<th>Status </th>
+					<th>Status &nbsp;</th>
 					<td>{{st}}</td>
 				</tr>
 			</table>
 		    <button class= "btn btn-sm btn-success" type="submit" value="Submit">Submit</button>
-            <button onClick="confirmDelete()" class="btn btn-default" id="deletebutton" type="submit">
-                    <i class=" glyphicon glyphicon-trash"></i>
-            </button>
+
 		</form>
         </div> <!--Edittable-->
         <!--Not Edittable-->
@@ -117,16 +119,16 @@ else
 					<td> {{sprint.sname}}</td>
 				</tr>
                 <tr>
-					<th>Start Date </th>
+					<th>Starts </th>
 					<td>  {{sprint.start_date|date:"j M Y"}}</td>
 				</tr>
 				<tr>
                 <tr>
-					<th>End Date </th>
+					<th>Ends </th>
 					<td>  {{sprint.end_date|date:"j M Y"}}</td>
 				</tr>
 				<tr>
-					<th>Status </th>
+					<th>Status &nbsp;</th>
 					<td>  {{st}}</td>
 				</tr>
 			</table>
@@ -143,7 +145,7 @@ else
         {% endif %}
         </div>
         {% if st != 'Sprint has Ended' %}
-        <div class = "col-md-3 whitecard">
+        <div class = "col-md-3 col-md-offset-1 whitecard">
                         <h3>Add/Remove Tasks</h3>
                         <ul class="add-to-sprint">
 			{% for task in sprint.project.task_set.all %}
@@ -231,4 +233,38 @@ $(function () {
 {% endif %}
 
 </script>
+<script>
+    function openForm(divName) {
+    var i;
+    var x = document.getElementsByClassName("sprintdetails");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none"; 
+    }
+    document.getElementById(divName).style.display = "block"; 
+}
+    function confirmDelete(){
+    var result = window.confirm("Are you sure you want to delete this sprint?");
+    window.alert("out here");
+    if (result == true) {
+        window.alert("out here");
+        window.location.href = "{% url 'delete_sprint' sprint.id %}";
+        }
+    else 
+     window.alert("now here");
+}
+</script>
+<script>
+$('button[name="deletesprint"]').on('click', function(e) {
+  var $form = $(this).closest('form');
+  e.preventDefault();
+  $('#confirm').modal({
+      backdrop: 'static',
+      keyboard: false
+    })
+    .one('click', '#delete', function(e) {
+      $form.trigger('submit');
+    });
+});
+</script>
+</body>
 {% endblock %}
