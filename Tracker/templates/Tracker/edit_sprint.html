@@ -6,7 +6,17 @@
 
    <script src="http://code.highcharts.com/highcharts.js"></script>
    <script src="http://code.highcharts.com/highcharts-3d.js"></script>
-
+    <style>
+    .status_color {
+        {% if st == "Green" %}
+        color: #02b875;
+        {% elif st == "Red" %}
+        color: #ec555b;
+        {% elif st == "Yellow" %}
+        color: #ffea00;
+        {% endif %}
+    }
+    </style>
 
     <div class= "container project-content">
   
@@ -100,7 +110,7 @@
 				</tr>
 				<tr>
 					<th>Status &nbsp;</th>
-					<td>{{st}}</td>
+					<td> <span class = "status_color"> <i class ="glyphicon glyphicon-record "> </i> {{st}}</span></td>
 				</tr>
 			</table>
 		    <button class= "btn btn-sm btn-success" type="submit" value="Submit">Submit</button>
@@ -129,7 +139,7 @@
 				</tr>
 				<tr>
 					<th>Status &nbsp;</th>
-					<td>  {{st}}</td>
+					<td> <span class = "status_color"> <i class = "glyphicon glyphicon-record"> </i> {{st}}</span></td>
 				</tr>
 			</table>
         </div>

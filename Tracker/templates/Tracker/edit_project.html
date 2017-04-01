@@ -3,6 +3,17 @@
 {% block title %}Project {{project.pname}}{% endblock %}
 
 {% block content %}
+    <style>
+    .status_color {
+        {% if ps == "Green" %}
+        color: #02b875;
+        {% elif ps == "Red" %}
+        color: #ec555b;
+        {% elif ps == "Yellow" %}
+        color: #ffea00;
+        {% endif %}
+    }
+    </style>
 <script>
     function openForm(divName) {
     var i;
@@ -14,6 +25,7 @@
 }
 
 </script>
+
         <!--Tab Navigation-->
         <ul class="nav nav-tabs project-nav">
 			<li class="active">
@@ -134,7 +146,7 @@
 				</tr>
 				<tr>
 					<th>Status </th>
-					<td>  {{ps}}</td>
+					<td><span class = "status_color"> <i class = "glyphicon glyphicon-record"> </i> {{ps}}</span></td>
 				</tr>
 			</table>
         </div>
@@ -172,7 +184,7 @@
 				</tr>
 				<tr>
 					<th>Status </th>
-					<td>  {{ps}}</td>
+					<td><span class = "status_color"> <i class="glyphicon glyphicon-record"> </i> {{ps}}</span></td>
 				</tr>
 			</table>
 			<button class= "btn btn-success" type="submit" value="Submit">Submit</button>
