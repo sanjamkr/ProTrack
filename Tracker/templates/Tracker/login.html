@@ -6,10 +6,11 @@
 	<head>
 	    <title>ProTrack</title>
         <link rel="icon" href="{% static 'Tracker/favicon.ico' %}" /> 
-		<link rel="stylesheet" type="text/css" href="{% static 'Tracker/css/bootstrap.min.css' %}" />
-	    <link rel="stylesheet" type="text/css" href="{% static 'Tracker/style.css' %}" />
+
         <script src="{% static 'Tracker/js/jquery-3.2.0.min.js' %}"></script>
         <script src="{% static 'Tracker/js/bootstrap.min.js' %}"></script>
+        		<link rel="stylesheet" type="text/css" href="{% static 'Tracker/css/bootstrap.min.css' %}" />
+	    <link rel="stylesheet" type="text/css" href="{% static 'Tracker/style.css' %}" />
 
 	</head>
 	<body id="loginpage">
@@ -19,26 +20,7 @@
 				alert("Please Contact Admin");
 			}
 	</script>
-    <!-- Modal -->
-<div id="forgotpass" class="modal fade" role="dialog">
-  <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Forgot Password</h4>
-      </div>
-      <div class="modal-body">
-        <p>Please Contact Admin</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
-      </div>
-    </div>
-
-  </div>
-</div>
     <div class="jumbotron vertical-center">
     <div class = "container">
       <div class="row vertical-align">
@@ -68,14 +50,39 @@
     <button class = "loginbtn btn btn-fb" formaction = "{% url 'social:begin' 'facebook' %}">Login with Facebook</button>
      <button class = "loginbtn btn btn-google" formaction = "{% url 'social:begin' 'google-oauth2' %}">Login with Google+</button>
  
-	<p><a href="#">Forgot Password?</a></p>
+	
 
     </form>
+    <p><a class="fpbtn" data-toggle="modal" data-target="#forgotpass">Forgot Password?</a></p>
     </div>
+
 
     
     </div>
     </div>
     </div>
+    
+        <!-- Modal -->
+<div id="forgotpass" class="modal fade" role="dialog"  tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Forgot Password</h4>
+      </div>
+      <div class="modal-body">
+        <p>Please Contact Admin</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+    
     </body>
 {% endblock %}

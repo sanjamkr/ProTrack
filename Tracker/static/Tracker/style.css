@@ -638,3 +638,11 @@ border: 1px solid #ccc;}
    left: -10px;
    padding: 3px 4px;
   }
+  
+.fpbtn{
+    cursor: pointer;
+}
+.fpbtn:hover,.fpbtn:active, .fpbtn:focus{
+    color: #fff;
+    text-decoration: none;
+}

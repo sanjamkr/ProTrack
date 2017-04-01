@@ -90,7 +90,7 @@ class comment(models.Model):
      
 #Notifications
 Noti_Types = (
-    ('nt','NewTask'),('np', 'NewProject'),('ns', 'NewSprint'), ('nc','NewComment'),('mc','MentionComment'),('od','OverDue'),('nd','NearDeadline'), ('ss', 'SprintStart'),('se','SprintEnd'),('et', 'EditTask'),('ep','EditProject'),
+    ('nt','NewTask'),('np', 'NewProject'),('ns', 'NewSprint'), ('nc','NewComment'),('mc','MentionComment'),('od','OverDue'),('nd','NearDeadline'), ('ss', 'SprintStart'),('se','SprintEnd'),('et', 'EditTask'),('ep','EditProject'),('uf','UploadFile'),
 )
 class notification(models.Model):
     type = models.CharField(max_length=50,choices=Noti_Types)

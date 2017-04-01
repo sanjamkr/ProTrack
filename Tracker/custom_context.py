@@ -16,7 +16,7 @@ def noti_count(request):
             is_not_othermember = Q(othermember = user.username)
             is_unread = Q(read = False)
     
-            unread_notis = notification.objects.filter(is_unread & (is_member | (is_group & ~(is_not_othermember)))).order_by('-noti_create')
+            unread_notis = notification.objects.filter( is_unread & is_member  & ~(is_not_othermember) ).order_by('-noti_create')
             noti_count = unread_notis.count()    
         except DoesNotExist:
             pass

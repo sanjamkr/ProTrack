@@ -188,7 +188,9 @@ def FileView(request,project_id):
             p = get_object_or_404(project,pk=project_id)            
             user = User.objects.get(username=request.user.username)
             g = user.groups.all()[0]
-            n = notification.objects.create(type='uf', nproject = p, membergroup=g, othermember = user.username, content=p.pname, urlid=p.id, read=False, noti_date = datetime.now())
+            users = User.objects.filter(groups__id = g.id)
+            for u in users:
+                n = notification.objects.create(type='uf', nproject = p, member = u, membergroup=g, othermember = user.username, content=p.pname, urlid=p.id, read=False, noti_date = datetime.now())
             return HttpResponseRedirect('/Tracker/files/'+project_id+'/')
     else:
         p = get_object_or_404(project,pk=project_id)
@@ -207,11 +209,13 @@ def FilesList(request,project_id):
 def add_project(request):
     if request.method == 'POST':
         form = NewProject(request.POST)        
-        if form.is_valid():   
+        if form.is_valid():
+            new_project = form.save()
             user = User.objects.get(username=request.user.username)
             g = request.user.groups.all()[0]
-            new_project = form.save()
-            n = notification.objects.create(type='np', membergroup=g, nproject = new_project, othermember = user.username, content=new_project.pname, urlid=new_project.id, read=False, noti_date = new_project.pcreated)
+            users = User.objects.filter(groups__id = g.id)
+            for u in users:
+                n = notification.objects.create(type='np', membergroup=g, member = u, nproject = new_project, othermember = user.username, content=new_project.pname, urlid=new_project.id, read=False, noti_date = new_project.pcreated)
             return HttpResponseRedirect('/Tracker/home')
     else:
         user = User.objects.get(username=request.user.username)
@@ -534,8 +538,8 @@ def notifications(request):
     is_group = Q(membergroup = g)
     is_not_othermember = Q(othermember = user.username)
     is_unread = Q(read = False)
-    my_notis = notification.objects.filter( ~(is_unread) & ( is_member | (is_group & ~(is_not_othermember) ) )).order_by('-noti_create')
-    unread_notis = notification.objects.filter(is_unread & (is_member | (is_group & ~(is_not_othermember)))).order_by('-noti_create')
+    my_notis = notification.objects.filter( ~(is_unread) &  is_member  & ~(is_not_othermember)  ).order_by('-noti_create')
+    unread_notis = notification.objects.filter( is_unread & is_member  & ~(is_not_othermember) ).order_by('-noti_create')
     unread_count = unread_notis.count()
     unread_notis.update(read = True)
     

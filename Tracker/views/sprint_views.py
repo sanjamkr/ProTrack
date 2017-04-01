@@ -20,8 +20,10 @@ def add_sprint(request,project_id):
         if form.is_valid():
             new_sprint = form.save()
             user = User.objects.get(username=request.user.username)
-            g = request.user.groups.all()[0]            
-            n = notification.objects.create(type='ns', membergroup=g, nproject = new_sprint.project, othermember = user.username, content=new_sprint.sname, urlid=new_sprint.id, read=False, noti_date = new_sprint.screated)
+            g = request.user.groups.all()[0]
+            users = User.objects.filter(groups__id = g.id)
+            for u in users:
+                n = notification.objects.create(type='ns', membergroup=g, member = u, nproject = new_sprint.project, othermember = user.username, content=new_sprint.sname, urlid=new_sprint.id, read=False, noti_date = new_sprint.screated)
             return HttpResponseRedirect('/Tracker/edit_project/'+str(new_sprint.project.id)+'/')
     else:
         user = User.objects.get(username=request.user.username)
