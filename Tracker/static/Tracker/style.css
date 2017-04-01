@@ -282,14 +282,16 @@ overflow-y: auto;}
     margin-bottom: 100px;
 }
 .btn-tab{
-    background-color: #fff;
-    color: #000;
+    background-color: #337ab7;
+    color: #fff;
     border: none;
 }
 .btn-tab:focus, .btn-tab:active{
+    
     border: none;
     outline: none;
     box-radius: 2px;
+    color: #f2f2f2;
 }
 
 .loginbtn {
@@ -601,4 +603,7 @@ border: 1px solid #ccc;}
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.activechart {
+
 }

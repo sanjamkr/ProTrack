@@ -315,8 +315,8 @@ def pieview(request,project_id):
             y = sum(e.tp for e in q if (e.comp_time!=None) and (datetime.date(e.comp_time) <= (datetime.date(p.pcreated) + timedelta(days=i))))
             realdata.append(x-y)
             categories = [str(dt.day) + ' ' + dt.strftime("%b") for dt in dates]
-            diff = int(round(total_tp/(days+1)))
-            idealdata = [total_tp - (i*diff) for i in range(days+1)]
+            diff = total_tp/(days+1)
+            idealdata = [float("{0:.1f}".format(total_tp - (i*diff))) for i in range(days+1)]
 
         
     

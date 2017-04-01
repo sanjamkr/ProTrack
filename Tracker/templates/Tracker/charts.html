@@ -39,10 +39,11 @@
     
     <div id = "row">
     <div>
-    <button class="pull-right btn btn-tab tablink" onclick="openChart(event, 'task')">Task States</button>
+    
     {% if errorchart == 0%}
     <button class="pull-right btn tablink" onclick="openChart(event, 'burn')">Burndown</button>
     {% endif %}
+    <button class="pull-right btn btn-tab tablink" onclick="openChart(event, 'task')">Task States</button>
     </div>
     <div class = "col chartcard" id = "task" style = "height:460px;">
     <div id="StatePie" style = "width = 100%; height:300px;"></div>

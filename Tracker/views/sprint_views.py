@@ -109,8 +109,8 @@ def edit_sprint(request,sprint_id):
         y = sum(e.tp for e in t if ((e.comp_time!=None) and (datetime.date(e.comp_time) <= (sp.start_date + timedelta(days=i) )) ))
         realdata.append(x-y)
         categories = [str(dt.day) + ' ' + dt.strftime("%b") for dt in dates]
-        diff = int(round(total_tps/(days+1)))
-        idealdata = [total_tps - (i*diff) for i in range(days+1)]
+        diff = total_tps/(days+1)
+        idealdata = [float("{0:.1f}".format(total_tps - (i*diff))) for i in range(days+1)]
     if total_tasks==0:
         errorchart = 1
     context ={
