@@ -538,7 +538,7 @@ def notifications(request):
     is_group = Q(membergroup = g)
     is_not_othermember = Q(othermember = user.username)
     is_unread = Q(read = False)
-    my_notis = notification.objects.filter( ~(is_unread) &  is_member  & ~(is_not_othermember)  ).order_by('-noti_create')
+    my_notis = notification.objects.filter( is_member  & ~(is_not_othermember)  ).order_by('-noti_create')
     unread_notis = notification.objects.filter( is_unread & is_member  & ~(is_not_othermember) ).order_by('-noti_create')
     unread_count = unread_notis.count()
     unread_notis.update(read = True)
