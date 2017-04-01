@@ -20,7 +20,7 @@ def add_task(request,project_id):
         if form.is_valid():
             new_task = form.save()
             if(new_task.assign != user):
-                n = notification.objects.create(type='nt', member=new_task.assign, othermember = user.username, content=new_task.tname, urlid=new_task.id, read=False, noti_date = new_task.created)
+                n = notification.objects.create(type='nt', nproject = new_task.tproject, member=new_task.assign, othermember = user.username, content=new_task.tname, urlid=new_task.id, read=False, noti_date = new_task.created)
             return HttpResponseRedirect('/Tracker/edit_project/'+str(new_task.tproject.id)+'/')
     else:
         user = User.objects.get(username=request.user.username)
@@ -49,7 +49,7 @@ def edit_task(request,task_id):
         if formc.is_valid():
             new_comment = formc.save()            
             if(new_comment.task.assign != user):
-                n = notification.objects.create(type='nc', member=new_comment.task.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
+                n = notification.objects.create(type='nc', nproject = new_comment.task.tproject, member=new_comment.task.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
             #if user.username in new_comment.comment:
             #    n2 = notification.objects.create(type='mc', member=t.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
             return HttpResponseRedirect('/Tracker/edit_task/'+str(new_comment.task.id)+'/#TaskComments')
@@ -189,6 +189,7 @@ def delete_task(request,task_id):
     t = get_object_or_404(task,pk=task_id)
     p = get_object_or_404(project,pk=t.tproject.id)
     task.objects.filter(id=task_id).delete()
+    notification.objects.filter(urlid=task_id).delete()
     return HttpResponseRedirect('/Tracker/edit_project/'+str(p.id)+'/')
 
 

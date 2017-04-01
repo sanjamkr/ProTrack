@@ -21,7 +21,7 @@ def add_sprint(request,project_id):
             new_sprint = form.save()
             user = User.objects.get(username=request.user.username)
             g = request.user.groups.all()[0]            
-            n = notification.objects.create(type='ns', membergroup=g, othermember = user.username, content=new_sprint.sname, urlid=new_sprint.id, read=False, noti_date = new_sprint.screated)
+            n = notification.objects.create(type='ns', membergroup=g, nproject = new_sprint.project, othermember = user.username, content=new_sprint.sname, urlid=new_sprint.id, read=False, noti_date = new_sprint.screated)
             return HttpResponseRedirect('/Tracker/edit_project/'+str(new_sprint.project.id)+'/')
     else:
         user = User.objects.get(username=request.user.username)
@@ -137,5 +137,6 @@ def delete_sprint(request,sprint_id):
     s = get_object_or_404(sprint,pk=sprint_id)
     p = get_object_or_404(project,pk=s.project.id)
     sprint.objects.filter(id=sprint_id).delete()
+    notification.objects.filter(urlid=sprint_id).delete()
     return HttpResponseRedirect('/Tracker/edit_project/'+str(p.id)+'/')
 

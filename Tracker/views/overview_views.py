@@ -188,8 +188,8 @@ def FileView(request,project_id):
             p = get_object_or_404(project,pk=project_id)            
             user = User.objects.get(username=request.user.username)
             g = user.groups.all()[0]
-            n = notification.objects.create(type='uf', membergroup=g, othermember = user.username, content=p.pname, urlid=p.id, read=False, noti_date = datetime.now())
-            return HttpResponseRedirect('/Tracker/edit_project/'+project_id+'/')
+            n = notification.objects.create(type='uf', nproject = p, membergroup=g, othermember = user.username, content=p.pname, urlid=p.id, read=False, noti_date = datetime.now())
+            return HttpResponseRedirect('/Tracker/files/'+project_id+'/')
     else:
         p = get_object_or_404(project,pk=project_id)
         user = User.objects.get(username=request.user.username)
@@ -211,7 +211,7 @@ def add_project(request):
             user = User.objects.get(username=request.user.username)
             g = request.user.groups.all()[0]
             new_project = form.save()
-            n = notification.objects.create(type='np', membergroup=g, othermember = user.username, content=new_project.pname, urlid=new_project.id, read=False, noti_date = new_project.pcreated)
+            n = notification.objects.create(type='np', membergroup=g, nproject = new_project, othermember = user.username, content=new_project.pname, urlid=new_project.id, read=False, noti_date = new_project.pcreated)
             return HttpResponseRedirect('/Tracker/home')
     else:
         user = User.objects.get(username=request.user.username)

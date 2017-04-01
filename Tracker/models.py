@@ -46,7 +46,7 @@ class sprint(models.Model):
 #Tasks associated with a Project
 class task(models.Model):
     tproject = models.ForeignKey(project, on_delete=models.CASCADE)
-    tsprint = models.ForeignKey(sprint, on_delete=models.CASCADE,blank=True,null=True)
+    tsprint = models.ForeignKey(sprint, on_delete=models.SET_NULL ,blank=True,null=True)
     tname = models.CharField(max_length=100)
     desc = models.CharField(max_length=200,blank=True)
     due_date = models.DateField('due date')
@@ -94,14 +94,15 @@ Noti_Types = (
 )
 class notification(models.Model):
     type = models.CharField(max_length=50,choices=Noti_Types)
-    member = models.ForeignKey(User, null=True)
-    membergroup = models.ForeignKey(Group, null=True)
+    member = models.ForeignKey(User, null=True,  on_delete=models.CASCADE)
+    membergroup = models.ForeignKey(Group, null=True,  on_delete=models.CASCADE)
     content = models.CharField(max_length=500)
     urlid = models.CharField(max_length=500, null=True)
     othermember = models.CharField(max_length=500, null=True)
     read = models.BooleanField(default=False)
     noti_date = models.DateTimeField()
     noti_create = models.DateTimeField(auto_now_add=True)
+    nproject = models.ForeignKey(project, on_delete=models.CASCADE)
     
     
     
