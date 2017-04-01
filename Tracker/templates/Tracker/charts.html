@@ -58,7 +58,7 @@
     <script>
 $(function () {
     Highcharts.setOptions({
-     colors: ['#218559', '#DD1E2F', '#06A2CB']
+     colors: ['#02b875', '#ec555b', '#3eb9ce']
     },
     {lang: {noData: "No Data Available!"}});
     Highcharts.chart('StatePie', {
@@ -156,12 +156,12 @@ $(function () {
     },
     series: [{
       name: 'Ideal Burn',
-      color: 'rgba(255,0,0,0.25)',
+      color: '#3eb9ce',
       lineWidth: 2,
       data: {{idealdata}}
     }, {
       name: 'Actual Burn',
-      color: 'rgba(0,120,200,0.75)',
+      color: '#ec555b',
       marker: {
         radius: 6
       },

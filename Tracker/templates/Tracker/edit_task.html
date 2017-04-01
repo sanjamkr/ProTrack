@@ -152,6 +152,7 @@
 		{% if error_message %}
 			<p>{{ error_message }}</p>
 		{% endif %}
+        {% if task.comment_set.all %}
         <div class="commentdiv">
         
 		{% for c in task.comment_set.all|dictsort:"ccreated"%}
@@ -163,6 +164,7 @@
             </div>
 		{% endfor %}
         </div>
+        {% endif %}
 
 		<form action="{% url 'edit_task' task.id %}" method="post">
 			{% csrf_token %}

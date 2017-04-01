@@ -366,12 +366,12 @@ class Calendar(HTMLCalendar):
                 cssclass += ' filled'
                 body = ['<ul class="sample">']
                 for workout in self.my_tasks[day]:
-                    body.append('<li>')
+                    body.append('<span> &#8226;')
                     
                     #body.append('<a href="%s">' % workout.get_absolute_url())
                     #body.append('<a href="Tracker/calendar1/">')
                     body.append(esc(workout.tname))
-                    body.append('</a></li>')
+                    body.append('</span>')
                     #body.append('</li>')
                 body.append('</ul>')
                 return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)))
