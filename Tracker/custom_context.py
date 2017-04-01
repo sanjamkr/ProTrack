@@ -10,14 +10,17 @@ def noti_count(request):
     if request.user.is_authenticated:
         try:
             user = User.objects.get(username=request.user.username)
-            g = user.groups.all()[0]
-            is_member = Q(member = user)
-            is_group = Q(membergroup = g)
-            is_not_othermember = Q(othermember = user.username)
-            is_unread = Q(read = False)
+            if user.groups.all().exists():
+                g = user.groups.all()[0]
+                is_member = Q(member = user)
+                is_group = Q(membergroup = g)
+                is_not_othermember = Q(othermember = user.username)
+                is_unread = Q(read = False)
     
-            unread_notis = notification.objects.filter( is_unread & is_member  & ~(is_not_othermember) ).order_by('-noti_create')
-            noti_count = unread_notis.count()    
+                unread_notis = notification.objects.filter( is_unread & is_member  & ~(is_not_othermember) ).order_by('-noti_create')
+                noti_count = unread_notis.count()
+            else:
+                pass
         except DoesNotExist:
             pass
     return{'noti_count': noti_count}
