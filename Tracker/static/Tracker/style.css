@@ -79,14 +79,14 @@ body {
     margin-bottom: 0px;
     border-radius: 5px;
     margin-bottom: 8px;
-    border: #eee 1px solid;
+    border: 1px solid  #eee;
     color: #000;
 }
 #group {
     color: #757575
 }
 .logininput:focus {
-    border: #888 1px solid;
+    border: 1px solid #888;
     border-radius: 5px;
     outline: none;
 }
@@ -286,7 +286,7 @@ overflow-y: auto;}
     color: #fff;
     border: none;
 }
-.btn-tab:focus, .btn-tab:active{
+.btn-tab:focus, .btn-tab:active, .btn-tab:hover{
     
     border: none;
     outline: none;
@@ -436,12 +436,12 @@ overflow-y: auto;}
 }
 .commentcard{
     padding: 5px;
-    border-bottom: #eee 1px solid; 
+    border-bottom: 1px solid #eee; 
 
 }
 .commentdiv{
      background: #fff;
-     border: #eee 1px solid; 
+     border: 1px solid #eee; 
      border-radius: 4px;
      padding-top: 4px;
 
@@ -484,7 +484,7 @@ overflow-y: auto;}
 }
 .notidiv {
      background: #fff;
-     border: #eee 1px solid; 
+     border:  1px solid #eee; 
      border-radius: 6px;
      padding-top: 4px;
      padding: 0px;
@@ -495,7 +495,7 @@ overflow-y: auto;}
 
 .noticard {
     padding:15px;
-    border-bottom: #eee 1px solid;
+    border-bottom:  1px solid #eee;
 }
 .notidivhead {
     padding: 0px;
@@ -513,6 +513,9 @@ overflow-y: auto;}
 .notitime {
     color: #888;
 }
+.unreadnoti {
+    background-color: #edf2fa;
+}
 .taskinput, #id_state, #id_tsprint, #id_assign, .sprintinput, #id_priority{
     width: 100%;
 
@@ -522,7 +525,7 @@ overflow-y: auto;}
 #id_newtask-state, #id_newtask-tsprint, #id_newtask-assign,  #id_newtask-priority,/*Edit Task Fields */
 #id_newtask-due_date_month,#id_newtask-due_date_day, #id_newtask-due_date_year
 {
-    border: #bbb 1px solid;
+    border: 1px solid #bbb;
     border-radius: 4px;
     padding-left: 5px;
      box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
@@ -531,7 +534,7 @@ overflow-y: auto;}
 /*Sprint Fields*/
 .sprintinput, #id_start_date_month, #id_start_date_day, #id_start_date_year, /*Add Sprint Field */
 #id_end_date_month, #id_end_date_day, #id_end_date_year{
-    border: #bbb 1px solid;
+    border: 1px solid #bbb ;
     border-radius: 4px;
     padding-left: 5px;
      box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
@@ -539,7 +542,7 @@ overflow-y: auto;}
 /*Project Fields */
 .projectinput {
     width: 80%;
-    border: #bbb 1px solid;
+    border: 1px solid #bbb;
     border-radius: 4px;
     padding-left: 5px;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
@@ -577,12 +580,12 @@ overflow-y: auto;}
     margin-top: 10px;
     
 }
-#searchbox, #id_newtag-tag{
+#id_newtag-tag{
   border-radius: 4px;  
 
 }
 #id_newtag-tag{
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 border: 1px solid #ccc;}
 
   #id_newtag-tag:focus {
@@ -604,6 +607,34 @@ border: 1px solid #ccc;}
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
-.activechart {
+#searchbox{
+    
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+#searchbox:focus{
+    border-radius: 4px;
+}
+#searchbutton {
+    border: 1px solid #ccc;
+    border-left: 0px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    margin-top:4px;
+    margin-left: -3px;
+    z-index:1;
+}
+#searchbutton:hover{
+  background-color: #fff;
+
+  outline: 0;
 
 }
+.badge-notify{
+   background-color: #337ab7;
+   position:relative;
+   top: -10px;
+   left: -10px;
+   padding: 3px 4px;
+  }

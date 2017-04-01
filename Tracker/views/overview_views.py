@@ -403,7 +403,7 @@ def calendar(request,project_id):
         my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
         cal = Calendar(my_tasks).formatmonth(year,month)
         #return render_to_response('Tracker/calendar.html', {'calendar':(cal),})
-        return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
+        return render(request, 'Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
     except task.DoesNotExist:
         return render(request, 'Tracker/nochart.html', {'project_id':project_id,'project':p})  
 
@@ -428,7 +428,7 @@ def calendar1(request,project_id,year,month):
 
     my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
     cal = Calendar(my_tasks).formatmonth(year,month)
-    return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
+    return render(request, 'Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
 
 
 @login_required
@@ -451,7 +451,7 @@ def calendar2(request,project_id,year,month):
 
     my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
     cal = Calendar(my_tasks).formatmonth(year,month)
-    return render_to_response('Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
+    return render(request, 'Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
 
 #..............................Search....................................
 
@@ -533,7 +533,16 @@ def notifications(request):
     is_member = Q(member = user)
     is_group = Q(membergroup = g)
     is_not_othermember = Q(othermember = user.username)
-    my_notis = notification.objects.filter(is_member | (is_group & ~(is_not_othermember))).order_by('-noti_create')
+    is_unread = Q(read = False)
+    my_notis = notification.objects.filter( ~(is_unread) & ( is_member | (is_group & ~(is_not_othermember) ) )).order_by('-noti_create')
+    unread_notis = notification.objects.filter(is_unread & (is_member | (is_group & ~(is_not_othermember)))).order_by('-noti_create')
+    unread_count = unread_notis.count()
+    unread_notis.update(read = True)
+    
     context = { 'my_notis': my_notis,
+    'unread_notis': unread_notis, 
+    'unread_count' : unread_count
     }
     return render(request, 'Tracker/notifications.html', context)
+
+  

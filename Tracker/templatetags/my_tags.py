@@ -8,3 +8,4 @@ register = template.Library()
 def upto(value, delimiter=None):
     return value.split(delimiter)[0]
 upto.is_safe = True
+
