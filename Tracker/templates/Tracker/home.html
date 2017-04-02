@@ -1,152 +1,112 @@
 {% extends "Tracker/base.html" %}
 {% block nav-home %} class="active"{% endblock %}
-
 {% block title %} Dashboard {% endblock %}
-
 {% block content %}
-		
 <div class="container">
-
-        <div class = "row">
-        <div class="col-md-9">
-
-        <div class = "row">
-        
-
-        <div class= "col-xs-12">
-        <form>
-			<button formaction="{% url 'add_project' %}" class="btn pull-right btn-primary"> Add Project&nbsp; <span class="glyphicon glyphicon-plus"></span></button>
-	    </form>
-            <h2>{{group.name}} Projects</h2>
-            <div style="margin-top: 10px; margin-bottom: 15px;"></div>
-                {% if group.project_set.all %}
-            <table class = "taskpool">
-                <tr>
-                    <th> Name </th>
-                    <th> Description </th>
-                    <th> Deadline </th>
-                </tr>
-                <tr>
-                {% for project in group.project_set.all %}
-                <td><a href= "{% url 'edit_project' project.id%}">{{ project.pname }}  </td>
-                <td>{{project.pdesc}} </td>
-                <td>{{project.pdeadline|date:"j M 'y"}} </td>
-                </tr>
-			{% endfor %}
-        </table>
-        {% endif %}
-        </div>
-        
-  
-        </div>
-        
-        <!--ALL TASKS-->
-        <div class="row"> 
-        {% if all_tasks %}
-        <div class = "col-xs-12">
-	    <h2 class="center">Your Tasks</h2>
-        <div style=" margin-top: 10px; margin-bottom: 15px;"></div>
-        <table class="taskpool">
-        <tr>
-			<th>Name</th>
-            <th>Project</th>
-			<th>Due Date</th>
-			<th>State</th>
-		</tr>
-	    	{% for t in all_tasks %}
-    			<tr>
-	    			<td><a href= "{% url 'edit_task' t.id %}">{{ t.tname }}</a></td>
-                    <td>{{t.tproject}}</td>
-	    			<td> {{t.due_date|date:"j M 'y"}}</td> 
-					<td> {{ t.get_state_display  }}</td>
-				</tr>			
-			{% endfor %}
-		</table>
-       </div>
-        {% endif %}
-	<!--<a href="/Tracker/">Logout</a>-->
-            </div>
-    </div>
-    <!--PENDING TASKS--> 
-
-        <div class="col-md-3 col-xs-12">
-            <div class="sidebar-nav-fixed">
-                <div class="well pending ">
-                    <ul class="nav ">
-                        <li class="nav-header"><strong>Pending Tasks</strong></li>
-                        <li> You have <strong>{{t_count}}</strong> Pending Task{% if t_count > 1 %}s{% endif %}</li>
-                        {% if task %}
-                        <ul>
-                          {% for t in task %}
-                            
-                            <li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
-                            
-                          {% endfor %}
-                        </ul>
-
-                        {% else %}
-                        <p></p>
-                        {% endif %}
-                </div>
-                <div class="well pending ">
-
-                    <ul class="nav ">
-                    <li class="nav-header"><strong>Alerts&nbsp;</strong><div class = "noti_circle"><strong>{{ noti }}</strong></div></li>
-                    
-                   {% if nd_count > 0 %} 
-                    <li> <strong>{{nd_count}} Task{% if nd_count > 1 %}s{% endif %} approaching deadline</strong> </li>
-                        <ul>
-                          {% for t in near_deadline %}
-                            
-                            <li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
-                            
-                          {% endfor %}
-                        </ul>
-                       
-                    {% endif %}
-                    <!--{% if nt_count > 0 %}
-                    <li> <strong>{{nt_count}} New Task{% if nt_count > 1 %}s{% endif %} Assigned</strong> </li>
-                        <ul>
-                          {% for t in new_task %}
-                            
-                            <li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
-                            
-                          {% endfor %}
-                        </ul>
-                     {% endif %}-->
-                     
-                     {% if od_count > 0 %} 
-                     
-                    <li> <strong>{{od_count}} Task{% if nd_count > 1 %}s{% endif %} Overdue</strong> </li>
-                        <ul>
-                          {% for t in over_due %}
-                            
-                            <li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
-                            
-                          {% endfor %}
-                        </ul>
-                        
-                    {% endif %}
-                    </ul>
-                </div>
-                              <div class= "well pending ">
-			
-		<ul  class = "nav ">
-            <li> <strong>Member <span class = "pull-right">Rank</span></strong> </li>
-            <ul>
-
-            {% for k,v in user_tp  %}
-            <li>{{k}} <span class ="pull-right"> {{v}}</span></li>
-			{% endfor %}
-            
-            </ul>
-		</ul>
-	   </div>
-                <!--/.well -->
-            </div>
-            <!--/sidebar-nav-fixed -->
-        </div>
-        
-       </div>
-    </div>
+<div class = "row">
+<div class="col-md-9">
+<div class = "row">
+<div class= "col-xs-12">
+<form>
+<button formaction="{% url 'add_project' %}" class="btn pull-right btn-primary"> Add Project&nbsp; <span class="glyphicon glyphicon-plus"></span></button>
+</form>
+<h2>{{group.name}} Projects</h2>
+<div style="margin-top: 10px; margin-bottom: 15px;"></div>
+{% if group.project_set.all %}
+<table class = "taskpool">
+<tr>
+<th> Name </th>
+<th> Description </th>
+<th> Deadline </th>
+</tr>
+<tr>
+{% for project in group.project_set.all %}
+<td><a href= "{% url 'edit_project' project.id%}">{{ project.pname }}  </td>
+<td>{{project.pdesc}} </td>
+<td>{{project.pdeadline|date:"j M 'y"}} </td>
+</tr>
+{% endfor %}
+</table>
+{% endif %}
+</div>
+</div>
+<!--ALL TASKS-->
+<div class="row"> 
+{% if all_tasks %}
+<div class = "col-xs-12">
+<h2 class="center">Your Tasks</h2>
+<div style=" margin-top: 10px; margin-bottom: 15px;"></div>
+<table class="taskpool">
+<tr>
+<th>Name</th>
+<th>Project</th>
+<th>Due Date</th>
+<th>State</th>
+</tr>
+{% for t in all_tasks %}
+<tr>
+<td><a href= "{% url 'edit_task' t.id %}">{{ t.tname }}</a></td>
+<td>{{t.tproject}}</td>
+<td> {{t.due_date|date:"j M 'y"}}</td> 
+<td> {{ t.get_state_display  }}</td>
+</tr>			
+{% endfor %}
+</table>
+</div>
+{% endif %}
+</div>
+</div>
+<!--PENDING TASKS--> 
+<div class="col-md-3 col-xs-12">
+<div class="sidebar-nav-fixed">
+<div class="well pending ">
+<ul class="nav ">
+<li class="nav-header"><strong>Pending Tasks</strong></li>
+<li> You have <strong>{{t_count}}</strong> Pending Task{% if t_count > 1 %}s{% endif %}</li>
+{% if task %}
+<ul>
+{% for t in task %}
+<li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
+{% endfor %}
+</ul>
+{% else %}
+<p></p>
+{% endif %}
+</div>
+<div class="well pending ">
+<ul class="nav ">
+<li class="nav-header"><strong>Alerts&nbsp;</strong><div class = "noti_circle"><strong>{{ noti }}</strong></div></li>
+{% if nd_count > 0 %} 
+<li> <strong>{{nd_count}} Task{% if nd_count > 1 %}s{% endif %} approaching deadline</strong> </li>
+<ul>
+{% for t in near_deadline %}
+<li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
+{% endfor %}
+</ul>
+{% endif %}
+{% if od_count > 0 %} 
+<li> <strong>{{od_count}} Task{% if nd_count > 1 %}s{% endif %} Overdue</strong> </li>
+<ul>
+{% for t in over_due %}
+<li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
+{% endfor %}
+</ul>
+{% endif %}
+</ul>
+</div>
+<div class= "well pending ">
+<ul  class = "nav ">
+<li> <strong>Member <span class = "pull-right">Rank</span></strong> </li>
+<ul>
+{% for k,v in user_tp  %}
+<li>{{k}} <span class ="pull-right"> {{v}}</span></li>
+{% endfor %}
+</ul>
+</ul>
+</div>
+</div>
+<!--/sidebar-nav-fixed -->
+</div>
+</div>
+</div>
 {% endblock content %}

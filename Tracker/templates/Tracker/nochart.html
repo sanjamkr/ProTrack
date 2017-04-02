@@ -1,21 +1,18 @@
-
 {% extends "Tracker/base.html" %}
-
 {% block title %} No Data {% endblock %}
-
 {% block content %}
 <ul class="nav nav-tabs project-nav ">
-			<li><a  href="{% url 'edit_project' project_id  %}"><span class = "hidden-xs">{{project.pname}}</span>  Overview</a></li>
-			<li><a href="{% url 'calendar' project_id  %}">Calendar</a></li>
-			<li><a href="{% url 'chart' project_id  %}">Analytics</a></li>
-            <li><a href="{% url 'files' project_id  %}">Files</a></li>
+<li><a  href="{% url 'edit_project' project_id  %}"><span class = "hidden-xs">{{project.pname}}</span>  Overview</a></li>
+<li><a href="{% url 'calendar' project_id  %}">Calendar</a></li>
+<li><a href="{% url 'chart' project_id  %}">Analytics</a></li>
+<li><a href="{% url 'files' project_id  %}">Files</a></li>
 </ul>
-    <div class = "container project-content">
-    <div class = "row">
-        <div class = "chartcard" style = "height:400px;">
-			<h3 class="nodata"> No Data Available </h3>
-			<p class="nodata">Add Tasks to get started </p>
-	    </div>
-    </div>
-    </div>
+<div class = "container project-content">
+<div class = "row">
+<div class = "chartcard" style = "height:400px;">
+<h3 class="nodata"> No Data Available </h3>
+<p class="nodata">Add Tasks to get started </p>
+</div>
+</div>
+</div>
 {% endblock %}

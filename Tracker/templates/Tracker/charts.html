@@ -1,182 +1,173 @@
 {% extends "Tracker/base.html" %}
 {% block nav-project %} active {% endblock %}
 {% block title %}Detailed Analysis{% endblock %}
-
 {% block content %}
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-   <script src="http://code.highcharts.com/highcharts.js"></script>
-   <script src="http://code.highcharts.com/highcharts-3d.js"></script>
-    <script>
-    {% if errorchart == 0%}
-    function openChart(evt, chartName) {
-    var i, tablinks;
-    var x = document.getElementsByClassName("chartcard");
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none"; 
-    }
-    tablinks = document.getElementsByClassName("tablink");
-    for (i = 0; i < x.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace("btn-tab", "");
-    }
-    document.getElementById(chartName).style.display = "block"; 
-    evt.currentTarget.className += " btn-tab";
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/highcharts-3d.js"></script>
+<script>
+{% if errorchart == 0%}
+function openChart(evt, chartName) {
+var i, tablinks;
+var x = document.getElementsByClassName("chartcard");
+for (i = 0; i < x.length; i++) {
+x[i].style.display = "none"; 
 }
-    {% endif %}
-    </script>
-    <ul class="nav nav-tabs project-nav">
-			<li>
-        <a  href="{% url 'edit_project' project_id  %}"><span class = "hidden-xs">{{project.pname}}</span> Overview</a>
-			</li>
-			<li><a href="{% url 'calendar' project_id  %}">Calendar</a>
-			</li>
-			<li  class="active"><a href="{% url 'chart' project_id  %}">Analytics</a>
-			</li>
-            <li><a href="{% url 'files' project_id  %}">Files</a>
-			</li>
-		</ul>
-    
-    <div class = "container project-content">
-    
-    <div id = "row">
-    <div>
-    
-    {% if errorchart == 0%}
-    <button class="pull-right btn tablink" onclick="openChart(event, 'burn')">Burndown</button>
-    {% endif %}
-    <button class="pull-right btn btn-tab tablink" onclick="openChart(event, 'task')">Task States</button>
-    </div>
-    <div class = "col chartcard" id = "task" style = "height:460px;">
-    <div id="StatePie" style = "height:300px;"></div>
-    </div>
-    {% if errorchart == 0%}
-    <div class="col chartcard" id = "burn" style = "height:460px;">
-    <div id="Burndown" style = "width = 100%; height:400px;"></div>
-    </div>
-    {% endif %}
-    </div>
-    </div>
-    <script>
+tablinks = document.getElementsByClassName("tablink");
+for (i = 0; i < x.length; i++) {
+tablinks[i].className = tablinks[i].className.replace("btn-tab", "");
+}
+document.getElementById(chartName).style.display = "block"; 
+evt.currentTarget.className += " btn-tab";
+}
+{% endif %}
+</script>
+<ul class="nav nav-tabs project-nav">
+<li>
+<a  href="{% url 'edit_project' project_id  %}"><span class = "hidden-xs">{{project.pname}}</span> Overview</a>
+</li>
+<li><a href="{% url 'calendar' project_id  %}">Calendar</a>
+</li>
+<li  class="active"><a href="{% url 'chart' project_id  %}">Analytics</a>
+</li>
+<li><a href="{% url 'files' project_id  %}">Files</a>
+</li>
+</ul>
+<div class = "container project-content">
+<div id = "row">
+<div>
+{% if errorchart == 0%}
+<button class="pull-right btn tablink" onclick="openChart(event, 'burn')">Burndown</button>
+{% endif %}
+<button class="pull-right btn btn-tab tablink" onclick="openChart(event, 'task')">Task States</button>
+</div>
+<div class = "col chartcard" id = "task" style = "height:460px;">
+<div id="StatePie" style = "height:300px;"></div>
+</div>
+{% if errorchart == 0%}
+<div class="col chartcard" id = "burn" style = "height:460px;">
+<div id="Burndown" style = "width = 100%; height:400px;"></div>
+</div>
+{% endif %}
+</div>
+</div>
+<script>
 $(function () {
-    Highcharts.setOptions({
-     colors: ['#02b875', '#ec555b', '#3eb9ce']
-    },
-    
-    {lang: {noData: "No Data Available!"}});
-    Highcharts.chart('StatePie', {
-        chart: {
-            
-            type: 'pie',
-            options3d: {
-                enabled: true,
-                alpha: 45,
-                beta: 0
-                }
-        },
-        title: {
-            text: 'Task States'
-        },
-        tooltip: {
-            pointFormat: '{series.name} <b>{point.y}</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                depth: 35,
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    
-                }
-            }
-        },
-        credits: {
-      enabled: false
-  },
-
-        series: [{
-            type: 'pie',
-            name: ' ',
-            colorByPoint: true,
-            data: [{
-                name: 'Complete Tasks',
-                y: {{ complete_tasks }}
-            },  
-               {
-                name: 'Blocked Tasks',
-                y: {{ blocked_tasks }}
-            }, {
-                name: 'Open Tasks',
-                y: {{ open_tasks }},
-                sliced: true,
-                selected: true
-                }
-                ]
-        }]
-    });
+Highcharts.setOptions({
+colors: ['#02b875', '#ec555b', '#3eb9ce']
+},
+{lang: {noData: "No Data Available!"}});
+Highcharts.chart('StatePie', {
+chart: {
+type: 'pie',
+options3d: {
+enabled: true,
+alpha: 45,
+beta: 0
+}
+},
+title: {
+text: 'Task States'
+},
+tooltip: {
+pointFormat: '{series.name} <b>{point.y}</b>'
+},
+plotOptions: {
+pie: {
+allowPointSelect: true,
+cursor: 'pointer',
+depth: 35,
+dataLabels: {
+enabled: true,
+format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+}
+}
+},
+credits: {
+enabled: false
+},
+series: [{
+type: 'pie',
+name: ' ',
+colorByPoint: true,
+data: [{
+name: 'Complete Tasks',
+y: {{ complete_tasks }}
+},  
+{
+name: 'Blocked Tasks',
+y: {{ blocked_tasks }}
+}, {
+name: 'Open Tasks',
+y: {{ open_tasks }},
+sliced: true,
+selected: true
+}
+]
+}]
+});
 });
 /*Burndown Chart*/
 {% if errorchart == 0%}
 $(function () {
-  $('#Burndown').highcharts({
-    title: {
-      text: 'Burndown Chart',
-      x: -20 //center
-    },
-    colors: ['blue', 'red'],
-    plotOptions: {
-      line: {
-        lineWidth: 3
-      },
-      tooltip: {
-        hideDelay: 200
-      }
-    },
-    /*subtitle: {
-      text: 'Sprint 1',
-      x: -20
-    },*/
-    xAxis: {
-      categories: {{categories|safe}}
-    },
-    yAxis: {
-      title: {
-        text: 'Task Points'
-      },
-      plotLines: [{
-        value: 0,
-        width: 1
-      }]
-    },
-    tooltip: {
-      valueSuffix: ' TP',
-      crosshairs: true,
-      shared: true
-    },
-    legend: {
-      layout: 'horizontal',
-      align: 'center',
-      verticalAlign: 'bottom',
-      borderWidth: 0
-    },
-    credits: {
-      enabled: false
-       },
-
-    series: [{
-      name: 'Ideal Burn',
-      color: '#3eb9ce',
-      lineWidth: 2,
-      data: {{idealdata}}
-    }, {
-      name: 'Actual Burn',
-      color: '#ec555b',
-      marker: {
-        radius: 6
-      },
-      data: {{realdata}}
-    }]
-  });
+$('#Burndown').highcharts({
+title: {
+text: 'Burndown Chart',
+x: -20 //center
+},
+colors: ['blue', 'red'],
+plotOptions: {
+line: {
+lineWidth: 3
+},
+tooltip: {
+hideDelay: 200
+}
+},
+/*subtitle: {
+text: 'Sprint 1',
+x: -20
+},*/
+xAxis: {
+categories: {{categories|safe}}
+},
+yAxis: {
+title: {
+text: 'Task Points'
+},
+plotLines: [{
+value: 0,
+width: 1
+}]
+},
+tooltip: {
+valueSuffix: ' TP',
+crosshairs: true,
+shared: true
+},
+legend: {
+layout: 'horizontal',
+align: 'center',
+verticalAlign: 'bottom',
+borderWidth: 0
+},
+credits: {
+enabled: false
+},
+series: [{
+name: 'Ideal Burn',
+color: '#3eb9ce',
+lineWidth: 2,
+data: {{idealdata}}
+}, {
+name: 'Actual Burn',
+color: '#ec555b',
+marker: {
+radius: 6
+},
+data: {{realdata}}
+}]
+});
 });
 {% endif %}
 </script>

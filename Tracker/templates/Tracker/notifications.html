@@ -1,86 +1,56 @@
 {% extends "Tracker/base.html" %}
 {% block nav-noti %} active {% endblock %}
 {% block title %} Notifications {% endblock %}
-
 {% block content %}
-<!--script>
-$('.unreadnoti').eq(1).css('backgroundColor','hsl(0,100%,50%');
-
-var d = 1000;
-for(var i=50; i<=100; i=i+0.1){ //i represents the lightness
-    d  += 10;
-    (function(ii,dd){
-        setTimeout(function(){
-            $('.unreadnoti').eq(1).css('backgroundColor','hsl(0,100%,'+ii+'%)'); 
-        }, dd);    
-    })(i,d);
-}
-</script>-->
 <div class= "container">
-    <div class = "row">
-
-        <div class = "notidiv col-xs-12 col-md-6 col-md-offset-3 ">
-            {% if my_notis %}  
-            <div class = "noticard notidivhead"><h4>Your Notifications</h4></div>
-            {% else %}
-            <div class = "noticard notidivhead"><h4>No Notifications</h4></div>
-            {% endif %}
-   
-                        
-                           {% if my_notis %} 
-                            
-                          {% for noti in my_notis %}
-                            <div class = "noticard {% if forloop.counter0 < unread_count %} unreadnoti {% endif %}">
-                            
-                            {% if noti.type == "nt" %}
-                            <p class = "notiheader"><strong>Task Assigned</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
-                            <p class = "notibody">
-                            You were assigned <a href= "{% url 'edit_task' noti.urlid%}"><strong>{{noti.content}}</strong></a> by {{noti.othermember}} 
-                            </p>
-                            {% endif %}
-                            
-                            {% if noti.type == "nc" %}
-                            <p class = "notiheader"><strong>Task Comment</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
-                            <p class = "notibody">{{noti.othermember}} commented on your <strong><a href= "{% url 'edit_task' noti.urlid%}#TaskComments"> task</a></strong>:<span class = "notiextra">{{ noti.content }}</span></p>           
-                            {% endif %}
-                            
-                            {% if noti.type == "mc" %}
-                            <p class = "notiheader"><strong>Comment Mention</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
-                            <p class = "notibody">
-                            <a href= "{% url 'edit_task' noti.urlid%}">{{noti.othermember}} mentioned you in a comment : {{ noti.content }} </a>
-                            </p>
-                            {% endif %}
-                            
-                            {% if noti.type == "np" %}
-                            <p class = "notiheader"><strong>Project Added</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
-                            <p class = "notibody"> {{noti.othermember}} added a new Project: 
-                            <strong><a href= "{% url 'edit_project' noti.urlid%}"> {{ noti.content }} </a></strong>
-                            </p>
-                            {% endif %}
-                            
-                            {% if noti.type == "ns" %}
-                            <p class = "notiheader"><strong>Sprint Added</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
-                            <p class = "notibody"> {{noti.othermember}} added a new Sprint: 
-                            <strong><a href= "{% url 'edit_sprint' noti.urlid%}"> {{ noti.content }} </a></strong>
-                            </p>
-                            {% endif %}
-                            
-                            {% if noti.type == "uf" %}
-                            <p class = "notiheader"><strong>File Uploaded</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
-                            <p class = "notibody">{{noti.othermember}} uploaded a new file to project 
-                            <strong><a href= "{% url 'files' noti.urlid%}"> {{ noti.content }} </a></strong>
-                            </p>
-                            {% endif %}
-                            
-                            </div>
-                          {% endfor %}
-                    {% endif %}
-
-            
-
-                          
-    </div>
+<div class = "row">
+<div class = "notidiv col-xs-12 col-md-6 col-md-offset-3 ">
+{% if my_notis %}  
+<div class = "noticard notidivhead"><h4>Your Notifications</h4></div>
+{% else %}
+<div class = "noticard notidivhead"><h4>No Notifications</h4></div>
+{% endif %}
+{% if my_notis %} 
+{% for noti in my_notis %}
+<div class = "noticard {% if forloop.counter0 < unread_count %} unreadnoti {% endif %}">
+{% if noti.type == "nt" %}
+<p class = "notiheader"><strong>Task Assigned</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
+<p class = "notibody">
+You were assigned <a href= "{% url 'edit_task' noti.urlid%}"><strong>{{noti.content}}</strong></a> by {{noti.othermember}} 
+</p>
+{% endif %}
+{% if noti.type == "nc" %}
+<p class = "notiheader"><strong>Task Comment</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
+<p class = "notibody">{{noti.othermember}} commented on your <strong><a href= "{% url 'edit_task' noti.urlid%}#TaskComments"> task</a></strong>:<span class = "notiextra">{{ noti.content }}</span></p>           
+{% endif %}
+{% if noti.type == "mc" %}
+<p class = "notiheader"><strong>Comment Mention</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
+<p class = "notibody">
+<a href= "{% url 'edit_task' noti.urlid%}">{{noti.othermember}} mentioned you in a comment : {{ noti.content }} </a>
+</p>
+{% endif %}
+{% if noti.type == "np" %}
+<p class = "notiheader"><strong>Project Added</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
+<p class = "notibody"> {{noti.othermember}} added a new Project: 
+<strong><a href= "{% url 'edit_project' noti.urlid%}"> {{ noti.content }} </a></strong>
+</p>
+{% endif %}
+{% if noti.type == "ns" %}
+<p class = "notiheader"><strong>Sprint Added</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
+<p class = "notibody"> {{noti.othermember}} added a new Sprint: 
+<strong><a href= "{% url 'edit_sprint' noti.urlid%}"> {{ noti.content }} </a></strong>
+</p>
+{% endif %}
+{% if noti.type == "uf" %}
+<p class = "notiheader"><strong>File Uploaded</strong><span class = "notitime pull-right">{{noti.noti_create|date:"j M H:i"}} </span> </p>
+<p class = "notibody">{{noti.othermember}} uploaded a new file to project 
+<strong><a href= "{% url 'files' noti.urlid%}"> {{ noti.content }} </a></strong>
+</p>
+{% endif %}
 </div>
-                        
+{% endfor %}
+{% endif %}
+</div>
+</div>
 </body>
 {% endblock %}

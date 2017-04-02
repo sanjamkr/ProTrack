@@ -2,35 +2,29 @@
 {% block content %}
 <!DOCTYPE html>
 <html>
-	<head>
-	    <title>Create Group - ProTrack</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
-		<link rel="stylesheet" type="text/css" href="{% static 'Tracker/css/bootstrap.min.css' %}" />
-	    <link rel="stylesheet" type="text/css" href="{% static 'Tracker/style.css' %}" />
-        <script src="{% static 'Tracker/js/jquery-3.2.0.min.js' %}"></script>
-        <script src="{% static 'Tracker/js/bootstrap.min.js' %}"></script>
-
-	</head>
-	<body id="grouppage">
-    <div class="jumbotron vertical-center">
-         <div class = "container">
-      <div class="row vertical-align">
-    <div class="col-xs-12 col-md-6 imagediv">
-    <img class="loginlogo" src = "{% static 'Tracker/logo.png' %}">
-    </div>
-    <div class="col-xs-10 col-md-5  col-xs-offset-2 col-md-offset-1 formdiv">
-    <form action="{% url 'add_group' %}" method="post">
-		{% csrf_token %}
-			
-			<input class = "signupinput" type=text name="group" placeholder="Group Name"/>
-            <button class = "loginbtn btn btn-success" type="submit">Create</button>
-            
+<head>
+<title>Create Group - ProTrack</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">        
+<link rel="stylesheet" type="text/css" href="{% static 'Tracker/css/bootstrap.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'Tracker/style.css' %}" />
+<script src="{% static 'Tracker/js/jquery-3.2.0.min.js' %}"></script>
+<script src="{% static 'Tracker/js/bootstrap.min.js' %}"></script>
+</head>
+<body id="grouppage">
+<div class="jumbotron vertical-center">
+<div class = "container">
+<div class="row vertical-align">
+<div class="col-xs-12 col-md-6 imagediv"><img class="loginlogo" src = "{% static 'Tracker/logo.png' %}"></div>
+<div class="col-xs-10 col-md-5  col-xs-offset-2 col-md-offset-1 formdiv">
+<form action="{% url 'add_group' %}" method="post">
+{% csrf_token %}
+<input class = "signupinput" type=text name="group" placeholder="Group Name"/>
+<button class = "loginbtn btn btn-success" type="submit">Create</button>
 </form>
 <a href="{% url 'signup' %}" >Back</a>
-   </div>
-   
-    </div>
-    </div>
-    </div>
-    </body>
+</div>
+</div>
+</div>
+</div>
+</body>
 {% endblock %}
