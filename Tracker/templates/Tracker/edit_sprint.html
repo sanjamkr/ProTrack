@@ -40,7 +40,9 @@
 </div>
     </div>
   </div> 
-            <div class="col-md-8">
+            <div class="col-md-8"> 
+            <div class = "row">
+             <div class = "col">
              <h2 style=" margin-bottom: 15px;">Sprint Tasks</h2>
 
              {% if sprint.task_set.all %}
@@ -65,12 +67,21 @@
             No Tasks Added
             {% endif %}   
             
+            </div> 
+                        {% if errorchart == 0 %}
+        <div class = "col">
+        <div id="Burndown" class="chartcard" style="height:400px;"></div>
+        {% endif %}
+        </div>
             </div>
+            
+            </div>
+
             
         <!--Sprint Details-->
         <!--Edittable-->
-        <div class = "col-md-3 col-md-offset-1  sprint-details">
-        <div id="edittable" class = "sprintdetails" style="display:none">
+        <div class = "col-md-3 col-md-offset-1 ">
+        <div id="edittable" class = "sprint-details sprintdetails" style="display:none">
         <form class = "deleteform pull-right" action = "{% url 'delete_sprint' sprint.id %}">
             <button class="btn btn-default"  name="deletesprint" id="deletebutton" type="submit">
         <i class=" glyphicon glyphicon-trash"></i>
@@ -113,13 +124,14 @@
 					<th>Status &nbsp;</th>
 					<td> <span class = "status_color"> <i class ="glyphicon glyphicon-record "> </i> {{st}}</span></td>
 				</tr>
+                 <th></th> <td><button class= "btn btn-success" type="submit" value="Submit">Submit</button></td>
 			</table>
-		    <button class= "btn btn-sm btn-success" type="submit" value="Submit">Submit</button>
+		    
 
 		</form>
         </div> <!--Edittable-->
         <!--Not Edittable-->
-        <div id="not_edittable" class = "sprintdetails">
+        <div id="not_edittable" class = "sprint-details sprintdetails">
         <h3><span class="pull-right"><button class="btn btn-default" id="editbutton" onclick="openForm('edittable')" type="submit">
         <i class="glyphicon glyphicon-pencil"></i>
       </button></span>Sprint Details</h3> 
@@ -143,20 +155,12 @@
 					<td> <span class = "status_color"> <i class = "glyphicon glyphicon-record"> </i> {{st}}</span></td>
 				</tr>
 			</table>
-        </div>
+       
+          </div> <!--Sprint Details-->
         
-        </div> <!--Sprint Details-->
-        </div> <!--1st Row-->
-    	<!--<br><a href="{% url 'edit_project' sprint.project.id  %}" >Back</a>-->
-        <div class="row">
-                
-        <div class="col-md-8">
-        {% if errorchart == 0 %}
-        <div id="Burndown" class="chartcard" style="height:400px;"></div>
-        {% endif %}
-        </div>
-        {% if st != 'Sprint has Ended' %}
-        <div class = "col-md-3 col-md-offset-1 whitecarda">
+
+        
+                <div class = "whitecarda">
                         <h3>Add/Remove Tasks</h3>
                         <ul class="add-to-sprint">
 			{% for task in sprint.project.task_set.all %}
@@ -172,8 +176,17 @@
 			{% endfor %}
                 </ul>
         </div>
+        </div>
+      
+ <!--1st Row-->
+    	<!--<br><a href="{% url 'edit_project' sprint.project.id  %}" >Back</a>-->
+
+
+
+        {% if st != 'Sprint has Ended' %}
+
         {% endif %}
-            
+
         
 
 
@@ -221,19 +234,23 @@ $(function () {
       shared: true
     },
     legend: {
-      layout: 'vertical',
-      align: 'right',
-      verticalAlign: 'middle',
+      layout: 'horizontal',
+      align: 'center',
+      verticalAlign: 'bottom',
       borderWidth: 0
     },
+    credits: {
+      enabled: false
+       },
+
     series: [{
       name: 'Ideal Burn',
-      color: 'rgba(255,0,0,0.25)',
+      color: '#3eb9ce',
       lineWidth: 2,
       data: {{idealdata}}
     }, {
       name: 'Actual Burn',
-      color: 'rgba(0,120,200,0.75)',
+      color: '#ec555b',
       marker: {
         radius: 6
       },

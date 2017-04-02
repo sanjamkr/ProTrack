@@ -30,6 +30,8 @@ a:hover{
     font-size: 40px;
 }
 
+
+
 .vertical-center {
   min-height: 100%;
   min-height: 100vh;
@@ -54,6 +56,8 @@ a:hover{
           justify-content : center;
 
 }
+
+
 
 #loginpage, #signuppage,#grouppage{
         padding: 0px;
@@ -82,6 +86,12 @@ a:hover{
   
   justify-content: center;
   flex-direction: row;
+}
+@media screen and (max-width: 500px) {
+    .vertical-align {
+  
+  flex-direction: column;
+}
 }
 
 .logininput, .signupinput {
@@ -265,7 +275,13 @@ overflow-y: auto;}
     color:#3eb9ce;
     background-color: #fff;
 }
-
+#editbutton:focus, #backbutton:focus, #deletebutton:focus{
+    outline: none;
+    border: none;
+}
+.proj-details #deletebutton i, .sprint-details #deletebutton i{
+    top: 18px;
+}
 .proj-details, .sprint-details{
     background:#fff;
     border: 1px solid #ddd;
@@ -275,13 +291,13 @@ overflow-y: auto;}
     padding-right: 30px;
     padding-left: 30px;
     padding-top: 5px;
-    margin-left: 7.33333333%;
     margin-top: 30px;
     border-bottom: 3px solid #383950;
 }
-.sprint-details{
-    margin-top: 6%;
-  
+
+#edittable {
+    padding-left:10px;
+    padding-right: 10px;
 }
 .whitecard,.whitecarda, .chartcard{
     background:#fff;
@@ -291,10 +307,10 @@ overflow-y: auto;}
     padding-bottom: 20px; 
     padding-right: 20px;
     margin-top: 30px;
+    padding-left: 20px;
+    padding-top: 10px;
 }
-.whitecarda{
-   margin-left: 7.33333333%;
-}
+
 .proj-details th, .proj-details td, .sprint-details {
     vertical-align: top;
 }
@@ -534,10 +550,11 @@ border-color: #e8797d;
 
 }
 .commentdiv{
-     background: #fff;
+     background: #fdfdfd;
      border: 1px solid #eee; 
      border-radius: 4px;
      padding-top: 4px;
+     box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 
 }
 .commentdate{
@@ -572,6 +589,7 @@ border-color: #e8797d;
 
 }
 .searchtag{
+    width: 60%;
      margin-bottom: 0px; 
      padding-top: 0px;
      padding-bottom: 0px;
@@ -667,7 +685,7 @@ border-color: #e8797d;
     
 }
 /* Add Forms */
-.addform td, .addform th {
+.addform td, .addform th, .searchtag {
     padding: 5px;
 
 }
@@ -675,7 +693,7 @@ border-color: #e8797d;
     margin-top: 10px;
     
 }
-#id_newtag-tag, .commentbox {
+#id_newtag-tag, .commentbox, .searchtag {
 border-radius: 4px; 
 box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
 border: 1px solid #ccc;}
@@ -693,11 +711,14 @@ border: 1px solid #ccc;}
 .form-control {
     margin-top: 5px;
 }
-.taskinput:focus, .projectinput:focus, .sprintinput:focus, .commentbox:focus{
+.taskinput:focus, .projectinput:focus, .sprintinput:focus, .commentbox:focus, {
   border-color: #66afe9;
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+.searchtag:focus{
+    outline: none;
 }
 #searchbox{
     
@@ -707,17 +728,25 @@ border: 1px solid #ccc;}
 #searchbox:focus{
     border-radius: 4px;
 }
-#searchbutton{
+#searchbutton {
+    margin-top:5px;
+    margin-left: -3px;
+}
+.searchbtns{
     border: 1px solid #ccc;
     border-left: 0px;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
-    margin-top:4px;
-    margin-left: -3px;
+
     z-index:1;
 }
-#searchbutton:hover{
+
+#searchtagbtn{
+    margin-left: -8px;
+    margin-top: -3px;
+}
+.searchbtns:hover{
   background-color: #fff;
 
   outline: 0;
@@ -737,4 +766,49 @@ border: 1px solid #ccc;}
 .fpbtn:hover,.fpbtn:active, .fpbtn:focus{
     color: #fff;
     text-decoration: none;
+}
+.project-nav{
+    padding-left: 3%;
+}
+@media (max-width: 991px) {
+  .navbar-header {
+      float: none;
+  }
+  .navbar-left,.navbar-right {
+      float: none !important;
+  }
+  .navbar-toggle {
+      display: block;
+  }
+  .navbar-collapse {
+      border-top: 1px solid transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-fixed-top {
+      top: 0;
+      border-width: 0 0 1px;
+  }
+  .navbar-collapse.collapse {
+      display: none!important;
+  }
+  .navbar-nav {
+      float: none!important;
+      margin-top: 7.5px;
+  }
+  .navbar-nav>li {
+      float: none;
+  }
+  .navbar-nav>li>a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+  .collapse.in{
+      display:block !important;
+  }
+}
+.collapse .in {background-color: #f7f7f7;}
+.collapse .in ul li a, .in ul li a {
+    color: #555!important;
+    border-bottom: 0px !important;}
+.collapse .in ul li a:hover, .in ul li a:hover {}
 }

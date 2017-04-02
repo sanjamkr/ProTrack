@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-	    <title>{% block title %}{% endblock %}</title>
+	    <title>{% if noti_count > 0 %}({{noti_count}}) {% endif %} {% block title %}{% endblock %}</title>
         <link rel="icon" href="{% static 'Tracker/favicon.ico' %}" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="{% static 'Tracker/css/bootstrap.min.css' %}" />
@@ -37,7 +37,7 @@
 						  	<div class="input-group">
 						    	<input type="text" id = "searchbox" class="form-control" placeholder="Search" name="q">
 						    	<div class="input-group-btn">
-						      		<button class="btn btn-default" id="searchbutton" type="submit">
+						      		<button class=" searchbtns btn btn-default" id="searchbutton" type="submit">
 						        		<i class="glyphicon glyphicon-search" style="font-size:14px;"></i>
 						      		</button>
 						    	</div>

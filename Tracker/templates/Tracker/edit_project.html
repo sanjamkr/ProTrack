@@ -26,9 +26,9 @@
 
 </script>
         <!--Tab Navigation-->
-        <ul class="nav nav-tabs project-nav" style="padding-left: 3%">
+        <ul class="nav nav-tabs project-nav">
 			 <li class="active">
-        <a  href="{% url 'edit_project' project.id  %}">{{project.pname}} Overview</a>
+        <a  href="{% url 'edit_project' project.id  %}"><span class = "hidden-xs">{{project.pname}}</span>  Overview</a>
 			</li>
 			<li><a href="{% url 'calendar' project.id  %}">Calendar</a>
 			</li>
@@ -125,9 +125,9 @@
         </div>
         
         <!--Project Info-->
-        <div class = "col-md-3 col-md-offset-1  proj-details ">
+        <div class = "col-md-3 col-md-offset-1">
         <!--Not Edittable-->
-        <div id="not_edittable" class = "projectdetails">
+        <div id="not_edittable" class = "  proj-details projectdetails">
         <h3><span class="pull-right"><button class="btn btn-default" id="editbutton" onclick="openForm('edittable')" type="submit">
         <i class="glyphicon glyphicon-pencil"></i>
       </button></span>Project Details</h3> 
@@ -155,7 +155,7 @@
         <!--Not Edittable-->
         
         <!--Edittable-->
-        <div id="edittable" class = "projectdetails" style="display:none">
+        <div id="edittable" class = "proj-details projectdetails" style="display:none">
                    <form class = "deleteform pull-right" action = "{% url 'delete_project' project.id %}">
             <button class="btn btn-default"  name="deleteproject" id="deletebutton" type="submit">
         <i class=" glyphicon glyphicon-trash"></i>
@@ -187,8 +187,9 @@
 					<th>Status </th>
 					<td><span class = "status_color"> <i class="glyphicon glyphicon-record"> </i> {{ps}}</span></td>
 				</tr>
+                <th></th> <td><button class= "btn btn-success" type="submit" value="Submit">Submit</button></td>
 			</table>
-			<button class= "btn btn-success" type="submit" value="Submit">Submit</button>
+			
 
 		</form>
 
@@ -197,19 +198,21 @@
        
         </div>
          {% if project.task_set.all %}
-           <div id = "search-tag-card" class = "col-md-3 col-md-offset-1   whitecarda ">
+           <div id = "search-tag-card" class = "col-md-3 col-md-offset-1">
+           <div class =" whitecarda">
            <h4>Search Tasks by Tags</h4>
             <form action = "{% url 'search_tag' %}" method="get" accept-charset="utf-8">
    
 			    
-                    <input type="text"  class = "searhtag" placeholder="Search" style="font-size:16px;" name="q">
+                    <input type="text"  class = "searchtag" placeholder="Search" style="font-size:16px;" name="q">
                         
-                        <button class="btn btn-default" type="submit">
+                        <button class="btn btn-default searchbtns" id = "searchtagbtn" type="submit">
                         <i class="glyphicon glyphicon-search" style="font-size:14px;"></i>
                         </button>
 
 
             </form>
+            </div>
             </div>  
 {% endif %}
 
