@@ -141,21 +141,21 @@
 
 
 
-        <button class= "btn btn-xs btn-primary" type="submit" value="Submit" name="edittask">Add Tag</button>
+        <button class= "btn btn-primary" type="submit" value="Submit" name="edittask">Add Tag</button>
         </form>
         </div>
         </div>
 
 	<!-- COMMENTS FOR THIS TASK-->	
         <div id = "TaskComments" class = "col-md-8">
-		<h3>Comments</h3>
+		<h3 style=" margin-top: 40px;">Comments</h3>
 		{% if error_message %}
 			<p>{{ error_message }}</p>
 		{% endif %}
         {% if task.comment_set.all %}
         <div class="commentdiv">
         
-		{% for c in task.comment_set.all|dictsort:"ccreated"%}
+		{% for c in task.comment_set.all|dictsort:"ccreated" reversed %}
             <div class = "commentcard">
 			<p class = "commentinfo"><span class = "commentname"><strong>{{c.member.first_name}} {{c.member.last_name}}</strong></span> <span class="commentuname">@{{c.member.username}}</span> &#183;<span class = "commentdate"> {{ c.ccreated|timesince|upto:','}} ago </span> </p>
             <p class = "commentcontent">{{c.comment}}</p>

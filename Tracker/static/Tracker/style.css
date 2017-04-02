@@ -1,15 +1,20 @@
 body {
 
     background: #fafbfc;
-    padding-top: 80px;
-    padding-bottom: 80px;
+    padding-top: 70px;
+    padding-bottom: 70px;
 }
 * {
-	font-family: Roboto,Arial;
+	font-family: 'Roboto Condensed',Arial;
 }
+
 a {
-    color: #3eb9ce;
-    text-decoration: none;
+  color: #3eb9ce;
+  text-decoration: none;
+}
+a:hover{
+  text-decoration: none;
+
 }
 .jumbotron.vertical-center {
     
@@ -260,12 +265,35 @@ overflow-y: auto;}
     color:#3eb9ce;
     background-color: #fff;
 }
-.proj-details, .chartcard, .sprint-details, .whitecard{
+
+.proj-details, .sprint-details{
     background:#fff;
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
+    padding-right: 30px;
+    padding-left: 30px;
+    padding-top: 5px;
+    margin-left: 7.33333333%;
+    margin-top: 30px;
+    border-bottom: 3px solid #383950;
+}
+.sprint-details{
+    margin-top: 6%;
+  
+}
+.whitecard,.whitecarda, .chartcard{
+    background:#fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding-bottom: 20px; 
+    padding-right: 20px;
+    margin-top: 30px;
+}
+.whitecarda{
+   margin-left: 7.33333333%;
 }
 .proj-details th, .proj-details td, .sprint-details {
     vertical-align: top;
@@ -351,6 +379,26 @@ border-color: #e8797d;
     background-color: #2f74af;
     outline: 0;
 }
+.btn-login{
+    background-color:#02b875;
+    color: #fff;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus, .btn-success.active, .btn-success:active:focus{
+    background-color: #00a86a;
+    border-color: #00a86a;
+    color: #fff;
+    outline: none;
+}
+.btn-register{
+    background-color:#337ab7;
+    color: #fff;
+}
+.btn-register:hover, .btn-register:active, .btn-register:focus, .btn-register.active, .btn-register:active:focus{
+    background-color: #216eb1;
+    border-color: #216eb1;
+    color: #fff;
+    outline: none;
+}
 .btn-fb{
     background-color:#425f9c;
     color: #fff;
@@ -379,7 +427,7 @@ border-color: #e8797d;
 
 }
 .mon, .tue, .wed, .thu, .fri, .sat, .sun, .noday{
-    background-color:#fff;
+    background-color:#fdfdfd;
     -webkit-box-shadow: 1px 1px 2px 0 #B0B0B0;
     box-shadow: 1px 1px 2px 0 #B0B0B0;
     transition: 0.3s;
@@ -409,7 +457,7 @@ border-color: #e8797d;
 
 .project-content
 {
-    padding-top:10px;
+    padding-top:0;
 }
 .add-to-sprint li{
     padding-bottom: 8px;
@@ -421,17 +469,18 @@ border-color: #e8797d;
     margin-bottom:20px;
 }
 .filecard a{
-    background: #fff;
+
+    background: #fdfdfd;
 
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: center;
-    padding-top:20px;
-    padding-bottom:20px;
-    padding-left:5px;
-    padding-right:5px;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-    border-bottom: 1px solid #e6e6ed;
+    padding-top:15px;
+    padding-bottom:15px;
+    padding-left:10px;
+    padding-right:10px;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 1px -2px rgba(0,0,0,0.12), 0 3px 7px 1px rgba(0,0,0,0.2);
+    border-bottom: 2px solid #1fe9e1;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
@@ -462,13 +511,12 @@ border-color: #e8797d;
 .task-details th, .task-details td {
     
     padding-top:10px;
+     padding-left: 20px;
     font-size: 16px;
 }
-.task-details td {
-    padding-left: 10px;
-}
+
 .taskdetails, .tag{
-    padding-left:20px;
+    padding-left:30px;
 }
  .commentcontent{
  margin-bottom: 0px;}
@@ -643,7 +691,7 @@ border: 1px solid #ccc;}
     display:inline;
 }
 .form-control {
-    margin-top: 4px;
+    margin-top: 5px;
 }
 .taskinput:focus, .projectinput:focus, .sprintinput:focus, .commentbox:focus{
   border-color: #66afe9;

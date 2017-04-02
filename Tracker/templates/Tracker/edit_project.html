@@ -25,10 +25,9 @@
 }
 
 </script>
-
         <!--Tab Navigation-->
-        <ul class="nav nav-tabs project-nav">
-			<li class="active">
+        <ul class="nav nav-tabs project-nav" style="padding-left: 3%">
+			 <li class="active">
         <a  href="{% url 'edit_project' project.id  %}">{{project.pname}} Overview</a>
 			</li>
 			<li><a href="{% url 'calendar' project.id  %}">Calendar</a>
@@ -69,6 +68,7 @@
 			<button formaction="{% url 'add_task' project.id %}" class="btn btn-primary"> Add Task&nbsp; <span class="glyphicon glyphicon-plus"></span></button>
 	    </form></span>
         </h3>
+        <div style=" margin-top: 10px; margin-bottom: 15px;"></div>
         {% if project.task_set.all %}
 		<table class = "taskpool">
 		<tr>
@@ -100,6 +100,7 @@
 			<button formaction="{% url 'add_sprint' project.id %}" class="btn btn-primary"> Add Sprint&nbsp; <span class="glyphicon glyphicon-plus"></span></button>
 	    </form></span>
         </h3>
+            <div style=" margin-top: 10px; margin-bottom: 15px;"></div>
         {% if project.sprint_set.all %}
         <table class = "taskpool">
 		<tr>
@@ -196,7 +197,7 @@
        
         </div>
          {% if project.task_set.all %}
-           <div id = "search-tag-card" class = "col-md-3 col-md-offset-1   proj-details ">
+           <div id = "search-tag-card" class = "col-md-3 col-md-offset-1   whitecarda ">
            <h4>Search Tasks by Tags</h4>
             <form action = "{% url 'search_tag' %}" method="get" accept-charset="utf-8">
    

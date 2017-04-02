@@ -41,7 +41,8 @@
     </div>
   </div> 
             <div class="col-md-8">
-             <h3>Sprint Tasks</h3>
+             <h2 style=" margin-bottom: 15px;">Sprint Tasks</h2>
+
              {% if sprint.task_set.all %}
                 <table class="taskpool">
 			<tr>
@@ -155,7 +156,7 @@
         {% endif %}
         </div>
         {% if st != 'Sprint has Ended' %}
-        <div class = "col-md-3 col-md-offset-1 whitecard">
+        <div class = "col-md-3 col-md-offset-1 whitecarda">
                         <h3>Add/Remove Tasks</h3>
                         <ul class="add-to-sprint">
 			{% for task in sprint.project.task_set.all %}

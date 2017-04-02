@@ -17,7 +17,8 @@
         <form>
 			<button formaction="{% url 'add_project' %}" class="btn pull-right btn-primary"> Add Project&nbsp; <span class="glyphicon glyphicon-plus"></span></button>
 	    </form>
-            <h3>{{group.name}} Projects</h3>
+            <h2>{{group.name}} Projects</h2>
+            <div style="margin-top: 10px; margin-bottom: 15px;"></div>
                 {% if group.project_set.all %}
             <table class = "taskpool">
                 <tr>
@@ -43,7 +44,8 @@
         <div class="row"> 
         {% if all_tasks %}
         <div class = "col">
-	    <h3 class="center">Your Tasks</h3>
+	    <h2 class="center">Your Tasks</h2>
+        <div style=" margin-top: 10px; margin-bottom: 15px;"></div>
         <table class="taskpool">
         <tr>
 			<th>Name</th>
