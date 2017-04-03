@@ -140,7 +140,7 @@ def home(request):
         user_tp = {}
         for member in g.user_set.all():
             is_m = Q(assign = member)
-            mem_name=member.get_full_name()
+            #mem_name=member.get_full_name()
             completed_tp =0
             total_tp = 0
             tl = task.objects.filter(is_m)
@@ -152,7 +152,7 @@ def home(request):
                 ratio=0
             else:
                 ratio=completed_tp/total_tp
-            user_tp[mem_name]=ratio
+            user_tp[member]=ratio
         r={key:rank for rank,key in enumerate(sorted(set(user_tp.values()),reverse=True),1)}
         user_tp={k:r[v] for k,v in user_tp.items()}
         user_tp = sorted(user_tp.items(), key=operator.itemgetter(1))
@@ -365,12 +365,12 @@ class Calendar(HTMLCalendar):
             if day in self.my_tasks:
                 cssclass += ' filled'
                 body = ['<ul class="sample">']
-                for workout in self.my_tasks[day]:
+                for t in self.my_tasks[day]:
                     body.append('<span> &#8226;')
                     
                     #body.append('<a href="%s">' % workout.get_absolute_url())
                     #body.append('<a href="Tracker/calendar1/">')
-                    body.append(esc(workout.tname))
+                    body.append(esc(t.tname))
                     body.append('</span>')
                     #body.append('</li>')
                 body.append('</ul>')
