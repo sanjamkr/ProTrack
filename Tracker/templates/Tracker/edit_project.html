@@ -74,7 +74,7 @@ Are you sure you want to delete this project?
 <th>Assignee</th>
 <th>Task Points</th>
 </tr>
-{% for task in project.task_set.all|dictsort:"created" %}
+{% for task in project.task_set.all|dictsort:"due_date" %}
 <tr>
 <td><a href= "{% url 'edit_task' task.id  %}">{{ task.tname }}</a></td>
 <td> {{task.due_date|date:"j M Y"}}</td> 
@@ -176,7 +176,9 @@ Are you sure you want to delete this project?
 <th>Status </th>
 <td><span class = "status_color"> <i class="glyphicon glyphicon-record"> </i> {{ps}}</span></td>
 </tr>
-<th></th> <td><button class= "btn btn-success" type="submit" value="Submit">Submit</button></td>
+<tr>
+<th> </th> <td><button class= "btn btn-success" type="submit" value="Submit">Submit</button></td>
+</tr>
 </table>
 </form>
 </div>

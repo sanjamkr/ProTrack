@@ -85,7 +85,7 @@
 </ul>
 {% endif %}
 {% if od_count > 0 %} 
-<li> <strong>{{od_count}} Task{% if nd_count > 1 %}s{% endif %} Overdue</strong> </li>
+<li> <strong>{{od_count}} Task{% if od_count > 1 %}s{% endif %} Overdue</strong> </li>
 <ul>
 {% for t in over_due %}
 <li><a href= "{% url 'edit_task' t.id%}">{{ t.tname }}</a><span class="pull-right">{{t.tproject}}</span></li>
@@ -94,12 +94,13 @@
 {% endif %}
 </ul>
 </div>
+<!--Member Ranking-->
 <div class= "well pending ">
 <ul  class = "nav ">
 <li> <strong>Member <span class = "pull-right">Rank</span></strong> </li>
 <ul>
 {% for k,v in user_tp  %}
-<li>{{k}} <span class ="pull-right"> {{v}}</span></li>
+<li>{{k.first_name}} {{k.last_name}}<span class ="pull-right"> {{v}}</span></li>
 {% endfor %}
 </ul>
 </ul>

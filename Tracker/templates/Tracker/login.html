@@ -28,6 +28,7 @@ alert("Please Contact Admin");
 <form action="{% url 'login_next' %}" method="post">
 {% csrf_token %}
 <div class = "loginform">
+{% if login_message %}<div class="text-danger">{{login_message}}</div>{% endif %}
 <div class="loginfield">
 <input placeholder = "Username" type=text name=name class="logininput">
 </div>

@@ -35,12 +35,18 @@ def log(request):
 def login_next(request):
     name = request.POST.get('name', None)
     pwd = request.POST.get('pwd', None)
-    user = authenticate(username=name, password=pwd)
+    try:
+        user = authenticate(username=name, password=pwd)
+    except KeyError:
+        return render(request, 'Tracker/login.html', {'login_message' : 'Fill in all fields'})
     if user is not None:
         login(request, user)
         return HttpResponseRedirect('/Tracker/home')
     else:
-        del request.session['username']
+        try:
+            del request.session['username']
+        except KeyError:
+            return render(request, 'Tracker/login.html', {'login_message' : 'Invalid Username or Password'})
         return HttpResponseRedirect('/Tracker/')
 
 def log_end(request):

@@ -14,7 +14,8 @@
  color: #fff;
  margin-bottom: 0; }
  .jumbotron.vertical-center p{
- font-size: 14px;}
+font-size: 14px;
+font-weight: 400;}
  .jumbotron.vertical-center h1{
  font-size: 40px;}
  .vertical-center {
