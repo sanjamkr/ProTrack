@@ -452,7 +452,7 @@ font-weight: 400;}
  .notitime {
  color: #888;}
  .unreadnoti {
- background-color: #edf2fa;}
+ background-color: #e0faff;}
  .taskinput, #id_state, #id_tsprint, #id_assign, .sprintinput, #id_priority{
  width: 100%;}
  /*Task Fields*/
