@@ -21,7 +21,7 @@
 </tr>
 <tr>
 {% for project in group.project_set.all %}
-<td><a href= "{% url 'edit_project' project.id%}">{{ project.pname }}  </td>
+<td><a href= "{% url 'edit_project' project.id%}">{{ project.pname }} </td>
 <td>{{project.pdesc}} </td>
 <td>{{project.pdeadline|date:"j M 'y"}} </td>
 </tr>
@@ -48,8 +48,8 @@
 <td><a href= "{% url 'edit_task' t.id %}">{{ t.tname }}</a></td>
 <td>{{t.tproject}}</td>
 <td> {{t.due_date|date:"j M 'y"}}</td> 
-<td> {{ t.get_state_display  }}</td>
-</tr>			
+<td> {{ t.get_state_display }}</td>
+</tr> 
 {% endfor %}
 </table>
 </div>
@@ -96,10 +96,10 @@
 </div>
 <!--Member Ranking-->
 <div class= "well pending ">
-<ul  class = "nav ">
+<ul class = "nav ">
 <li> <strong>Member <span class = "pull-right">Rank</span></strong> </li>
 <ul>
-{% for k,v in user_tp  %}
+{% for k,v in user_tp %}
 <li>{{k.first_name}} {{k.last_name}}<span class ="pull-right"> {{v}}</span></li>
 {% endfor %}
 </ul>

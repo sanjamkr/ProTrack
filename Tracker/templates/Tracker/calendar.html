@@ -45,13 +45,13 @@ border-collapse: collapse;
 </style>
 <ul class="nav nav-tabs project-nav">
 <li>
-<a  href="{% url 'edit_project' project_id  %}"><span class = "hidden-xs">{{project.pname}}</span>  Overview</a>
+<a href="{% url 'edit_project' project_id %}"><span class = "hidden-xs">{{project.pname}}</span> Overview</a>
 </li>
-<li  class="active"><a href="{% url 'calendar' project_id  %}">Calendar</a>
+<li class="active"><a href="{% url 'calendar' project_id %}">Calendar</a>
 </li>
-<li><a href="{% url 'chart' project_id  %}">Analytics</a>
+<li><a href="{% url 'chart' project_id %}">Analytics</a>
 </li>
-<li><a href="{% url 'files' project_id  %}">Files</a>
+<li><a href="{% url 'files' project_id %}">Files</a>
 </li>
 </ul>
 <div class="container project-content">

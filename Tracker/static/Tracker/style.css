@@ -55,7 +55,7 @@ font-weight: 400;}
  -webkit-align-items : center;
  -moz-box-align : center;
  -ms-flex-align : center;
- align-items : center;  
+ align-items : center; 
  justify-content: center;
  flex-direction: row;}
  @media screen and (max-width: 500px) {
@@ -67,7 +67,7 @@ font-weight: 400;}
  margin-bottom: 0px;
  border-radius: 5px;
  margin-bottom: 8px;
- border: 1px solid  #eee;
+ border: 1px solid #eee;
  color: #000;}
  #group {
  color: #757575}
@@ -155,14 +155,14 @@ font-weight: 400;}
  color: #3eb9ce;}
  .navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:focus, .navbar-default .navbar-nav>.open>a:hover{
  background-color: #fff;
- border-bottom:  3px solid #3eb9ce;
+ border-bottom: 3px solid #3eb9ce;
  color: #3eb9ce;}
  .navbar .glyphicon{
  font-size:18px;
  top:4px;}
  .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover{
  background-color: #fff;
- border-bottom:  4px solid #3eb9ce;
+ border-bottom: 4px solid #3eb9ce;
  color: #3eb9ce;}
  .prodate{
  padding-right: 10px;}
@@ -431,7 +431,7 @@ font-weight: 400;}
  padding-bottom: 0px;}
  .notidiv {
  background: #fff;
- border:  1px solid #eee; 
+ border: 1px solid #eee; 
  border-radius: 6px;
  padding-top: 4px;
  padding: 0px;}
@@ -439,7 +439,7 @@ font-weight: 400;}
  padding-left: 15px;}
  .noticard {
  padding:15px;
- border-bottom:  1px solid #eee;}
+ border-bottom: 1px solid #eee;}
  .notidivhead {
  padding: 0px;}
  .notiheader {
@@ -456,8 +456,8 @@ font-weight: 400;}
  .taskinput, #id_state, #id_tsprint, #id_assign, .sprintinput, #id_priority{
  width: 100%;}
  /*Task Fields*/
- .taskinput, #id_state, #id_tsprint, #id_assign, #id_due_date_month,#id_due_date_day, #id_due_date_year,  #id_priority,
- #id_newtask-state, #id_newtask-tsprint, #id_newtask-assign,  #id_newtask-priority,/*Edit Task Fields */
+ .taskinput, #id_state, #id_tsprint, #id_assign, #id_due_date_month,#id_due_date_day, #id_due_date_year, #id_priority,
+ #id_newtask-state, #id_newtask-tsprint, #id_newtask-assign, #id_newtask-priority,/*Edit Task Fields */
  #id_newtask-due_date_month,#id_newtask-due_date_day, #id_newtask-due_date_year,
  #id_pdeadline_month, #id_pdeadline_day, #id_pdeadline_year
  {
@@ -481,7 +481,7 @@ font-weight: 400;}
  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);}
  /*Select Fields*/
  #id_state, #id_tsprint, #id_assign, #id_due_date_month,#id_due_date_day, #id_priority, #id_due_date_year, /* Add Task Fields */ 
- #id_newtask-state, #id_newtask-tsprint, #id_newtask-assign,  #id_newtask-priority, /*Edit Task Fields */
+ #id_newtask-state, #id_newtask-tsprint, #id_newtask-assign, #id_newtask-priority, /*Edit Task Fields */
  #id_newtask-due_date_month,#id_newtask-due_date_day, #id_newtask-due_date_year,
  #id_start_date_month, #id_start_date_day, #id_start_date_year, /*Add Sprint Field */
  #id_end_date_month, #id_end_date_day, #id_end_date_year,
@@ -490,7 +490,7 @@ font-weight: 400;}
  padding-top: 2px;
  padding-bottom: 2px;}
  #id_state:focus, #id_tsprint:focus, #id_assign:focus, #id_due_date_month:focus,#id_due_date_day:focus, #id_priority:focus, #id_due_date_year:focus, /* Add Task Fields */ 
- #id_newtask-state:focus, #id_newtask-tsprint:focus, #id_newtask-assign:focus,  #id_newtask-priority:focus, /*Edit Task Fields */
+ #id_newtask-state:focus, #id_newtask-tsprint:focus, #id_newtask-assign:focus, #id_newtask-priority:focus, /*Edit Task Fields */
  #id_newtask-due_date_month:focus,#id_newtask-due_date_day:focus, #id_newtask-due_date_year:focus,
  #id_start_date_month:focus, #id_start_date_day:focus, #id_start_date_year:focus, /*Add Sprint Field */
  #id_end_date_month:focus, #id_end_date_day:focus, #id_end_date_year:focus,

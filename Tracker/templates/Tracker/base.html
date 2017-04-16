@@ -11,7 +11,7 @@
 <script src="{% static 'Tracker/js/jquery-3.2.0.min.js' %}"></script>
 <script src="{% static 'Tracker/js/bootstrap.min.js' %}"></script>
 </head>
-<body>    
+<body> 
 <nav class="navbar navbar-default navbar-fixed-top" style="background-color: #fff ">
 <div class="container">
 <div class="navbar-header">
@@ -22,7 +22,7 @@ data-toggle = "collapse" data-target = "#home-navbar-collapse">
 <span class = "icon-bar"></span>
 <span class = "icon-bar"></span>
 </button>
-<a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'Tracker/protrack.png'  %}" height = "27px"></a>
+<a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'Tracker/protrack.png' %}" height = "27px"></a>
 </div>
 {% block nav %}
 <div class = "collapse navbar-collapse" id = "home-navbar-collapse">
@@ -39,9 +39,9 @@ data-toggle = "collapse" data-target = "#home-navbar-collapse">
 </div>
 </div>
 </form>
-<ul class="nav navbar-nav navbar-right">    
+<ul class="nav navbar-nav navbar-right"> 
 <li {% block nav-home %} {% endblock %}> <a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span><span> Home </span></a></li>
-<li class=" {% block nav-project  %} {% endblock %} dropdown"> 
+<li class=" {% block nav-project %} {% endblock %} dropdown"> 
 <a data-toggle="dropdown" class="dropdown-toggle" href="#"><span class="glyphicon glyphicon-list-alt"> </span> <span> Projects </span><b class="caret"></b></a>
 <ul role="menu" class="dropdown-menu">
 {% for project in user.groups.all.0.project_set.all %}
@@ -49,7 +49,7 @@ data-toggle = "collapse" data-target = "#home-navbar-collapse">
 {% endfor %}
 </ul>
 </li>
-<li class="{% block nav-noti %} {% endblock %}"><a href="{% url 'notifications' %}"><span class="glyphicon glyphicon-bell"></span>{% if noti_count > 0 %}<span class="badge badge-notify">{{noti_count}} </span> {% endif %}<span> Notifications </span>  </a></li>
+<li class="{% block nav-noti %} {% endblock %}"><a href="{% url 'notifications' %}"><span class="glyphicon glyphicon-bell"></span>{% if noti_count > 0 %}<span class="badge badge-notify">{{noti_count}} </span> {% endif %}<span> Notifications </span> </a></li>
 <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-out"> </span><span> Logout </span></a></li>
 </ul>
 </div>

@@ -2,10 +2,10 @@
 {% block title %} Add Sprint {% endblock %}
 {% block content %}
 <div class= "container">
-<div class = "row">		
-<div class = "col-md-6  col-md-offset-3">   
+<div class = "row">  
+<div class = "col-md-6 col-md-offset-3"> 
 <div class = "taskdetails whitecard" >
-<h3  align="center"><span class="pull-left"><form><button class="btn btn-default" id="backbutton" formaction = "{% url 'edit_project' project_id %}" type="submit">
+<h3 align="center"><span class="pull-left"><form><button class="btn btn-default" id="backbutton" formaction = "{% url 'edit_project' project_id %}" type="submit">
 <i class=" glyphicon glyphicon-circle-arrow-left"></i>
 </button></form></span>New Sprint</h3>
 <form action="{% url 'add_sprint' project_id %}" method="post">
@@ -13,9 +13,9 @@
 {{ form.errors }}
 {% endif %}
 {% csrf_token %}
-<table  class = "addform" align="center">
+<table class = "addform" align="center">
 <tr>
-<td  hidden>{{form.project}}</td>
+<td hidden>{{form.project}}</td>
 </tr>
 <tr>
 <th>Name</th>

@@ -3,9 +3,9 @@
 {% block content %}
 <div class= "container">
 <div class = "row">
-<div class = "col-md-6  col-md-offset-3">   
+<div class = "col-md-6 col-md-offset-3"> 
 <div class = "taskdetails whitecard" >
-<h3  align="center"><span class="pull-left"><form><button class="btn btn-default" id="backbutton" formaction = "{% url 'edit_project' project.id %}" type="submit">
+<h3 align="center"><span class="pull-left"><form><button class="btn btn-default" id="backbutton" formaction = "{% url 'edit_project' project.id %}" type="submit">
 <i class=" glyphicon glyphicon-circle-arrow-left"></i>
 </button></form></span>New Task</h3>
 <form action="{% url 'add_task' project.id %}" method="post">
@@ -31,11 +31,11 @@
 <td> {{ form.tname }}</td>
 </tr>
 <tr>
-<th>Description  </th>
+<th>Description </th>
 <td> {{ form.desc }}</td>
 </tr>
 <tr><th>Due Date </th><td> {{form.due_date}}</td></tr> 
-<tr><th>Risk </th><td>  {{ form.risk }}</td></tr>
+<tr><th>Risk </th><td> {{ form.risk }}</td></tr>
 <tr><th>Priority </th><td> {{ form.priority }}</td></tr>
 <tr><th>State </th><td> {{ form.state }}</td></tr>
 <tr>

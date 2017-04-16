@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404, redirect
+from django.shortcuts import render,get_object_or_404, redirect, render_to_response
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User, Group
@@ -9,13 +9,11 @@ from datetime import datetime, timedelta
 from django.utils import timezone 
 from dateutil.rrule import rrule, MONTHLY, DAILY, YEARLY
 from Tracker.forms import NewProject, SignUpForm, NewFile
-from django.shortcuts import render_to_response
 from django.utils.safestring import mark_safe
 from calendar import HTMLCalendar
 from datetime import date
 from itertools import groupby
 from django.utils.html import conditional_escape as esc
-from django.views.generic import ListView
 import operator
 import re
 from django.db.models import Q
@@ -23,7 +21,6 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import FormView, DetailView, ListView
 
 #............Login...............
-
 def log(request):
     if 'username' in request.session:
         return HttpResponseRedirect('/Tracker/home/')
@@ -78,7 +75,6 @@ def signup(request):
     return render(request, 'Tracker/signup.html',context)
 
 #.....................Group..........................
-
 def group(request):
     if request.method == 'POST':
         group_name = request.POST.get('group',None)
@@ -163,7 +159,6 @@ def home(request):
         user_tp={k:r[v] for k,v in user_tp.items()}
         user_tp = sorted(user_tp.items(), key=operator.itemgetter(1))
 
-
         context ={
             'group': g,
             'user': user,
@@ -184,7 +179,6 @@ def home(request):
         return HttpResponseRedirect('/Tracker/group/')
 
 #.........Project Views..................
-
 @login_required
 def FileView(request,project_id):
     if request.method == 'POST':
@@ -267,7 +261,6 @@ def edit_project(request,project_id):
       }
     return render(request, 'Tracker/edit_project.html', context)
 
-
 @login_required
 def delete_project(request,project_id):
     p = get_object_or_404(project,pk=project_id)
@@ -326,15 +319,7 @@ def pieview(request,project_id):
             realdata.append(x-y)
             categories = [str(dt.day) + ' ' + dt.strftime("%b") for dt in dates]
             diff = total_tp/(days+1)
-            idealdata = [float("{0:.1f}".format(total_tp - (i*diff))) for i in range(days+1)]
-
-        
-    
-    '''elif days >= 365:
-        categories = [dt.strftime("%b") + " '" + dt.strftime("%y") for dt in months]
-    elif days > 730:
-        categories = [str(dt.year) for dt in years]'''
-        
+            idealdata = [float("{0:.1f}".format(total_tp - (i*diff))) for i in range(days+1)]        
     context = { 'project_id': project_id,
         'project': p,
         'complete_tasks': complete_tasks, 
@@ -353,10 +338,7 @@ def pieview(request,project_id):
     else:
         return render(request, 'Tracker/nochart.html', context)
 
-
-
 #.................................Calendar View............................
-
 class Calendar(HTMLCalendar):
 
     def __init__(self, my_tasks):
@@ -373,12 +355,8 @@ class Calendar(HTMLCalendar):
                 body = ['<ul class="sample">']
                 for t in self.my_tasks[day]:
                     body.append('<span> &#8226;')
-                    
-                    #body.append('<a href="%s">' % workout.get_absolute_url())
-                    #body.append('<a href="Tracker/calendar1/">')
                     body.append(esc(t.tname))
                     body.append('</span>')
-                    #body.append('</li>')
                 body.append('</ul>')
                 return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)))
             return self.day_cell(cssclass, day)
@@ -393,10 +371,9 @@ class Calendar(HTMLCalendar):
         return dict(
             [(day, list(items)) for day, items in groupby(my_tasks, field)]
         )
-
+    
     def day_cell(self, cssclass, body):
         return '<td class="%s">%s</td>' % (cssclass, body)
-
 
 @login_required
 def calendar(request,project_id):
@@ -417,7 +394,6 @@ def calendar(request,project_id):
     except task.DoesNotExist:
         return render(request, 'Tracker/nochart.html', {'project_id':project_id,'project':p})  
 
-
 @login_required        
 def calendar1(request,project_id,year,month):
     p = get_object_or_404(project,pk=project_id)
@@ -434,12 +410,9 @@ def calendar1(request,project_id,year,month):
     q2 = task.objects.filter(is_member & is_project)
     q = task.objects.filter(tproject = project_id)
     t = q.latest('due_date')
-
-
     my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
     cal = Calendar(my_tasks).formatmonth(year,month)
     return render(request, 'Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
-
 
 @login_required
 def calendar2(request,project_id,year,month):
@@ -457,19 +430,15 @@ def calendar2(request,project_id,year,month):
     q2 = task.objects.filter(is_member & is_project)
     q = task.objects.filter(tproject = project_id)
     t = q.latest('due_date')
-
-
     my_tasks = q.order_by('due_date').filter(due_date__year=year, due_date__month=month)
     cal = Calendar(my_tasks).formatmonth(year,month)
     return render(request, 'Tracker/calendar.html', {'calendar': mark_safe(cal),'project':p,'project_id':project_id,'user':user,'year':year,'month':month})
 
 #..............................Search....................................
-
 def normalize_query(query_string,
                     findterms=re.compile(r'"([^"]+)"|(\S+)').findall,
                     normspace=re.compile(r'\s{2,}').sub):
     return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(query_string)] 
-
 
 def get_query(query_string, search_fields):
 
@@ -519,6 +488,7 @@ def search(request):
         tag_entries = tag.objects.filter(is_group_tag & tag_query)
         
     return render(request, 'Tracker/searchresults.html', { 'query_string': query_string, 'task_entries': task_entries, 'project_entries': project_entries, 'sprint_entries': sprint_entries, 'tag_entries': tag_entries })
+
 @login_required
 def search_tag(request):
     user = User.objects.get(username=request.user.username)
@@ -532,8 +502,6 @@ def search_tag(request):
         tag_query = get_query(query_string, ['tag',])
         tag_entries = tag.objects.filter(is_group_tag & tag_query)
     return render(request, 'Tracker/searchresults.html', { 'query_string': query_string, 'tag_entries': tag_entries})
-
-
 
 #...............Notification..............
 @login_required
@@ -555,4 +523,3 @@ def notifications(request):
     }
     return render(request, 'Tracker/notifications.html', context)
 
-  

@@ -26,8 +26,6 @@ def add_task(request,project_id):
         user = User.objects.get(username=request.user.username)
         p = get_object_or_404(project,pk=project_id)
         form = NewTask(initial={'tproject': p })
-        
-
     return render(request, 'Tracker/add_task.html', {'form': form,'project':p,'user':user})
 
 @login_required
@@ -53,8 +51,6 @@ def edit_task(request,task_id):
             #if user.username in new_comment.comment:
             #    n2 = notification.objects.create(type='mc', member=t.assign, othermember = user.username, content=new_comment.comment, urlid=t.id, read=False, noti_date = new_comment.ccreated)
             return HttpResponseRedirect('/Tracker/edit_task/'+str(new_comment.task.id)+'/#TaskComments')
-
-        
     else:
         formc = NewComment(prefix='newcomment',initial={'task': t,'member':user})
         
@@ -115,7 +111,6 @@ def edit_sprint(request,sprint_id):
     else: 
         st=" "
     #...........Charts..........
-    
     if (sp.start_date<=sp.end_date):
         days = (sp.end_date - sp.start_date).days
         months = [dt for dt in rrule(MONTHLY, dtstart=sp.start_date, until=sp.end_date)]

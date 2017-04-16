@@ -3,7 +3,6 @@ from django.contrib.auth.models import User,Group
 import os
 import datetime
 
-
 #Projects associated with a Group
 
 class project(models.Model):                                                                 
@@ -15,7 +14,6 @@ class project(models.Model):
     
     def __str__(self):
         return self.pname
-
 
 class project_file(models.Model):
     fproject = models.ForeignKey(project, on_delete=models.CASCADE)
@@ -103,7 +101,4 @@ class notification(models.Model):
     noti_date = models.DateTimeField()
     noti_create = models.DateTimeField(auto_now_add=True)
     nproject = models.ForeignKey(project, on_delete=models.CASCADE)
-    
-    
-    
-    
+

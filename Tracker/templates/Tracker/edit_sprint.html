@@ -49,16 +49,16 @@ Are you sure you want to delete this sprint?
 </tr>
 {% for task in sprint.task_set.all %}
 <tr>
-<td><a href= "{% url 'edit_task' task.id  %}">{{ task.tname }}</a></td>
+<td><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a></td>
 <td>{{ task.get_state_display }}</td>
 <td>{{ task.assign}}</td>
 <td>{{ task.tp }}</td>
 </tr>
-{% endfor %}	
+{% endfor %} 
 </table>
 {% else %}
 No Tasks Added
-{% endif %}   
+{% endif %} 
 </div> 
 {% if errorchart == 0 %}
 <div class = "col">
@@ -72,7 +72,7 @@ No Tasks Added
 <div class = "col-md-3 col-md-offset-1 ">
 <div id="edittable" class = "sprint-details sprintdetails" style="display:none">
 <form class = "deleteform pull-right" action = "{% url 'delete_sprint' sprint.id %}">
-<button class="btn btn-default"  name="deletesprint" id="deletebutton" type="submit">
+<button class="btn btn-default" name="deletesprint" id="deletebutton" type="submit">
 <i class=" glyphicon glyphicon-trash"></i>
 </button>
 </form>
@@ -83,7 +83,7 @@ No Tasks Added
 {% if form.errors %}
 <div class="text-danger">Error: End Date cannot be before Start Date</div>
 {% endif %}
-<form action="{% url 'edit_sprint' sprint.id  %}" method="post">
+<form action="{% url 'edit_sprint' sprint.id %}" method="post">
 {% csrf_token %}
 <table>
 <tr>
@@ -95,7 +95,7 @@ No Tasks Added
 </tr>
 <tr>
 <th>Starts</th>
-<td>  {{form.start_date}}</td>
+<td> {{form.start_date}}</td>
 </tr>
 <tr>
 {% if form.errors %}
@@ -127,12 +127,12 @@ No Tasks Added
 </tr>
 <tr>
 <th>Starts </th>
-<td>  {{sprint.start_date|date:"j M Y"}}</td>
+<td> {{sprint.start_date|date:"j M Y"}}</td>
 </tr>
 <tr>
 <tr>
 <th>Ends </th>
-<td>  {{sprint.end_date|date:"j M Y"}}</td>
+<td> {{sprint.end_date|date:"j M Y"}}</td>
 </tr>
 <tr>
 <th>Status &nbsp;</th>
@@ -145,11 +145,11 @@ No Tasks Added
 <ul class="add-to-sprint">
 {% for task in sprint.project.task_set.all %}
 <form>
-<li><a href= "{% url 'edit_task' task.id  %}">{{ task.tname }}</a> &nbsp 
+<li><a href= "{% url 'edit_task' task.id %}">{{ task.tname }}</a> &nbsp 
 {% if task in sprint.task_set.all %}
-<button formaction="{% url 'tsr' task.id  sprint.id %}" class="btn btn-xs btn-danger pull-right sprintbtn"><span style="font-size:12px;" class="glyphicon glyphicon-minus-sign"></span>&nbsp;</button>
+<button formaction="{% url 'tsr' task.id sprint.id %}" class="btn btn-xs btn-danger pull-right sprintbtn"><span style="font-size:12px;" class="glyphicon glyphicon-minus-sign"></span>&nbsp;</button>
 {% else %}
-<button formaction="{% url 'ts' task.id  sprint.id %}" class="btn btn-xs btn-success pull-right sprintbtn"> <span style="font-size:12px;"class="glyphicon glyphicon-plus-sign"></span>&nbsp;</button>
+<button formaction="{% url 'ts' task.id sprint.id %}" class="btn btn-xs btn-success pull-right sprintbtn"> <span style="font-size:12px;"class="glyphicon glyphicon-plus-sign"></span>&nbsp;</button>
 {% endif %}
 </li>
 </form>
@@ -158,7 +158,7 @@ No Tasks Added
 </div>
 </div>
 <!--1st Row-->
-<!--<br><a href="{% url 'edit_project' sprint.project.id  %}" >Back</a>-->
+<!--<br><a href="{% url 'edit_project' sprint.project.id %}" >Back</a>-->
 {% if st != 'Sprint has Ended' %}
 {% endif %}
 </div> <!-- Row--->

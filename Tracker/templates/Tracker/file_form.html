@@ -4,17 +4,17 @@
 {% block content %}
 <ul class="nav nav-tabs project-nav">
 <li>
-<a  href="{% url 'edit_project' project.id  %}"><span class = "hidden-xs">{{project.pname}}</span>  Overview</a>
+<a href="{% url 'edit_project' project.id %}"><span class = "hidden-xs">{{project.pname}}</span> Overview</a>
 </li>
-<li><a href="{% url 'calendar' project.id  %}">Calendar</a>
+<li><a href="{% url 'calendar' project.id %}">Calendar</a>
 </li>
-<li><a href="{% url 'chart' project.id  %}">Analytics</a>
+<li><a href="{% url 'chart' project.id %}">Analytics</a>
 </li>
-<li  class="active"><a href="{% url 'files' project.id  %}">Files</a>
+<li class="active"><a href="{% url 'files' project.id %}">Files</a>
 </li>
 </ul>
 <div class="container project-content">
-<div class="row">   
+<div class="row">
 <div class = "col-md-8">
 <form action="{% url 'file_upload' project.id %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}

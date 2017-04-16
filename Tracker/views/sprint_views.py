@@ -8,10 +8,7 @@ from django.contrib.auth.models import User, Group
 from Tracker.models import project,sprint,task,tag,notification
 from Tracker.forms import NewSprint
 from django.contrib.auth.decorators import login_required
-
-
 from django.contrib.auth import authenticate, login, logout
-
 
 @login_required
 def add_sprint(request,project_id):
@@ -30,7 +27,6 @@ def add_sprint(request,project_id):
         p = get_object_or_404(project,pk=project_id)
         form = NewSprint(initial={'project':p})
     return render(request, 'Tracker/add_sprint.html', {'form': form,'project_id':project_id,'user':user})
-
 
 @login_required
 def edit_sprint(request,sprint_id):
@@ -74,8 +70,7 @@ def edit_sprint(request,sprint_id):
             st = 'Red'
     else: 
         st=" "
-    #...........Charts..........
-    
+    #...........Charts..........    
     if (sp.start_date<=sp.end_date):
         days = (sp.end_date - sp.start_date).days
         months = [dt for dt in rrule(MONTHLY, dtstart=sp.start_date, until=sp.end_date)]
@@ -132,7 +127,6 @@ def edit_sprint(request,sprint_id):
         'errorchart': errorchart
       }
     return render(request, 'Tracker/edit_sprint.html', context)
-
 
 @login_required
 def delete_sprint(request,sprint_id):

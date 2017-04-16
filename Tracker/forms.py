@@ -13,8 +13,6 @@ class SignUpForm(UserCreationForm):
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'signupinput password1','placeholder':'Password*'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'signupinput password2','placeholder':'Confirm Password*'}))
 
-
-
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2']
@@ -37,6 +35,7 @@ class NewProject(ModelForm):
         'pname': forms.TextInput(attrs={'class': 'projectinput projectname'}),
         'pdesc': forms.TextInput(attrs={'class': 'projectinput projectdesc'}),
         }
+
 class NewSprint(ModelForm):
     start_date = forms.DateField(widget=SelectDateWidget(years=range(datetime.date.today().year, datetime.date.today().year+10 )),initial = datetime.date.today())
     end_date = forms.DateField(widget=SelectDateWidget(years=range(datetime.date.today().year, datetime.date.today().year+10 )), initial = datetime.date.today()+datetime.timedelta(days=1))
@@ -87,3 +86,4 @@ class NewTag(ModelForm):
         widgets = {
             'tag': forms.TextInput(attrs={'class': 'tagbox','placeholder':'Add a Tag...'}),
         }
+
