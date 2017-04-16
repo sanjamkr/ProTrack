@@ -186,19 +186,3 @@ def delete_task(request,task_id):
     task.objects.filter(id=task_id).delete()
     notification.objects.filter(urlid=task_id).delete()
     return HttpResponseRedirect('/Tracker/edit_project/'+str(p.id)+'/')
-
-
-'''
-@login_required
-def add_tag(request,task_id):
-    if request.method == 'POST':
-        form = NewTag(request.POST)
-        if form.is_valid():
-            new_tag = form.save()
-            return HttpResponseRedirect('/Tracker/edit_task/'+str(new_tag.task.id)+'/')
-    else:
-        t = get_object_or_404(task,pk=task_id)
-        user = User.objects.get(username=request.user.username)
-        form = NewTag(initial={'task': t })
-    return render(request, 'Tracker/add_tag.html', {'form': form,'task_id':task_id,'user':user})
-'''
