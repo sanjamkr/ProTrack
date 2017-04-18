@@ -55,7 +55,7 @@ From {{entry.start_date|date:"j M"}} to {{entry.end_date|date:"j M Y"}}
 <h3>Task Tags</h3>
 {% for entry in tag_entries %}
 <div class = "searchcard">
-<span class= "tags searchtag">{{entry.tag}}</span>
+<span class= "tags">{{entry.tag}}</span>
 <a href= "{% url 'edit_task' entry.task.id%}"><strong>{{ entry.task.tname }}</strong></a>
 <p class = "tdetails">
 {{entry.task.desc}}

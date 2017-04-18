@@ -7,10 +7,14 @@
 <div class="col-md-9">
 <div class = "row">
 <div class= "col-xs-12">
+<h2>{{group.name}} Projects 
+<span class = "pull-right"> 
 <form>
-<button formaction="{% url 'add_project' %}" class="btn pull-right btn-primary"> Add Project&nbsp; <span class="glyphicon glyphicon-plus"></span></button>
+<button formaction="{% url 'add_project' %}" class="btn btn-primary"> Add Project&nbsp; <span class="glyphicon glyphicon-plus"></span>
+</button>
 </form>
-<h2>{{group.name}} Projects</h2>
+</span>
+</h2>
 <div style="margin-top: 10px; margin-bottom: 15px;"></div>
 {% if group.project_set.all %}
 <table class = "taskpool">

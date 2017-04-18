@@ -40,25 +40,21 @@ Are you sure you want to delete this task?
 <i class="glyphicon glyphicon-pencil"></i>
 </button></span>Task Details</h3> 
 <table class="task-details">
-<tr>
-<th>Name </th>
-<td> {{task.tname}}</td>
-</tr>
-<tr>
-<th>Description&nbsp; </th>
-<td> {{ task.desc }}</td>
-</tr>
-<tr><th>Due Date </th><td> {{task.due_date}} ({% if days >= 0 %}{{days}} Day{% if days > 1 %}s{% endif %}
-left{% else %}Task is Overdue{% endif %})
+<tr><th>Name </th><td> {{task.tname}}</td></tr>
+<tr><th>Description&nbsp; </th><td> {{ task.desc }}</td></tr>
+<tr><th>State </th><td> {{ task.get_state_display }}</td></tr>
+<tr><th>Assignee </th><td> {{task.assign }}</td></tr>
+<tr><th>Due Date </th><td> {{task.due_date}} {% if task.state != 'completed' %}({% if days >= 0 %}{{days}} Day{% if days > 1 %}s{% endif %}
+left{% else %}Task is Overdue{% endif %}) {% endif %}
 </td></tr>
+<tr><th>Task Points </th><td> {{task.tp}}</td></tr>
 {% if task.risk%}<tr><th>Risk </th><td> {{ task.risk }}</td></tr>{% endif %}
 <tr><th>Priority </th><td> {{ task.get_priority_display }}</td></tr>
-<tr><th>State </th><td> {{ task.get_state_display }}</td></tr>
-<tr><th>Assignee </th><td> {{task.assign }}</td>
+
 {% if task.remainder%}<tr><th>Remainder </th><td> {{task.remainder}}</td></tr>{% endif %}
 {% if task.heading%}<tr><th>Heading </th><td> {{task.heading}}</td></tr>{% endif %}
 {% if task.dep_task%}<tr><th>Dependent Task &nbsp;</th><td> {{task.dep_task}}</td></tr>{% endif %}
-<tr><th>Task Points </th><td> {{task.tp}}</td></tr>
+
 </table>
 </div>
 <!-- EDITTABLE -->
