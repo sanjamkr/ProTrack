@@ -10,7 +10,11 @@ Web-based Project Tracking Application.
  
  4) On command prompt,type- python manage.py runserver
  
+# Requirements
+ -social django
+ 
 # See in action:
   - Go to localhost:8000/Tracker from any browser 
+  - Demo: http://protracktracker.pythonanywhere.com/Tracker/
 
 
